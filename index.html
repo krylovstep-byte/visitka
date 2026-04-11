@@ -6,22 +6,23 @@
   <title>Степан Крылов — Project Manager</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- ══════════ BOOT SCREEN ══════════ -->
+<!-- ══════════ BOOT ══════════ -->
 <div id="boot">
   <div class="boot-inner">
-    <div class="boot-brand">STEPAN<span>OS</span></div>
-    <div class="boot-ver">v2.0.0 — Project Manager Edition</div>
+    <div class="boot-logo">Stepan <span>OS</span></div>
+    <div class="boot-sub">Project Manager Edition · v2.0</div>
     <div class="boot-log" id="boot-log"></div>
     <div class="boot-bar-wrap"><div class="boot-bar-fill" id="boot-bar"></div></div>
+    <div class="boot-hint">© Степан Крылов 2026</div>
   </div>
 </div>
 
-<!-- ══════════ CUSTOM CURSOR ══════════ -->
+<!-- ══════════ CURSOR ══════════ -->
 <div id="cursor-ring"></div>
 
 <!-- ══════════ CONTEXT MENU ══════════ -->
@@ -30,68 +31,25 @@
   <div class="ctx-sep"></div>
   <div class="ctx-item" data-action="close-all">Закрыть все окна</div>
   <div class="ctx-sep"></div>
-  <div class="ctx-item ctx-dim">Stepan OS v2.0</div>
+  <div class="ctx-dim">Stepan OS v2.0</div>
 </div>
 
 <!-- ══════════ DESKTOP ══════════ -->
 <div id="desktop">
-  <div class="wallpaper-text">stepankrylov</div>
 
-  <!-- ── Icons ── -->
-  <div id="icons">
-
-    <div class="icon" data-app="about">
-      <div class="icon-img">
-        <svg viewBox="0 0 44 44" fill="none">
-          <circle cx="22" cy="16" r="8" stroke="currentColor" stroke-width="2.2"/>
-          <path d="M6 40c0-8.837 7.163-16 16-16s16 7.163 16 16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <div class="icon-label">about.app</div>
-    </div>
-
-    <div class="icon" data-app="projects">
-      <div class="icon-img">
-        <svg viewBox="0 0 44 44" fill="none">
-          <rect x="4" y="10" width="36" height="26" rx="2.5" stroke="currentColor" stroke-width="2.2"/>
-          <path d="M4 17h36" stroke="currentColor" stroke-width="2.2"/>
-          <path d="M14 10V6M30 10V6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-          <rect x="10" y="23" width="9" height="7" rx="1.2" stroke="currentColor" stroke-width="1.8"/>
-          <rect x="24" y="21" width="9" height="9" rx="1.2" stroke="currentColor" stroke-width="1.8"/>
-        </svg>
-      </div>
-      <div class="icon-label">projects.app</div>
-    </div>
-
-    <div class="icon" data-app="terminal">
-      <div class="icon-img">
-        <svg viewBox="0 0 44 44" fill="none">
-          <rect x="4" y="8" width="36" height="28" rx="3" stroke="currentColor" stroke-width="2.2"/>
-          <path d="M12 19l6 5-6 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M22 29h10" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <div class="icon-label">terminal.app</div>
-    </div>
-
-    <div class="icon" data-app="contact">
-      <div class="icon-img">
-        <svg viewBox="0 0 44 44" fill="none">
-          <rect x="4" y="10" width="36" height="26" rx="2.5" stroke="currentColor" stroke-width="2.2"/>
-          <path d="M4 14l18 13L40 14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <div class="icon-label">contact.app</div>
-    </div>
-
-  </div><!-- /icons -->
+  <!-- Hero typography -->
+  <div class="desktop-hero">
+    <div class="dh-role">Project Manager · Предприниматель</div>
+    <div class="dh-name">Степан<br>Крылов</div>
+    <div class="dh-note">Currently building <span>Taskin →</span></div>
+  </div>
 
   <!-- ══════════ WINDOW: ABOUT ══════════ -->
   <div class="window" id="window-about" data-app="about">
     <div class="window-titlebar">
       <div class="window-dots">
-        <span class="dot dot-red"   data-action="close" data-app="about"></span>
-        <span class="dot dot-yellow" data-action="min"  data-app="about"></span>
+        <span class="dot dot-red"    data-action="close" data-app="about"></span>
+        <span class="dot dot-yellow" data-action="min"   data-app="about"></span>
       </div>
       <div class="window-title">about.app</div>
       <div class="window-dots-spacer"></div>
@@ -101,21 +59,18 @@
         <div class="about-avatar">СК</div>
         <div class="about-header">
           <h1>Степан Крылов</h1>
-          <div class="about-role">Project Manager &middot; Предприниматель</div>
+          <div class="about-role">Project Manager · Предприниматель</div>
         </div>
       </div>
-
       <div class="about-bio">
         <p>Особенно силён в генерации идей и запуске продуктов — от концепции до первых клиентов. Работаю на стыке бизнеса и технологий: сбор требований, планирование, бэклог, координация команды.</p>
       </div>
-
       <div class="about-stats">
-        <div class="stat"><div class="stat-num">6+</div><div class="stat-lbl">крупных проектов</div></div>
+        <div class="stat"><div class="stat-num">15+</div><div class="stat-lbl">крупных проектов</div></div>
         <div class="stat"><div class="stat-num">2+</div><div class="stat-lbl">года опыта</div></div>
         <div class="stat"><div class="stat-num">3</div><div class="stat-lbl">языка</div></div>
         <div class="stat"><div class="stat-num">10</div><div class="stat-lbl">чел. в команде</div></div>
       </div>
-
       <div class="about-section-label">Навыки</div>
       <div class="about-tags">
         <span class="tag">Scrum / Kanban</span>
@@ -129,11 +84,10 @@
         <span class="tag">Miro</span>
         <span class="tag">CJM / SNW</span>
       </div>
-
       <div class="about-section-label" style="margin-top:20px">Образование</div>
       <div class="edu-item">
         <div class="edu-name">Президентская Академия (РАНХиГС), ФМ</div>
-        <div class="edu-sub">Бакалавриат, Менеджмент &middot; 2024 — н.в.</div>
+        <div class="edu-sub">Бакалавриат, Менеджмент · 2024 — н.в.</div>
       </div>
     </div>
   </div>
@@ -149,8 +103,6 @@
       <div class="window-dots-spacer"></div>
     </div>
     <div class="window-body">
-
-      <!-- Taskin — featured -->
       <div class="project-card featured">
         <div class="project-top">
           <div>
@@ -160,17 +112,9 @@
           <div class="project-badge wip">В разработке</div>
         </div>
         <p class="project-desc">Платформа для фрилансеров и заказчиков с канбан-доской, геймификацией и минимальными комиссиями. Рынок — Россия.</p>
-        <div class="project-meta">
-          <span>🗓 Запуск: апрель — май 2026</span>
-          <span>🇷🇺 Рынок: РФ</span>
-        </div>
-        <div class="project-chips">
-          <span class="chip">Канбан</span><span class="chip">Геймификация</span>
-          <span class="chip">Фриланс</span><span class="chip">B2C</span>
-        </div>
+        <div class="project-meta"><span>🗓 Запуск: апрель — май 2026</span><span>🇷🇺 Рынок: РФ</span></div>
+        <div class="project-chips"><span class="chip">Канбан</span><span class="chip">Геймификация</span><span class="chip">Фриланс</span><span class="chip">B2C</span></div>
       </div>
-
-      <!-- GRAND PRIX -->
       <div class="project-card">
         <div class="project-top">
           <div>
@@ -179,14 +123,9 @@
           </div>
           <div class="project-badge done">Завершён</div>
         </div>
-        <p class="project-desc">Руководил командой на серии кейсов X5 Group: Пакет, Чижик, X5 Import, Зелёная линия. Исследования, продуктовые концепции, логистика, защита на финале.</p>
-        <div class="project-chips">
-          <span class="chip">PM</span><span class="chip">Маркетинг</span>
-          <span class="chip">Product Dev</span><span class="chip">X5 Group</span>
-        </div>
+        <p class="project-desc">Руководил командой на серии кейсов: Пакет, Чижик, X5 Import, Зелёная линия. Исследования, продуктовые концепции, логистика, защита на финале.</p>
+        <div class="project-chips"><span class="chip">PM</span><span class="chip">Маркетинг</span><span class="chip">Product Dev</span></div>
       </div>
-
-      <!-- X5 Group -->
       <div class="project-card">
         <div class="project-top">
           <div>
@@ -196,12 +135,8 @@
           <div class="project-badge done">Завершён</div>
         </div>
         <p class="project-desc">Стратегия внутреннего бренда X5 Digital — многоканальная коммуникация, геймификация (квест, Digital Бункер, система KPI), контент-механики.</p>
-        <div class="project-chips">
-          <span class="chip">Маркетинг</span><span class="chip">Employer Brand</span><span class="chip">Геймификация</span>
-        </div>
+        <div class="project-chips"><span class="chip">Employer Brand</span><span class="chip">Геймификация</span></div>
       </div>
-
-      <!-- Альфа-Банк -->
       <div class="project-card">
         <div class="project-top">
           <div>
@@ -210,13 +145,9 @@
           </div>
           <div class="project-badge done">Завершён</div>
         </div>
-        <p class="project-desc">Концепт системы объединения счетов разных банков с цифровым рублём. Анализ болей, дизайн решения, единая витрина финпродуктов, roadmap.</p>
-        <div class="project-chips">
-          <span class="chip">Product Dev</span><span class="chip">Fintech</span><span class="chip">ЦБ РФ</span>
-        </div>
+        <p class="project-desc">Концепт системы объединения счетов разных банков с цифровым рублём. Дизайн решения, витрина финпродуктов, roadmap.</p>
+        <div class="project-chips"><span class="chip">Product Dev</span><span class="chip">Fintech</span><span class="chip">ЦБ РФ</span></div>
       </div>
-
-      <!-- Сбер -->
       <div class="project-card">
         <div class="project-top">
           <div>
@@ -225,13 +156,9 @@
           </div>
           <div class="project-badge done">Завершён</div>
         </div>
-        <p class="project-desc">Концепция развития приложения для популяризации инвестиций среди молодёжи: анализ рынка, геймификация, СДР, риски, план-граф Ганта.</p>
-        <div class="project-chips">
-          <span class="chip">Marketing</span><span class="chip">Product Dev</span><span class="chip">Сбер</span>
-        </div>
+        <p class="project-desc">Концепция развития приложения для молодёжи: анализ рынка, геймификация, СДР, риски, план-граф Ганта.</p>
+        <div class="project-chips"><span class="chip">Marketing</span><span class="chip">Product Dev</span><span class="chip">Сбер</span></div>
       </div>
-
-      <!-- Яндекс -->
       <div class="project-card">
         <div class="project-top">
           <div>
@@ -240,12 +167,9 @@
           </div>
           <div class="project-badge done">Завершён</div>
         </div>
-        <p class="project-desc">Продуктовые инициативы для Алисы: анализ сценариев, гипотезы, техническая архитектура интеграций, план внедрения в Яндекс Маркет.</p>
-        <div class="project-chips">
-          <span class="chip">Product Dev</span><span class="chip">IT</span><span class="chip">Яндекс</span>
-        </div>
+        <p class="project-desc">Продуктовые инициативы для Алисы: анализ сценариев, гипотезы, техническая архитектура, план внедрения в Яндекс Маркет.</p>
+        <div class="project-chips"><span class="chip">Product Dev</span><span class="chip">IT</span><span class="chip">Яндекс</span></div>
       </div>
-
     </div>
   </div>
 
@@ -262,11 +186,11 @@
     <div class="window-body term-body">
       <div class="term-screen" id="term-screen">
         <div class="term-line term-sys">Stepan OS Terminal v2.0</div>
-        <div class="term-line term-sys">Введи <span class="term-accent">help</span> для списка команд.</div>
+        <div class="term-line term-sys">Введи <span class="term-hl">help</span> для списка команд.</div>
         <div class="term-spacer"></div>
       </div>
       <div class="term-input-row">
-        <span class="term-prompt">stepan@os:~$</span>
+        <span class="term-prompt">stepan@os:~$&nbsp;</span>
         <input class="term-input" id="term-input" type="text" autocomplete="off" spellcheck="false" placeholder="введи команду...">
       </div>
     </div>
@@ -285,12 +209,9 @@
     <div class="window-body">
       <p class="contact-intro">Напиши мне — отвечу быстро.</p>
       <div class="contact-links">
-
         <a class="contact-item" href="https://t.me/krygerman" target="_blank" rel="noopener">
           <div class="contact-icon">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.393c-.16.16-.295.295-.606.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.372-.12L7.19 13.668l-2.972-.924c-.645-.204-.657-.645.136-.955l11.57-4.461c.537-.194 1.006.131.638.92z"/>
-            </svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.393c-.16.16-.295.295-.606.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.372-.12L7.19 13.668l-2.972-.924c-.645-.204-.657-.645.136-.955l11.57-4.461c.537-.194 1.006.131.638.92z"/></svg>
           </div>
           <div class="contact-info">
             <div class="contact-name">Telegram</div>
@@ -298,13 +219,9 @@
           </div>
           <div class="contact-arrow">→</div>
         </a>
-
         <a class="contact-item" href="mailto:directstep@mail.ru">
           <div class="contact-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="2" y="4" width="20" height="16" rx="2"/>
-              <path d="M2 8l10 7 10-7" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8l10 7 10-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <div class="contact-info">
             <div class="contact-name">Email</div>
@@ -312,9 +229,65 @@
           </div>
           <div class="contact-arrow">→</div>
         </a>
-
       </div>
       <p class="contact-tip">💡 Или напиши <code>contact</code> в <strong>terminal.app</strong></p>
+    </div>
+  </div>
+
+  <!-- ══════════ DOCK ══════════ -->
+  <div id="dock">
+    <div class="dock-wrap">
+
+      <div class="dock-icon" data-app="about">
+        <div class="dock-img">
+          <svg viewBox="0 0 44 44" fill="none">
+            <circle cx="22" cy="16" r="8" stroke="currentColor" stroke-width="2.2"/>
+            <path d="M6 40c0-8.837 7.163-16 16-16s16 7.163 16 16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="dock-label">about.app</div>
+        <div class="dock-dot"></div>
+      </div>
+
+      <div class="dock-icon" data-app="projects">
+        <div class="dock-img">
+          <svg viewBox="0 0 44 44" fill="none">
+            <rect x="4" y="10" width="36" height="26" rx="2.5" stroke="currentColor" stroke-width="2.2"/>
+            <path d="M4 17h36" stroke="currentColor" stroke-width="2.2"/>
+            <path d="M14 10V6M30 10V6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <rect x="10" y="23" width="9" height="7" rx="1.2" stroke="currentColor" stroke-width="1.8"/>
+            <rect x="24" y="21" width="9" height="9" rx="1.2" stroke="currentColor" stroke-width="1.8"/>
+          </svg>
+        </div>
+        <div class="dock-label">projects.app</div>
+        <div class="dock-dot"></div>
+      </div>
+
+      <div class="dock-icon" data-app="terminal">
+        <div class="dock-img">
+          <svg viewBox="0 0 44 44" fill="none">
+            <rect x="4" y="8" width="36" height="28" rx="3" stroke="currentColor" stroke-width="2.2"/>
+            <path d="M12 19l6 5-6 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M22 29h10" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="dock-label">terminal.app</div>
+        <div class="dock-dot"></div>
+      </div>
+
+      <div class="dock-sep"></div>
+
+      <div class="dock-icon" data-app="contact">
+        <div class="dock-img">
+          <svg viewBox="0 0 44 44" fill="none">
+            <rect x="4" y="10" width="36" height="26" rx="2.5" stroke="currentColor" stroke-width="2.2"/>
+            <path d="M4 14l18 13L40 14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="dock-label">contact.app</div>
+        <div class="dock-dot"></div>
+      </div>
+
     </div>
   </div>
 
@@ -326,7 +299,6 @@
   </div>
 
 </div><!-- /desktop -->
-
 <script src="app.js"></script>
 </body>
 </html>
