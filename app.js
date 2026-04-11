@@ -348,15 +348,15 @@ function initCursor() {
 const CLIPPY_QA = [
   {
     q: ['taskin', 'таскин', 'проект', 'фриланс', 'биржа'],
-    a: 'Taskin — фриланс-биржа нового поколения! Канбан-доска, геймификация, минимальные комиссии. Запуск апрель–май 2026, рынок РФ.'
+    a: 'Taskin — фриланс-биржа нового поколения!\nКанбан-доска, геймификация, минимальные комиссии.\nЗапуск апрель–май 2026, рынок РФ. 🚀'
   },
   {
     q: ['контакт', 'написать', 'связь', 'telegram', 'телеграм', 'почта', 'email'],
-    a: 'Пиши в Telegram: @krygerman или на почту directstep@mail.ru. Отвечает быстро!'
+    a: 'Telegram: @krygerman\nEmail: directstep@mail.ru\nОтвечает быстро!'
   },
   {
     q: ['образование', 'учёба', 'университет', 'ранхигс', 'академия', 'вуз'],
-    a: 'РАНХиГС, факультет менеджмента, бюджет, 2024 — н.в. Ещё Skillbox, РУДН, Нетология — постоянно учится.'
+    a: 'РАНХиГС, менеджмент, бюджет, 2024–н.в.\nЕщё: Skillbox, РУДН, Нетология.'
   },
   {
     q: ['навыки', 'умения', 'инструменты', 'скиллы', 'стек'],
@@ -399,31 +399,49 @@ const CLIPPY_DEFAULT = [
   'Открой terminal.app и введи help — там много интересного!',
 ];
 
+let clippyTypingTimer = null;
+
 function clippyRespond(text) {
-  const msgEl = document.getElementById('clippy-msg');
+  const msgEl  = document.getElementById('clippy-msg');
+  const chips  = document.getElementById('clippy-chips');
   if (!msgEl) return;
 
   const lower = text.toLowerCase();
   let answer = null;
 
   for (const qa of CLIPPY_QA) {
-    if (qa.q.some(kw => lower.includes(kw))) {
-      answer = qa.a;
-      break;
-    }
+    if (qa.q.some(kw => lower.includes(kw))) { answer = qa.a; break; }
   }
-
   if (!answer) {
     answer = CLIPPY_DEFAULT[Math.floor(Math.random() * CLIPPY_DEFAULT.length)];
   }
 
-  // Typing animation
-  msgEl.textContent = '';
+  // Hide chips while answering
+  if (chips) chips.style.display = 'none';
+
+  // Clear prev timer
+  if (clippyTypingTimer) clearTimeout(clippyTypingTimer);
+
+  // Typing animation, line-break aware
+  msgEl.innerHTML = '';
   let i = 0;
   function type() {
     if (i < answer.length) {
-      msgEl.textContent += answer[i++];
-      setTimeout(type, 18);
+      if (answer[i] === '\n') {
+        msgEl.appendChild(document.createElement('br'));
+      } else {
+        const last = msgEl.lastChild;
+        if (last && last.nodeType === Node.TEXT_NODE) {
+          last.textContent += answer[i];
+        } else {
+          msgEl.appendChild(document.createTextNode(answer[i]));
+        }
+      }
+      i++;
+      clippyTypingTimer = setTimeout(type, 16);
+    } else {
+      // Show chips again after reply
+      if (chips) { chips.style.display = 'flex'; }
     }
   }
   type();
@@ -434,25 +452,34 @@ function initClippy() {
   const bubble = document.getElementById('clippy-bubble');
   const close  = document.getElementById('clippy-close');
   const input  = document.getElementById('clippy-input');
+  const chips  = document.querySelectorAll('.clippy-chip');
   if (!char || !bubble || !input) return;
 
+  // Toggle on char click
   char.addEventListener('click', () => {
     bubble.classList.toggle('hidden');
-    if (!bubble.classList.contains('hidden')) {
-      input.focus();
-    }
+    if (!bubble.classList.contains('hidden')) setTimeout(() => input.focus(), 100);
   });
 
+  // Close button
   close.addEventListener('click', e => {
     e.stopPropagation();
     bubble.classList.add('hidden');
   });
 
+  // Text input
   input.addEventListener('keydown', e => {
     if (e.key === 'Enter' && input.value.trim()) {
       clippyRespond(input.value.trim());
       input.value = '';
     }
+  });
+
+  // Quick-reply chip buttons
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      clippyRespond(chip.dataset.q || chip.textContent);
+    });
   });
 }
 
