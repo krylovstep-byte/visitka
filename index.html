@@ -4,9 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Степан Крылов — Project Manager</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -23,7 +20,13 @@
 </div>
 
 <!-- ══════════ CURSOR ══════════ -->
-<div id="cursor-ring"></div>
+<div id="cursor" aria-hidden="true">
+  <svg class="cursor-arrow" viewBox="0 0 22 32" fill="none">
+    <path d="M3 2L3 25L8.5 19.5L12.5 30.5L15.5 29.5L11.5 18.5L19.5 18.5L3 2Z"
+          fill="white" stroke="#1a1a2a" stroke-width="1.2" stroke-linejoin="round"/>
+  </svg>
+  <div class="cursor-badge">Степан</div>
+</div>
 
 <!-- ══════════ CONTEXT MENU ══════════ -->
 <div id="ctx-menu">
@@ -37,11 +40,30 @@
 <!-- ══════════ DESKTOP ══════════ -->
 <div id="desktop">
 
-  <!-- Hero typography -->
+  <!-- Desktop clock top -->
+  <div id="desktop-clock">
+    <div class="dc-time" id="dc-time">00:00</div>
+    <div class="dc-date" id="dc-date">—</div>
+  </div>
+
+  <!-- Hero -->
   <div class="desktop-hero">
-    <div class="dh-role">Project Manager · Предприниматель</div>
+    <div class="dh-label">Project Manager · Предприниматель</div>
     <div class="dh-name">Степан<br>Крылов</div>
-    <div class="dh-note">Currently building <span>Taskin →</span></div>
+    <div class="dh-bento">
+      <div class="dh-card">
+        <span class="dh-card-dot"></span>
+        <span>Строю Taskin →</span>
+      </div>
+      <div class="dh-card-sep"></div>
+      <div class="dh-card">
+        <span>Ярославль → Москва</span>
+      </div>
+      <div class="dh-card-sep"></div>
+      <div class="dh-card">
+        <span>15+ проектов</span>
+      </div>
+    </div>
   </div>
 
   <!-- ══════════ WINDOW: ABOUT ══════════ -->
@@ -55,40 +77,54 @@
       <div class="window-dots-spacer"></div>
     </div>
     <div class="window-body">
-      <div class="about-hero">
-        <div class="about-avatar">СК</div>
-        <div class="about-header">
-          <h1>Степан Крылов</h1>
-          <div class="about-role">Project Manager · Предприниматель</div>
+
+      <div class="ed-name">Степан<br>Крылов</div>
+      <div class="ed-rule"></div>
+      <div class="ed-meta-row">
+        <span class="ed-role">Project Manager · Предприниматель</span>
+        <span class="ed-loc">Ярославль → Москва</span>
+      </div>
+
+      <p class="ed-bio">Имею счастье быть человеком, занимающимся проектами в сфере IT, финансов и дизайна. Также развиваюсь в управлении продуктами. Запускаю и веду собственные проекты, а также работаю в рамках заказных инициатив. Особенно силён в генерации идей и запуске от концепции до первых клиентов.</p>
+
+      <div class="ed-stats-row">
+        <div class="ed-stat">
+          <div class="ed-stat-n">15<span>+</span></div>
+          <div class="ed-stat-l">проектов</div>
+        </div>
+        <div class="ed-stat-div"></div>
+        <div class="ed-stat">
+          <div class="ed-stat-n">2<span>+</span></div>
+          <div class="ed-stat-l">года</div>
+        </div>
+        <div class="ed-stat-div"></div>
+        <div class="ed-stat">
+          <div class="ed-stat-n">3</div>
+          <div class="ed-stat-l">языка</div>
+        </div>
+        <div class="ed-stat-div"></div>
+        <div class="ed-stat">
+          <div class="ed-stat-n">10</div>
+          <div class="ed-stat-l">чел. в команде</div>
         </div>
       </div>
-      <div class="about-bio">
-        <p>Особенно силён в генерации идей и запуске продуктов — от концепции до первых клиентов. Работаю на стыке бизнеса и технологий: сбор требований, планирование, бэклог, координация команды.</p>
+
+      <div class="ed-rule"></div>
+
+      <div class="ed-section-lbl">Навыки</div>
+      <p class="ed-skills-text">Scrum / Kanban — CustDev — PESTEL / SWOT — Figma — Notion / Jira — Дорожные карты — Гипотезы и MVP — Python / HTML — Miro — CJM / SNW</p>
+
+      <div class="ed-rule" style="margin-top:20px"></div>
+
+      <div class="ed-section-lbl">Образование</div>
+      <div class="ed-edu">
+        <div class="ed-edu-name">Президентская Академия (РАНХиГС), ФМ</div>
+        <div class="ed-edu-sub">Бакалавриат, Менеджмент · 2024 — н.в. · бюджет</div>
       </div>
-      <div class="about-stats">
-        <div class="stat"><div class="stat-num">15+</div><div class="stat-lbl">крупных проектов</div></div>
-        <div class="stat"><div class="stat-num">2+</div><div class="stat-lbl">года опыта</div></div>
-        <div class="stat"><div class="stat-num">3</div><div class="stat-lbl">языка</div></div>
-        <div class="stat"><div class="stat-num">10</div><div class="stat-lbl">чел. в команде</div></div>
+      <div class="ed-edu" style="margin-top:10px">
+        <div class="ed-edu-sub">+ Skillbox, РУДН, Нетология</div>
       </div>
-      <div class="about-section-label">Навыки</div>
-      <div class="about-tags">
-        <span class="tag">Scrum / Kanban</span>
-        <span class="tag">CustDev</span>
-        <span class="tag">PESTEL / SWOT</span>
-        <span class="tag">Figma</span>
-        <span class="tag">Notion / Jira</span>
-        <span class="tag">Дорожные карты</span>
-        <span class="tag">Гипотезы и MVP</span>
-        <span class="tag">Python / HTML</span>
-        <span class="tag">Miro</span>
-        <span class="tag">CJM / SNW</span>
-      </div>
-      <div class="about-section-label" style="margin-top:20px">Образование</div>
-      <div class="edu-item">
-        <div class="edu-name">Президентская Академия (РАНХиГС), ФМ</div>
-        <div class="edu-sub">Бакалавриат, Менеджмент · 2024 — н.в.</div>
-      </div>
+
     </div>
   </div>
 
@@ -103,73 +139,95 @@
       <div class="window-dots-spacer"></div>
     </div>
     <div class="window-body">
-      <div class="project-card featured">
-        <div class="project-top">
-          <div>
-            <div class="project-name">Taskin <span class="proj-my">мой проект</span></div>
-            <div class="project-tagline">Фриланс-биржа нового поколения</div>
+
+      <div class="proj-item feat">
+        <div class="proj-header">
+          <div class="proj-num">01</div>
+          <div class="proj-info">
+            <div class="proj-title">Taskin <span class="proj-mine">мой</span></div>
+            <div class="proj-sub">Фриланс-биржа нового поколения</div>
           </div>
-          <div class="project-badge wip">В разработке</div>
+          <div class="proj-status wip">В разработке</div>
         </div>
-        <p class="project-desc">Платформа для фрилансеров и заказчиков с канбан-доской, геймификацией и минимальными комиссиями. Рынок — Россия.</p>
-        <div class="project-meta"><span>🗓 Запуск: апрель — май 2026</span><span>🇷🇺 Рынок: РФ</span></div>
-        <div class="project-chips"><span class="chip">Канбан</span><span class="chip">Геймификация</span><span class="chip">Фриланс</span><span class="chip">B2C</span></div>
+        <p class="proj-desc">Платформа для фрилансеров и заказчиков с канбан-доской, геймификацией и минимальными комиссиями. Запуск апрель–май 2026. Рынок — Россия.</p>
+        <div class="proj-tags">Канбан · Геймификация · Фриланс · B2C</div>
       </div>
-      <div class="project-card">
-        <div class="project-top">
-          <div>
-            <div class="project-name">GRAND PRIX'25</div>
-            <div class="project-tagline">5 кейсов от X5 Group — финал хакатона</div>
+
+      <div class="proj-rule"></div>
+
+      <div class="proj-item">
+        <div class="proj-header">
+          <div class="proj-num">02</div>
+          <div class="proj-info">
+            <div class="proj-title">GRAND PRIX'25</div>
+            <div class="proj-sub">5 кейсов от X5 Group — финал хакатона</div>
           </div>
-          <div class="project-badge done">Завершён</div>
+          <div class="proj-status done">Завершён</div>
         </div>
-        <p class="project-desc">Руководил командой на серии кейсов: Пакет, Чижик, X5 Import, Зелёная линия. Исследования, продуктовые концепции, логистика, защита на финале.</p>
-        <div class="project-chips"><span class="chip">PM</span><span class="chip">Маркетинг</span><span class="chip">Product Dev</span></div>
+        <p class="proj-desc">Руководил командой: Пакет, Чижик, X5 Import, Зелёная линия. Исследования, продуктовые концепции, логистика, защита на финале.</p>
+        <div class="proj-tags">PM · Маркетинг · Product Dev</div>
       </div>
-      <div class="project-card">
-        <div class="project-top">
-          <div>
-            <div class="project-name">X5 Group — Employer Brand</div>
-            <div class="project-tagline">Московский Управленческий Хакатон</div>
+
+      <div class="proj-rule"></div>
+
+      <div class="proj-item">
+        <div class="proj-header">
+          <div class="proj-num">03</div>
+          <div class="proj-info">
+            <div class="proj-title">X5 Group — Employer Brand</div>
+            <div class="proj-sub">Московский Управленческий Хакатон</div>
           </div>
-          <div class="project-badge done">Завершён</div>
+          <div class="proj-status done">Завершён</div>
         </div>
-        <p class="project-desc">Стратегия внутреннего бренда X5 Digital — многоканальная коммуникация, геймификация (квест, Digital Бункер, система KPI), контент-механики.</p>
-        <div class="project-chips"><span class="chip">Employer Brand</span><span class="chip">Геймификация</span></div>
+        <p class="proj-desc">Стратегия внутреннего бренда X5 Digital — многоканальная коммуникация, геймификация (квест, Digital Бункер, система KPI).</p>
+        <div class="proj-tags">Employer Brand · Геймификация</div>
       </div>
-      <div class="project-card">
-        <div class="project-top">
-          <div>
-            <div class="project-name">Альфа-Банк — Мультибанк</div>
-            <div class="project-tagline">Совместно с ЦБ РФ</div>
+
+      <div class="proj-rule"></div>
+
+      <div class="proj-item">
+        <div class="proj-header">
+          <div class="proj-num">04</div>
+          <div class="proj-info">
+            <div class="proj-title">Альфа-Банк — Мультибанк</div>
+            <div class="proj-sub">Совместно с ЦБ РФ</div>
           </div>
-          <div class="project-badge done">Завершён</div>
+          <div class="proj-status done">Завершён</div>
         </div>
-        <p class="project-desc">Концепт системы объединения счетов разных банков с цифровым рублём. Дизайн решения, витрина финпродуктов, roadmap.</p>
-        <div class="project-chips"><span class="chip">Product Dev</span><span class="chip">Fintech</span><span class="chip">ЦБ РФ</span></div>
+        <p class="proj-desc">Концепт объединения счетов разных банков с цифровым рублём. Дизайн решения, витрина финпродуктов, roadmap.</p>
+        <div class="proj-tags">Product Dev · Fintech · ЦБ РФ</div>
       </div>
-      <div class="project-card">
-        <div class="project-top">
-          <div>
-            <div class="project-name">СберИнвестиции</div>
-            <div class="project-tagline">Геймификация брокерского приложения</div>
+
+      <div class="proj-rule"></div>
+
+      <div class="proj-item">
+        <div class="proj-header">
+          <div class="proj-num">05</div>
+          <div class="proj-info">
+            <div class="proj-title">СберИнвестиции</div>
+            <div class="proj-sub">Геймификация брокерского приложения</div>
           </div>
-          <div class="project-badge done">Завершён</div>
+          <div class="proj-status done">Завершён</div>
         </div>
-        <p class="project-desc">Концепция развития приложения для молодёжи: анализ рынка, геймификация, СДР, риски, план-граф Ганта.</p>
-        <div class="project-chips"><span class="chip">Marketing</span><span class="chip">Product Dev</span><span class="chip">Сбер</span></div>
+        <p class="proj-desc">Концепция развития для молодёжи: анализ рынка, геймификация, СДР, риски, план-граф Ганта.</p>
+        <div class="proj-tags">Marketing · Product Dev · Сбер</div>
       </div>
-      <div class="project-card">
-        <div class="project-top">
-          <div>
-            <div class="project-name">Яндекс — Алиса</div>
-            <div class="project-tagline">Школа менеджеров Яндекса</div>
+
+      <div class="proj-rule"></div>
+
+      <div class="proj-item">
+        <div class="proj-header">
+          <div class="proj-num">06</div>
+          <div class="proj-info">
+            <div class="proj-title">Яндекс — Алиса</div>
+            <div class="proj-sub">Школа менеджеров Яндекса</div>
           </div>
-          <div class="project-badge done">Завершён</div>
+          <div class="proj-status done">Завершён</div>
         </div>
-        <p class="project-desc">Продуктовые инициативы для Алисы: анализ сценариев, гипотезы, техническая архитектура, план внедрения в Яндекс Маркет.</p>
-        <div class="project-chips"><span class="chip">Product Dev</span><span class="chip">IT</span><span class="chip">Яндекс</span></div>
+        <p class="proj-desc">Продуктовые инициативы для Алисы: анализ сценариев, гипотезы, техническая архитектура, план внедрения в Яндекс Маркет.</p>
+        <div class="proj-tags">Product Dev · IT · Яндекс</div>
       </div>
+
     </div>
   </div>
 
@@ -207,37 +265,30 @@
       <div class="window-dots-spacer"></div>
     </div>
     <div class="window-body">
-      <p class="contact-intro">Напиши мне — отвечу быстро.</p>
-      <div class="contact-links">
-        <a class="contact-item" href="https://t.me/krygerman" target="_blank" rel="noopener">
-          <div class="contact-icon">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.393c-.16.16-.295.295-.606.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.372-.12L7.19 13.668l-2.972-.924c-.645-.204-.657-.645.136-.955l11.57-4.461c.537-.194 1.006.131.638.92z"/></svg>
-          </div>
-          <div class="contact-info">
-            <div class="contact-name">Telegram</div>
-            <div class="contact-handle">@krygerman</div>
-          </div>
-          <div class="contact-arrow">→</div>
-        </a>
-        <a class="contact-item" href="mailto:directstep@mail.ru">
-          <div class="contact-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8l10 7 10-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <div class="contact-info">
-            <div class="contact-name">Email</div>
-            <div class="contact-handle">directstep@mail.ru</div>
-          </div>
-          <div class="contact-arrow">→</div>
-        </a>
-      </div>
-      <p class="contact-tip">💡 Или напиши <code>contact</code> в <strong>terminal.app</strong></p>
+
+      <div class="ct-headline">Напиши<br><em>мне.</em></div>
+      <div class="ed-rule" style="margin:20px 0"></div>
+
+      <a class="ct-link" href="https://t.me/krygerman" target="_blank" rel="noopener">
+        <span class="ct-arrow">↗</span>
+        <span class="ct-platform">Telegram</span>
+        <span class="ct-handle">@krygerman</span>
+      </a>
+      <a class="ct-link" href="mailto:directstep@mail.ru">
+        <span class="ct-arrow">↗</span>
+        <span class="ct-platform">Email</span>
+        <span class="ct-handle">directstep@mail.ru</span>
+      </a>
+
+      <div class="ed-rule" style="margin-top:20px"></div>
+      <p class="ct-note">Или открой <code>terminal.app</code> и введи <code>contact</code></p>
+
     </div>
   </div>
 
   <!-- ══════════ DOCK ══════════ -->
   <div id="dock">
     <div class="dock-wrap">
-
       <div class="dock-icon" data-app="about">
         <div class="dock-img">
           <svg viewBox="0 0 44 44" fill="none">
@@ -287,7 +338,6 @@
         <div class="dock-label">contact.app</div>
         <div class="dock-dot"></div>
       </div>
-
     </div>
   </div>
 
@@ -296,6 +346,32 @@
     <div class="tb-brand">⬡ Stepan OS</div>
     <div class="tb-apps" id="tb-apps"></div>
     <div class="tb-clock" id="clock">00:00</div>
+  </div>
+
+  <!-- ══════════ CLIPPY ══════════ -->
+  <div id="clippy">
+    <div id="clippy-char" title="Привет! Я Скрепкин">
+      <svg viewBox="0 0 60 100" fill="none" class="clippy-svg">
+        <!-- Outer paperclip wire -->
+        <path d="M44 75 C50 75 54 68 54 60 L54 28 C54 14 44 6 30 6 C16 6 8 16 8 30 L8 68 C8 83 17 94 30 94 C43 94 54 84 54 70"
+              stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Inner paperclip wire -->
+        <path d="M40 62 C44 62 47 57 47 52 L47 32 C47 22 40 16 30 16 C20 16 15 23 15 32 L15 62"
+              stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Eyes -->
+        <circle cx="23" cy="46" r="4" fill="currentColor"/>
+        <circle cx="37" cy="46" r="4" fill="currentColor"/>
+        <circle cx="24.5" cy="47.5" r="2" fill="#1e1e24"/>
+        <circle cx="38.5" cy="47.5" r="2" fill="#1e1e24"/>
+        <!-- Smile -->
+        <path d="M21 57 Q30 66 39 57" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div id="clippy-bubble" class="hidden">
+      <button class="clippy-close" id="clippy-close">×</button>
+      <div id="clippy-msg">Привет! Я Скрепкин 📎<br>Спроси что-нибудь о Степане!</div>
+      <input id="clippy-input" type="text" placeholder="Задай вопрос...">
+    </div>
   </div>
 
 </div><!-- /desktop -->

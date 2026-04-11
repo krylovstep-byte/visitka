@@ -1,5 +1,5 @@
 /* ══════════════════════════════════════
-   STEPAN OS v2.1 — app.js
+   STEPAN OS v3.0 — app.js
    ══════════════════════════════════════ */
 'use strict';
 
@@ -13,7 +13,7 @@ const state = {
    BOOT
    ══════════════════════════════════════ */
 const BOOT_MSGS = [
-  { text: '[ <span class="ok">OK</span> ]  Loading STEPAN OS v2.1…',         delay: 0    },
+  { text: '[ <span class="ok">OK</span> ]  Loading STEPAN OS v3.0…',         delay: 0    },
   { text: '[ <span class="ok">OK</span> ]  Initializing workspace…',          delay: 300  },
   { text: '[ <span class="ok">OK</span> ]  Profile loaded: Крылов Степан',    delay: 580  },
   { text: '[ <span class="ok">OK</span> ]  15+ projects mounted…',            delay: 840  },
@@ -41,21 +41,42 @@ function boot() {
   setTimeout(() => {
     bootEl.classList.add('hidden');
     desk.classList.add('visible');
-    startClock();
+    startClocks();
   }, last + 850);
 }
 
 /* ══════════════════════════════════════
-   CLOCK
+   CLOCKS — taskbar + desktop widget
    ══════════════════════════════════════ */
-function startClock() {
-  const el = document.getElementById('clock');
+const MONTHS = ['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
+const DAYS   = ['вс','пн','вт','ср','чт','пт','сб'];
+
+function startClocks() {
+  const tbClock  = document.getElementById('clock');
+  const dcTime   = document.getElementById('dc-time');
+  const dcDate   = document.getElementById('dc-date');
+
   function tick() {
     const d = new Date();
-    el.textContent = String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+    const hh = String(d.getHours()).padStart(2,'0');
+    const mm = String(d.getMinutes()).padStart(2,'0');
+    const ss = String(d.getSeconds()).padStart(2,'0');
+
+    tbClock.textContent = hh + ':' + mm;
+
+    if (dcTime) {
+      dcTime.textContent = hh + ':' + mm + ':' + ss;
+    }
+    if (dcDate) {
+      const day  = DAYS[d.getDay()];
+      const date = d.getDate();
+      const mon  = MONTHS[d.getMonth()];
+      const yr   = d.getFullYear();
+      dcDate.textContent = day + ' · ' + date + ' ' + mon + ' ' + yr;
+    }
   }
   tick();
-  setInterval(tick, 10000);
+  setInterval(tick, 1000);
 }
 
 /* ══════════════════════════════════════
@@ -72,7 +93,7 @@ function centerWindow(win) {
   const vw  = window.innerWidth;
   const vh  = window.innerHeight;
   const tbH = 48;
-  const dkH = 90;   // dock height + gap
+  const dkH = 92;
   const ww  = win.offsetWidth  || 520;
   const wh  = win.offsetHeight || 420;
   const availH = vh - tbH - dkH;
@@ -160,7 +181,7 @@ function initDrag(titlebar) {
     const rect = win.getBoundingClientRect();
     const ox = e.clientX - rect.left;
     const oy = e.clientY - rect.top;
-    const dockSafe = 48 + 90; // taskbar + dock
+    const dockSafe = 48 + 92;
 
     function onMove(e) {
       const nx = Math.max(-win.offsetWidth + 80, Math.min(window.innerWidth - 80, e.clientX - ox));
@@ -189,11 +210,12 @@ const FUN = [
   'Управлял командами до 10 человек 👥',
   'Финалист GRAND PRIX\'25 от X5 Group 🏆',
   'Базово умеет Python и HTML/CSS 💻',
-  'Запустил этот сайт на чистом HTML без фреймворков 🛠',
+  'Из Ярославля, живёт в Москве 🏙',
+  'Занимается IT, финансами и дизайном 🎯',
 ];
 
 const CMD = {
-  help:     () => `Доступные команды:
+  help:    () => `Доступные команды:
   about      — кто такой Степан
   skills     — навыки и инструменты
   projects   — все проекты
@@ -204,30 +226,31 @@ const CMD = {
   fun        — случайный факт
   clear      — очистить`,
 
-  about:    () => `Крылов Степан — Project Manager
-  Силён в генерации идей и запуске продуктов от концепции до клиентов.
-  Работаю на стыке бизнеса и технологий.`,
+  about:   () => `Крылов Степан — Project Manager · Предприниматель
+  Ярославль → Москва
+  Занимается проектами в сфере IT, финансов и дизайна.
+  15+ проектов, собственные и заказные инициативы.`,
 
-  skills:   () => `Инструменты:   Jira, Notion, Figma, Miro, Google Sheets
+  skills:  () => `Инструменты:   Jira, Notion, Figma, Miro, Google Sheets
   Методологии:   Scrum / Kanban, CustDev, MVP, WBS
   Аналитика:     CJM, SNW, PESTEL, SWOT, 5 сил Портера
   Управление:    команды 3–10 человек
   Базовый:       Python, HTML / CSS`,
 
-  projects: () => `1.  Taskin          — фриланс-биржа, геймификация (2025 — н.в.)
-  2.  GRAND PRIX'25  — 5 кейсов X5 Group, финал хакатона
-  3.  X5 Group       — employer brand X5 Digital
-  4.  Альфа-Банк     — мультибанк с цифровым рублём, ЦБ РФ
-  5.  СберИнвест.    — геймификация брокерского приложения
-  6.  Яндекс         — продуктовые инициативы для Алисы`,
+  projects: () => `01. Taskin          — фриланс-биржа, геймификация (2025 — н.в.)
+  02. GRAND PRIX'25  — 5 кейсов X5 Group, финал хакатона
+  03. X5 Group       — employer brand X5 Digital
+  04. Альфа-Банк     — мультибанк с цифровым рублём, ЦБ РФ
+  05. СберИнвест.    — геймификация брокерского приложения
+  06. Яндекс         — продуктовые инициативы для Алисы`,
 
-  exp:      () => `X5 Group | ТД Перекрёсток           нояб. 2025 — фев. 2026
+  exp:     () => `X5 Group | ТД Перекрёсток           нояб. 2025 — фев. 2026
     Стажёр, категорийный менеджмент СТМ «Зелёная линия»
 
   ЦПР «Просто будущее»               окт. 2024 — нояб. 2025
     Project Manager`,
 
-  edu:      () => `Президентская Академия (РАНХиГС), ФМ (ФЭСН)
+  edu:     () => `Президентская Академия (РАНХиГС), ФМ (ФЭСН)
     Бакалавриат, Менеджмент — 2024 — н.в. (бюджет)
 
   Дополнительно:
@@ -235,14 +258,14 @@ const CMD = {
     РУДН    — Проектный менеджмент
     Нетология — Figma`,
 
-  lang:     () => `Английский  ████████████░░  C1
+  lang:    () => `Английский  ████████████░░  C1
   Немецкий    ████████░░░░░░  B1
   Итальянский ████░░░░░░░░░░  A2`,
 
-  contact:  () => `Telegram:  @krygerman         → t.me/krygerman
+  contact: () => `Telegram:  @krygerman         → t.me/krygerman
   Email:     directstep@mail.ru`,
 
-  fun:      () => '→  ' + FUN[Math.floor(Math.random() * FUN.length)],
+  fun:     () => '→  ' + FUN[Math.floor(Math.random() * FUN.length)],
 };
 
 const ALIAS = { h: 'help', p: 'projects', s: 'skills', c: 'contact', e: 'exp', l: 'lang' };
@@ -259,7 +282,6 @@ function termExec(raw) {
   if (!cmd) { screen.scrollTop = screen.scrollHeight; return; }
 
   const key = ALIAS[cmd] || cmd;
-
   if (key === 'clear') { screen.innerHTML = ''; return; }
 
   const handler = CMD[key];
@@ -271,7 +293,7 @@ function termExec(raw) {
     if (result) { outEl.textContent = result; screen.appendChild(outEl); }
   } else {
     outEl.className = 'term-line term-err';
-    outEl.textContent = `Команда не найдена: ${cmd}. Введи 'help' для списка.`;
+    outEl.textContent = `Команда не найдена: ${cmd}. Введи 'help'.`;
     screen.appendChild(outEl);
   }
 
@@ -284,7 +306,6 @@ function termExec(raw) {
 function initTerminal() {
   const input = document.getElementById('term-input');
   if (!input) return;
-
   const history = [];
   let hi = -1;
 
@@ -299,8 +320,7 @@ function initTerminal() {
       input.value = history[hi] || '';
     } else if (e.key === 'ArrowDown') {
       e.preventDefault();
-      if (hi > 0) hi--;
-      else { hi = -1; input.value = ''; return; }
+      if (hi > 0) hi--; else { hi = -1; input.value = ''; return; }
       input.value = history[hi] || '';
     }
   });
@@ -309,33 +329,131 @@ function initTerminal() {
 }
 
 /* ══════════════════════════════════════
-   CURSOR — fixed lag
+   CURSOR — Figma style, instant
    ══════════════════════════════════════ */
 function initCursor() {
-  const ring = document.getElementById('cursor-ring');
-  if (!ring) return;
-
-  let mx = -100, my = -100;
-  let rx = -100, ry = -100;
+  const cur = document.getElementById('cursor');
+  if (!cur) return;
 
   document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    ring.classList.add('visible');
+    cur.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+    cur.classList.add('visible');
   });
-  document.addEventListener('mouseleave', () => ring.classList.remove('visible'));
-  document.addEventListener('mousedown',  () => ring.classList.add('clicking'));
-  document.addEventListener('mouseup',    () => ring.classList.remove('clicking'));
+  document.addEventListener('mouseleave', () => cur.classList.remove('visible'));
+}
 
-  const SIZE = 10; // half of 20px ring
+/* ══════════════════════════════════════
+   CLIPPY — Скрепкин 📎
+   ══════════════════════════════════════ */
+const CLIPPY_QA = [
+  {
+    q: ['taskin', 'таскин', 'проект', 'фриланс', 'биржа'],
+    a: 'Taskin — фриланс-биржа нового поколения! Канбан-доска, геймификация, минимальные комиссии. Запуск апрель–май 2026, рынок РФ.'
+  },
+  {
+    q: ['контакт', 'написать', 'связь', 'telegram', 'телеграм', 'почта', 'email'],
+    a: 'Пиши в Telegram: @krygerman или на почту directstep@mail.ru. Отвечает быстро!'
+  },
+  {
+    q: ['образование', 'учёба', 'университет', 'ранхигс', 'академия', 'вуз'],
+    a: 'РАНХиГС, факультет менеджмента, бюджет, 2024 — н.в. Ещё Skillbox, РУДН, Нетология — постоянно учится.'
+  },
+  {
+    q: ['навыки', 'умения', 'инструменты', 'скиллы', 'стек'],
+    a: 'Figma, Jira, Notion, Miro, Scrum/Kanban, CustDev, PESTEL, SWOT, CJM, Python, HTML. Полный PM-стек!'
+  },
+  {
+    q: ['опыт', 'работа', 'стажировка', 'x5', 'перекрёсток'],
+    a: 'X5 Group/Перекрёсток (2025–2026), ЦПР «Просто будущее» (2024–2025). Плюс 15+ проектов: Яндекс, Сбер, Альфа-Банк, X5.'
+  },
+  {
+    q: ['ярославль', 'москва', 'откуда', 'город', 'живёт'],
+    a: 'Из Ярославля, сейчас живёт в Москве. Три языка: английский C1, немецкий B1, итальянский A2.'
+  },
+  {
+    q: ['языки', 'английский', 'немецкий', 'итальянский'],
+    a: 'Английский — C1, немецкий — B1, итальянский — A2. Многоязычный PM!'
+  },
+  {
+    q: ['привет', 'hi', 'hello', 'здравствуй', 'хей', 'хай', 'салют'],
+    a: 'Привет! Я Скрепкин 📎 — помогаю разобраться в портфолио Степана. Спроси что угодно!'
+  },
+  {
+    q: ['кто', 'степан', 'крылов', 'расскажи', 'информация'],
+    a: 'Степан Крылов — PM и предприниматель, Ярославль → Москва. 15+ проектов в IT, финансах и дизайне. Сейчас строит Taskin.'
+  },
+  {
+    q: ['проекты', 'портфолио', 'работы', 'кейсы'],
+    a: 'Taskin, GRAND PRIX\'25, X5 Employer Brand, Альфа-Банк Мультибанк, СберИнвестиции, Яндекс Алиса. Открой projects.app!'
+  },
+  {
+    q: ['сайт', 'сделан', 'технологии', 'стек', 'html'],
+    a: 'Сайт написан на чистом HTML/CSS/JS — без фреймворков. Чистота! Хостинг на GitHub Pages.'
+  },
+];
 
-  function animate() {
-    // 0.45 = fast follow, minimal lag
-    rx += (mx - rx) * 0.45;
-    ry += (my - ry) * 0.45;
-    ring.style.transform = `translate(${rx - SIZE}px, ${ry - SIZE}px)`;
-    requestAnimationFrame(animate);
+const CLIPPY_DEFAULT = [
+  'Спроси меня о проектах, навыках или контактах!',
+  'Хочешь узнать про Taskin? Просто напиши "Taskin"!',
+  'Знаешь, Степан говорит на 3 языках — спроси меня!',
+  'Открой terminal.app и введи help — там много интересного!',
+];
+
+function clippyRespond(text) {
+  const msgEl = document.getElementById('clippy-msg');
+  if (!msgEl) return;
+
+  const lower = text.toLowerCase();
+  let answer = null;
+
+  for (const qa of CLIPPY_QA) {
+    if (qa.q.some(kw => lower.includes(kw))) {
+      answer = qa.a;
+      break;
+    }
   }
-  animate();
+
+  if (!answer) {
+    answer = CLIPPY_DEFAULT[Math.floor(Math.random() * CLIPPY_DEFAULT.length)];
+  }
+
+  // Typing animation
+  msgEl.textContent = '';
+  let i = 0;
+  function type() {
+    if (i < answer.length) {
+      msgEl.textContent += answer[i++];
+      setTimeout(type, 18);
+    }
+  }
+  type();
+}
+
+function initClippy() {
+  const char   = document.getElementById('clippy-char');
+  const bubble = document.getElementById('clippy-bubble');
+  const close  = document.getElementById('clippy-close');
+  const input  = document.getElementById('clippy-input');
+  if (!char || !bubble || !input) return;
+
+  char.addEventListener('click', () => {
+    bubble.classList.toggle('hidden');
+    if (!bubble.classList.contains('hidden')) {
+      input.focus();
+    }
+  });
+
+  close.addEventListener('click', e => {
+    e.stopPropagation();
+    bubble.classList.add('hidden');
+  });
+
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && input.value.trim()) {
+      clippyRespond(input.value.trim());
+      input.value = '';
+    }
+  });
 }
 
 /* ══════════════════════════════════════
@@ -346,7 +464,7 @@ function initContextMenu() {
   if (!menu) return;
 
   document.getElementById('desktop')?.addEventListener('contextmenu', e => {
-    if (e.target.closest('.window') || e.target.closest('#dock') || e.target.closest('#taskbar')) return;
+    if (e.target.closest('.window') || e.target.closest('#dock') || e.target.closest('#taskbar') || e.target.closest('#clippy')) return;
     e.preventDefault();
     const x = Math.min(e.clientX, window.innerWidth  - menu.offsetWidth  - 10);
     const y = Math.min(e.clientY, window.innerHeight - menu.offsetHeight - 10);
@@ -364,15 +482,14 @@ function initContextMenu() {
     });
   });
 
-  document.addEventListener('click',   e => { if (!menu.contains(e.target)) menu.classList.remove('visible'); });
-  document.addEventListener('keydown',  e => { if (e.key === 'Escape') menu.classList.remove('visible'); });
+  document.addEventListener('click',  e => { if (!menu.contains(e.target)) menu.classList.remove('visible'); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') menu.classList.remove('visible'); });
 }
 
 /* ══════════════════════════════════════
    BIND
    ══════════════════════════════════════ */
 function bindEvents() {
-  // Dock icon clicks
   document.querySelectorAll('.dock-icon').forEach(ic => {
     ic.addEventListener('click', () => {
       const name = ic.dataset.app;
@@ -381,7 +498,6 @@ function bindEvents() {
     });
   });
 
-  // Window control dots
   document.querySelectorAll('.dot[data-action]').forEach(dot => {
     dot.addEventListener('click', e => {
       e.stopPropagation();
@@ -389,10 +505,8 @@ function bindEvents() {
     });
   });
 
-  // Draggable titlebars
   document.querySelectorAll('.window-titlebar').forEach(initDrag);
 
-  // Focus window on click
   document.querySelectorAll('.window').forEach(win => {
     win.addEventListener('mousedown', () => focusWindow(win));
   });
@@ -406,5 +520,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initTerminal();
   initCursor();
   initContextMenu();
+  initClippy();
   boot();
 });
