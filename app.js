@@ -42,16 +42,11 @@ const DOW = ['вс','пн','вт','ср','чт','пт','сб'];
 
 function startClocks() {
   const tbC = document.getElementById('clock');
-  const dcT = document.getElementById('dc-time');
-  const dcD = document.getElementById('dc-date');
   function tick() {
     const d  = new Date();
     const hh = String(d.getHours()).padStart(2,'0');
     const mm = String(d.getMinutes()).padStart(2,'0');
-    const ss = String(d.getSeconds()).padStart(2,'0');
-    tbC.textContent = hh + ':' + mm;
-    if (dcT) dcT.textContent = hh + ':' + mm + ':' + ss;
-    if (dcD) dcD.textContent = DOW[d.getDay()] + ' · ' + d.getDate() + ' ' + MON[d.getMonth()] + ' ' + d.getFullYear();
+    if (tbC) tbC.textContent = hh + ':' + mm;
   }
   tick(); setInterval(tick, 1000);
 }
@@ -178,22 +173,22 @@ const CQA = [
 ];
 
 const CDEF = [
-  'Хочешь узнать про Taskin?\nНапиши "Taskin" или нажми кнопку!',
-  'Степан говорит на 3 языках.\nСпроси меня — расскажу!',
-  'Открой projects.app — там 6 интересных кейсов!',
-  'Знаешь, этот сайт написан на\nчистом HTML без фреймворков 💅',
+  'Спроси про Taskin, опыт или контакты.',
+  'Степан говорит на 3 языках. Спроси.',
+  'В projects.app — 6 кейсов с топовыми компаниями.',
+  'Сайт на чистом HTML. Без фреймворков.',
 ];
 
-/* Рандомные фразы Скрепкина — появляются сами */
+/* Рандомные фразы Скрепкина */
 const CRAND = [
-  'Похоже, ты засмотрелся... 👀\nОткрой taskin.app!',
-  'Кстати, Taskin запускается в апреле.\nСледи за обновлениями! 📅',
-  'Степан был на финале X5 GRAND PRIX\'25.\nСерьёзный парень 🏆',
-  'Этот сайт написан за один вечер\nна чистом HTML. Факт.',
-  'Кликни правой кнопкой по рабочему столу —\nесть пасхалка!',
-  'Степан управлял командами до 10 человек.\nА ты?',
-  'Слышал? Taskin = Kanban + геймификация.\nДовольно нестандартно 🎮',
-  'Нужен PM для твоего проекта?\nЗаходи в contact.app! 😉',
+  'Taskin — фриланс-биржа нового поколения.\nЗапуск апрель–май 2026.',
+  'Степан прошёл финал X5 GRAND PRIX\'25.\nОткрой projects.app.',
+  'Сайт написан на чистом HTML без фреймворков.',
+  'Нужен PM для проекта?\nЗаходи в contact.app.',
+  'Кликни правой кнопкой по рабочему столу.',
+  'Степан управлял командами до 10 человек.',
+  'Taskin: Kanban + геймификация + низкие комиссии.',
+  '15+ проектов в IT, финансах и дизайне.',
 ];
 
 let clippyTimerLock = false;
@@ -307,9 +302,9 @@ function initCtxMenu() {
   menu.querySelectorAll('.ctx-item[data-action]').forEach(it => {
     it.addEventListener('click', () => {
       if (it.dataset.action === 'open-all')
-        ['about','projects','tasks','contact'].forEach(openApp);
+        ['about','projects','folder','contact'].forEach(openApp);
       else if (it.dataset.action === 'close-all')
-        ['about','projects','tasks','contact'].forEach(closeApp);
+        ['about','projects','folder','contact'].forEach(closeApp);
       menu.classList.remove('visible');
     });
   });

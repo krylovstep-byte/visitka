@@ -4,18 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Степан Крылов — Project Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<!-- CRT overlay -->
+<div id="crt" aria-hidden="true"></div>
+
 <!-- BOOT -->
 <div id="boot">
   <div class="boot-inner">
-    <div class="boot-logo">Stepan <span>OS</span></div>
-    <div class="boot-sub">Project Manager Edition · v4.0</div>
+    <div class="boot-logo">Stepan<span>OS</span></div>
+    <div class="boot-sub">v4.0 · Project Manager Edition</div>
     <div class="boot-log" id="boot-log"></div>
     <div class="boot-bar-wrap"><div class="boot-bar-fill" id="boot-bar"></div></div>
-    <div class="boot-hint">© Степан Крылов 2026</div>
+    <div class="boot-hint">Крылов Степан · 2026</div>
   </div>
 </div>
 
@@ -40,31 +46,14 @@
 <!-- DESKTOP -->
 <div id="desktop">
 
-  <!-- Desktop clock (top center) -->
-  <div id="desktop-clock">
-    <div class="dc-time" id="dc-time">00:00</div>
-    <div class="dc-date" id="dc-date">—</div>
-  </div>
-
-  <!-- Desktop hero text (watermark) -->
-  <div class="desktop-hero">
-    <div class="dh-label">Project Manager · Предприниматель</div>
-    <div class="dh-name">Степан<br>Крылов</div>
-    <div class="dh-status">
-      <span class="dh-dot"></span>
-      <span>Строю Taskin →</span>
-    </div>
-  </div>
-
   <!-- Desktop icons (left column) -->
   <div id="desk-icons">
 
     <div class="desk-icon" data-app="about">
       <div class="desk-icon-img">
         <svg viewBox="0 0 44 44" fill="none">
-          <rect x="4" y="4" width="36" height="36" rx="6" fill="currentColor" opacity="0.08" stroke="currentColor" stroke-width="1.5"/>
-          <circle cx="22" cy="17" r="6" stroke="currentColor" stroke-width="1.8"/>
-          <path d="M9 38c0-7.18 5.82-13 13-13s13 5.82 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <circle cx="22" cy="17" r="7" stroke="currentColor" stroke-width="2"/>
+          <path d="M8 40c0-7.73 6.27-14 14-14s14 6.27 14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
         </svg>
       </div>
       <div class="desk-icon-label">about.app</div>
@@ -73,34 +62,30 @@
     <div class="desk-icon" data-app="projects">
       <div class="desk-icon-img">
         <svg viewBox="0 0 44 44" fill="none">
-          <rect x="4" y="4" width="36" height="36" rx="6" fill="currentColor" opacity="0.08" stroke="currentColor" stroke-width="1.5"/>
-          <path d="M4 16h36" stroke="currentColor" stroke-width="1.8"/>
-          <path d="M14 10V4M30 10V4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-          <rect x="10" y="22" width="9" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/>
-          <rect x="24" y="20" width="9" height="10" rx="1" stroke="currentColor" stroke-width="1.5"/>
+          <rect x="6" y="8" width="32" height="28" stroke="currentColor" stroke-width="2"/>
+          <path d="M6 16h32" stroke="currentColor" stroke-width="2"/>
+          <path d="M15 12V8M29 12V8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <rect x="11" y="22" width="7" height="9" stroke="currentColor" stroke-width="1.5"/>
+          <rect x="22" y="20" width="7" height="11" stroke="currentColor" stroke-width="1.5"/>
         </svg>
       </div>
       <div class="desk-icon-label">projects.app</div>
     </div>
 
-    <div class="desk-icon" data-app="tasks">
+    <div class="desk-icon" data-app="folder">
       <div class="desk-icon-img">
         <svg viewBox="0 0 44 44" fill="none">
-          <rect x="4" y="4" width="36" height="36" rx="6" fill="currentColor" opacity="0.08" stroke="currentColor" stroke-width="1.5"/>
-          <rect x="9"  y="10" width="8" height="24" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
-          <rect x="20" y="10" width="8" height="16" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
-          <rect x="31" y="10" width="8" height="20" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M6 16h10l4 6h18v16H6V16z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
         </svg>
       </div>
-      <div class="desk-icon-label">taskin.app</div>
+      <div class="desk-icon-label">folder_01</div>
     </div>
 
     <div class="desk-icon" data-app="contact">
       <div class="desk-icon-img">
         <svg viewBox="0 0 44 44" fill="none">
-          <rect x="4" y="4" width="36" height="36" rx="6" fill="currentColor" opacity="0.08" stroke="currentColor" stroke-width="1.5"/>
-          <rect x="8" y="14" width="28" height="20" rx="2" stroke="currentColor" stroke-width="1.8"/>
-          <path d="M8 18l14 10 14-10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="6" y="12" width="32" height="22" stroke="currentColor" stroke-width="2"/>
+          <path d="M6 16l16 12 16-12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
       <div class="desk-icon-label">contact.app</div>
@@ -237,78 +222,23 @@
     </div>
   </div>
 
-  <!-- WINDOW: TASKS (заменяет terminal) -->
-  <div class="window" id="window-tasks" data-app="tasks">
+  <!-- WINDOW: FOLDER (пустая папка) -->
+  <div class="window" id="window-folder" data-app="folder">
     <div class="window-titlebar">
       <div class="window-dots">
-        <span class="dot dot-red"    data-action="close" data-app="tasks"></span>
-        <span class="dot dot-yellow" data-action="min"   data-app="tasks"></span>
+        <span class="dot dot-red"    data-action="close" data-app="folder"></span>
+        <span class="dot dot-yellow" data-action="min"   data-app="folder"></span>
       </div>
-      <div class="window-title">taskin.app — Спринт 4 · текущий статус</div>
+      <div class="window-title">folder_01</div>
       <div class="window-dots-spacer"></div>
     </div>
-    <div class="window-body kn-body">
-      <div class="kn-board">
-
-        <div class="kn-col">
-          <div class="kn-col-head">
-            <span class="kn-dot doing"></span>В работе
-            <span class="kn-count">3</span>
-          </div>
-          <div class="kn-card doing">
-            <div class="kn-card-title">MVP Backend</div>
-            <div class="kn-card-sub">FastAPI + PostgreSQL</div>
-          </div>
-          <div class="kn-card doing">
-            <div class="kn-card-title">Дизайн ЛК фрилансера</div>
-            <div class="kn-card-sub">Figma, mobile first</div>
-          </div>
-          <div class="kn-card doing">
-            <div class="kn-card-title">Онбординг-флоу</div>
-            <div class="kn-card-sub">3 сценария пользователя</div>
-          </div>
-        </div>
-
-        <div class="kn-col">
-          <div class="kn-col-head">
-            <span class="kn-dot review"></span>На ревью
-            <span class="kn-count">2</span>
-          </div>
-          <div class="kn-card review">
-            <div class="kn-card-title">Лендинг v1.0</div>
-            <div class="kn-card-sub">Этот сайт 👋</div>
-          </div>
-          <div class="kn-card review">
-            <div class="kn-card-title">Канбан-модуль</div>
-            <div class="kn-card-sub">Drag & drop</div>
-          </div>
-        </div>
-
-        <div class="kn-col">
-          <div class="kn-col-head">
-            <span class="kn-dot done"></span>Готово
-            <span class="kn-count">4</span>
-          </div>
-          <div class="kn-card done">
-            <div class="kn-card-title">Концепция + CJM</div>
-            <div class="kn-card-sub">200+ экранов пути</div>
-          </div>
-          <div class="kn-card done">
-            <div class="kn-card-title">Анализ конкурентов</div>
-            <div class="kn-card-sub">12 платформ РФ</div>
-          </div>
-          <div class="kn-card done">
-            <div class="kn-card-title">Прототип UI/UX</div>
-            <div class="kn-card-sub">80+ экранов, Figma</div>
-          </div>
-          <div class="kn-card done">
-            <div class="kn-card-title">Бизнес-модель</div>
-            <div class="kn-card-sub">Revenue model, unit-экономика</div>
-          </div>
-        </div>
-
+    <div class="window-body">
+      <div class="folder-empty">
+        <svg viewBox="0 0 72 54" fill="none" style="width:72px;height:54px;">
+          <path d="M2 12h20l6 8h42v30H2V12z" stroke="#000" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+        <div class="folder-empty-label">[ папка пуста ]</div>
       </div>
-      <div class="kn-footer">Taskin · Запуск апрель–май 2026 · Рынок РФ</div>
     </div>
   </div>
 
@@ -336,13 +266,13 @@
         <span class="ct-handle">directstep@mail.ru</span>
       </a>
       <div class="w-rule" style="margin-top:20px"></div>
-      <p class="ct-note">Открой <code>taskin.app</code> — там текущий статус проекта</p>
+      <p class="ct-note">Открой <code>projects.app</code> — там кейсы и проекты</p>
     </div>
   </div>
 
   <!-- TASKBAR -->
   <div id="taskbar">
-    <div class="tb-brand">⬡ Stepan OS</div>
+    <div class="tb-brand">Stepan OS</div>
     <div class="tb-apps" id="tb-apps"></div>
     <div class="tb-clock" id="clock">00:00</div>
   </div>
@@ -351,7 +281,7 @@
   <div id="clippy">
     <div id="clippy-bubble" class="hidden">
       <button class="clippy-x" id="clippy-close">×</button>
-      <div id="clippy-msg">Привет! Я Скрепкин.<br>Спроси меня про Степана!</div>
+      <div id="clippy-msg">Скрепкин. Спрашивай.</div>
       <div class="clippy-chips" id="clippy-chips">
         <button class="clippy-chip" data-q="кто такой степан">Кто такой Степан?</button>
         <button class="clippy-chip" data-q="taskin">Что такое Taskin?</button>
@@ -364,75 +294,74 @@
       <svg class="clippy-svg" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="cg1" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%"   stop-color="#e4e4f0"/>
-            <stop offset="40%"  stop-color="#b0b0c4"/>
-            <stop offset="100%" stop-color="#686878"/>
+            <stop offset="0%"   stop-color="#d8d8e4"/>
+            <stop offset="50%"  stop-color="#9494a8"/>
+            <stop offset="100%" stop-color="#555565"/>
           </linearGradient>
           <linearGradient id="cg2" x1="1" y1="0" x2="0" y2="1">
-            <stop offset="0%"   stop-color="#d8d8e8"/>
-            <stop offset="50%"  stop-color="#9898ac"/>
-            <stop offset="100%" stop-color="#585868"/>
+            <stop offset="0%"   stop-color="#c8c8d8"/>
+            <stop offset="50%"  stop-color="#8080938"/>
+            <stop offset="100%" stop-color="#484858"/>
           </linearGradient>
           <filter id="ws" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="1.5" dy="2.5" stdDeviation="2" flood-color="#000" flood-opacity="0.35"/>
+            <feDropShadow dx="1" dy="2" stdDeviation="1.5" flood-color="#000" flood-opacity="0.4"/>
           </filter>
         </defs>
 
-        <!-- Yellow-green grid paper (slightly rotated) -->
-        <g transform="rotate(-7 50 60)">
-          <rect x="20" y="18" width="68" height="88" rx="2" fill="#edf4ce" stroke="#c4d87a" stroke-width="0.8"/>
-          <line x1="20" y1="33" x2="88" y2="33" stroke="#c4d87a" stroke-width="0.8"/>
-          <line x1="20" y1="46" x2="88" y2="46" stroke="#c4d87a" stroke-width="0.8"/>
-          <line x1="20" y1="59" x2="88" y2="59" stroke="#c4d87a" stroke-width="0.8"/>
-          <line x1="20" y1="72" x2="88" y2="72" stroke="#c4d87a" stroke-width="0.8"/>
-          <line x1="20" y1="85" x2="88" y2="85" stroke="#c4d87a" stroke-width="0.8"/>
-          <line x1="20" y1="98" x2="88" y2="98" stroke="#c4d87a" stroke-width="0.8"/>
-          <line x1="33" y1="18" x2="33" y2="106" stroke="#f4a0a0" stroke-width="0.8" opacity="0.55"/>
-        </g>
+        <!-- Grid paper — строгая, без наклона -->
+        <rect x="22" y="20" width="64" height="84" rx="1" fill="#f0f0e8" stroke="#c0c8a0" stroke-width="0.8"/>
+        <line x1="22" y1="34" x2="86" y2="34" stroke="#c0c8a0" stroke-width="0.7"/>
+        <line x1="22" y1="47" x2="86" y2="47" stroke="#c0c8a0" stroke-width="0.7"/>
+        <line x1="22" y1="60" x2="86" y2="60" stroke="#c0c8a0" stroke-width="0.7"/>
+        <line x1="22" y1="73" x2="86" y2="73" stroke="#c0c8a0" stroke-width="0.7"/>
+        <line x1="22" y1="86" x2="86" y2="86" stroke="#c0c8a0" stroke-width="0.7"/>
+        <line x1="22" y1="99" x2="86" y2="99" stroke="#c0c8a0" stroke-width="0.7"/>
+        <line x1="34" y1="20" x2="34" y2="104" stroke="#e8a0a0" stroke-width="0.7" opacity="0.5"/>
 
-        <!-- OUTER wire — shadow pass -->
+        <!-- OUTER wire — shadow -->
         <path d="M18 92 L18 32 C18 10 32 3 50 3 C68 3 82 10 82 32 L82 80 C82 100 68 110 50 110 C36 110 26 102 24 92"
-              stroke="#3a3a48" stroke-width="10" stroke-linecap="round" filter="url(#ws)"/>
+              stroke="#2a2a38" stroke-width="10" stroke-linecap="round" filter="url(#ws)"/>
         <!-- OUTER wire — main -->
         <path d="M18 92 L18 32 C18 10 32 3 50 3 C68 3 82 10 82 32 L82 80 C82 100 68 110 50 110 C36 110 26 102 24 92"
               stroke="url(#cg1)" stroke-width="7.5" stroke-linecap="round"/>
         <!-- OUTER wire — highlight -->
         <path d="M19.5 90 L19.5 32 C19.5 13 32 5.5 50 5.5"
-              stroke="#f0f0ff" stroke-width="2.2" stroke-linecap="round" opacity="0.55"/>
+              stroke="#e8e8f8" stroke-width="1.8" stroke-linecap="round" opacity="0.4"/>
 
         <!-- Left foot curl -->
         <path d="M18 92 C12 102 16 114 26 114 C36 114 38 104 30 96"
-              stroke="#3a3a48" stroke-width="10" stroke-linecap="round" fill="none" filter="url(#ws)"/>
+              stroke="#2a2a38" stroke-width="10" stroke-linecap="round" fill="none" filter="url(#ws)"/>
         <path d="M18 92 C12 102 16 114 26 114 C36 114 38 104 30 96"
               stroke="url(#cg1)" stroke-width="7.5" stroke-linecap="round" fill="none"/>
 
-        <!-- EYES — between the two wire passes -->
-        <!-- Left eye (bigger — perspective) -->
-        <ellipse cx="37" cy="52" rx="14.5" ry="15.5" fill="white" stroke="#b4b4c4" stroke-width="1.2"/>
-        <circle  cx="39" cy="54" r="10.5" fill="#080808"/>
-        <circle  cx="35" cy="49" r="5"    fill="white"/>
-        <circle  cx="35" cy="49" r="2"    fill="rgba(255,255,255,0.6)"/>
+        <!-- EYES — строгие, чуть прищуренные -->
+        <!-- Left eye -->
+        <ellipse cx="37" cy="53" rx="13" ry="12.5" fill="white" stroke="#a0a0b4" stroke-width="1"/>
+        <circle  cx="38.5" cy="54.5" r="9.5" fill="#0a0a0a"/>
+        <circle  cx="34.5" cy="50.5" r="4"   fill="white"/>
+        <circle  cx="34.5" cy="50.5" r="1.6" fill="rgba(255,255,255,0.55)"/>
+        <!-- Прищур левый — верхнее веко опущено -->
+        <path d="M24 47 Q37 41 50 47" fill="#f0f0e8" stroke="none"/>
 
         <!-- Right eye -->
-        <ellipse cx="63" cy="49" rx="12"   ry="13"   fill="white" stroke="#b4b4c4" stroke-width="1.2"/>
-        <circle  cx="65" cy="51" r="9"    fill="#080808"/>
-        <circle  cx="61" cy="46" r="4"    fill="white"/>
-        <circle  cx="61" cy="46" r="1.5"  fill="rgba(255,255,255,0.6)"/>
+        <ellipse cx="63" cy="50" rx="11" ry="10.5" fill="white" stroke="#a0a0b4" stroke-width="1"/>
+        <circle  cx="64.5" cy="51.5" r="8" fill="#0a0a0a"/>
+        <circle  cx="61"   cy="47.5" r="3.2" fill="white"/>
+        <circle  cx="61"   cy="47.5" r="1.2" fill="rgba(255,255,255,0.55)"/>
+        <!-- Прищур правый -->
+        <path d="M52 44 Q63 38 74 44" fill="#f0f0e8" stroke="none"/>
 
-        <!-- INNER wire — drawn ON TOP of eyes (cage effect) -->
-        <!-- Shadow pass -->
+        <!-- INNER wire — ON TOP of eyes -->
         <path d="M30 96 L30 36 C30 18 38 12 50 12 C62 12 70 18 70 36 L70 80"
-              stroke="#3a3a48" stroke-width="10" stroke-linecap="round" filter="url(#ws)"/>
-        <!-- Main -->
+              stroke="#2a2a38" stroke-width="10" stroke-linecap="round" filter="url(#ws)"/>
         <path d="M30 96 L30 36 C30 18 38 12 50 12 C62 12 70 18 70 36 L70 80"
-              stroke="url(#cg2)" stroke-width="7.5" stroke-linecap="round"/>
-        <!-- Highlight -->
+              stroke="url(#cg1)" stroke-width="7.5" stroke-linecap="round"/>
         <path d="M31.5 94 L31.5 36 C31.5 20 38.5 14 50 14"
-              stroke="#f0f0ff" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+              stroke="#e8e8f8" stroke-width="1.6" stroke-linecap="round" opacity="0.4"/>
 
-        <!-- Eyebrows (on top of everything) -->
-        <path d="M22 37 Q37 29 52 35" stroke="#181820" stroke-width="3.8" fill="none" stroke-linecap="round"/>
-        <path d="M51 33 Q64 25 76 30" stroke="#181820" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+        <!-- EYEBROWS — нахмуренные, строгие (опускаются к носу) -->
+        <path d="M24 42 Q36 36 50 41" stroke="#0e0e18" stroke-width="4.2" fill="none" stroke-linecap="round"/>
+        <path d="M52 38 Q64 33 76 38" stroke="#0e0e18" stroke-width="3.6" fill="none" stroke-linecap="round"/>
       </svg>
     </div>
   </div>
