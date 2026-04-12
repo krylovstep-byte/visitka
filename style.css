@@ -493,17 +493,17 @@ html, body {
   display: flex; gap: 16px; justify-content: center;
   margin: 4px 0;
 }
-.snake-dpad { margin-top: 6px; user-select: none; }
+.snake-dpad { margin: 6px 0; user-select: none; }
 .snake-dpad-row { display: flex; justify-content: center; gap: 4px; margin: 2px 0; }
+.dpad-gap { width: 44px; height: 44px; }
 .dpad-btn {
   font-family: var(--font); font-size: 20px;
   width: 44px; height: 44px;
   border: 2px solid var(--ink); background: var(--paper); color: var(--ink);
   display: flex; align-items: center; justify-content: center;
-  transition: background .07s, color .07s;
+  transition: background .07s, color .07s; cursor: pointer;
 }
 .dpad-btn:hover, .dpad-btn:active { background: var(--ink); color: var(--paper); }
-.dpad-center { visibility: hidden; }
 
 /* ── MOBILE DOCK и HEADER (скрыты на десктопе) ── */
 #mobile-dock   { display: none; }
@@ -594,6 +594,9 @@ html, body {
   .ct-note     { font-size: 15px !important; }
   .ct-rule-top    { margin: 10px 0 !important; }
   .ct-rule-bottom { margin: 8px 0 0 !important; }
+
+  /* Snake на мобиле — уменьшить канвас чтобы влезал d-pad */
+  #snake-canvas { width: 160px !important; height: 160px !important; }
 
   /* Boot */
   .boot-inner { width: 90vw; }
