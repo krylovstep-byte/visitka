@@ -560,6 +560,27 @@ html, body {
   .clippy-img    { width: 80px; }
   #clippy-bubble { width: 200px; }
 
+  /* Шапка окна — крупнее на мобиле */
+  .window-titlebar {
+    height: 44px;
+    padding: 0 10px;
+  }
+  .window-title { font-size: 24px; }
+  .dot {
+    width: 26px; height: 26px;
+    font-size: 18px;
+  }
+  .window-dots-spacer { width: 56px; }
+
+  /* Contact — убрать избыточную высоту */
+  .ct-head { font-size: 34px; }
+  .ct-link { padding: 10px 0; }
+  .ct-platform { font-size: 18px; min-width: 80px; }
+  .ct-handle   { font-size: 16px; }
+  .ct-arrow    { font-size: 18px; }
+  .ct-note     { font-size: 15px; }
+  .w-rule { margin: 10px 0; }
+
   /* Boot */
   .boot-inner { width: 90vw; }
 
