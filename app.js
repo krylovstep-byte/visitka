@@ -5,17 +5,16 @@ const state = { z: 100, open: new Set(), min: new Set() };
 
 /* ── BOOT ── */
 const BOOT = [
-  { t: '[ <span class="ok">OK</span> ]  Loading STEPAN OS v4.0…',        d: 0    },
-  { t: '[ <span class="ok">OK</span> ]  Workspace initialized…',          d: 300  },
-  { t: '[ <span class="ok">OK</span> ]  Profile: Крылов Степан, PM',      d: 580  },
-  { t: '[ <span class="ok">OK</span> ]  15+ projects mounted…',           d: 840  },
-  { t: '[ <span class="ok">OK</span> ]  Taskin sprint 4 loaded…',         d: 1080 },
-  { t: '[ <span class="info">--</span> ]  System ready.',                  d: 1300 },
+  { t: '[ <span class="ok">OK</span> ]  Loading STEPAN OS v4.0…',   d: 0    },
+  { t: '[ <span class="ok">OK</span> ]  Workspace initialized…',     d: 320  },
+  { t: '[ <span class="ok">OK</span> ]  Profile: Крылов Степан, PM', d: 600  },
+  { t: '[ <span class="ok">OK</span> ]  15+ projects mounted…',       d: 860  },
+  { t: '[ <span class="info">--</span> ]  System ready.',             d: 1080 },
 ];
 
 function boot() {
-  const log = document.getElementById('boot-log');
-  const bar = document.getElementById('boot-bar');
+  const log    = document.getElementById('boot-log');
+  const bar    = document.getElementById('boot-bar');
   const bootEl = document.getElementById('boot');
   const desk   = document.getElementById('desktop');
 
@@ -33,36 +32,36 @@ function boot() {
     bootEl.classList.add('hidden');
     desk.classList.add('visible');
     startClocks();
-  }, last + 800);
+    scheduleClippy();
+  }, last + 700);
 }
 
 /* ── CLOCKS ── */
-const MON = ['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
-const DOW = ['вс','пн','вт','ср','чт','пт','сб'];
-
 function startClocks() {
-  const tbC = document.getElementById('clock');
+  const tbC  = document.getElementById('clock');
+  const mbC  = document.getElementById('mb-clock');
   function tick() {
     const d  = new Date();
     const hh = String(d.getHours()).padStart(2,'0');
     const mm = String(d.getMinutes()).padStart(2,'0');
-    if (tbC) tbC.textContent = hh + ':' + mm;
+    const t  = hh + ':' + mm;
+    if (tbC) tbC.textContent = t;
+    if (mbC) mbC.textContent = t;
   }
   tick(); setInterval(tick, 1000);
 }
 
 /* ── WINDOWS ── */
 function getWin(n) { return document.getElementById('window-' + n); }
-
 function focusWin(win) { state.z++; win.style.zIndex = state.z; }
 
 function centerWin(win) {
   const vw = window.innerWidth, vh = window.innerHeight;
-  const tbH = 44, pad = 16;
+  const menuH = 22, tbH = 28, pad = 16;
   const ww = win.offsetWidth || 500, wh = win.offsetHeight || 400;
-  const avH = vh - tbH - pad * 2;
+  const avH = vh - menuH - tbH - pad * 2;
   win.style.left = Math.max(20, Math.round((vw - ww) / 2)) + 'px';
-  win.style.top  = Math.max(10, Math.round((avH - wh) / 2 + pad)) + 'px';
+  win.style.top  = Math.max(menuH + 8, Math.round(menuH + pad + (avH - wh) / 2)) + 'px';
 }
 
 function openApp(n) {
@@ -77,6 +76,7 @@ function openApp(n) {
     win.classList.add('open');
   }
   focusWin(win); updateTaskbar(); updateIcon(n, true);
+  clippyReactToApp(n);
 }
 
 function closeApp(n) {
@@ -126,13 +126,16 @@ function initDrag(bar) {
     focusWin(win);
     const r = win.getBoundingClientRect();
     const ox = e.clientX - r.left, oy = e.clientY - r.top;
-    const safe = 44 + 16;
     function onMove(e) {
-      win.style.left = Math.max(-win.offsetWidth+80, Math.min(window.innerWidth-80, e.clientX-ox)) + 'px';
-      win.style.top  = Math.max(0, Math.min(window.innerHeight-safe-20, e.clientY-oy)) + 'px';
+      win.style.left = Math.max(-win.offsetWidth + 80, Math.min(window.innerWidth - 80, e.clientX - ox)) + 'px';
+      win.style.top  = Math.max(22, Math.min(window.innerHeight - 56, e.clientY - oy)) + 'px';
     }
-    function onUp() { document.removeEventListener('mousemove',onMove); document.removeEventListener('mouseup',onUp); }
-    document.addEventListener('mousemove',onMove); document.addEventListener('mouseup',onUp);
+    function onUp() {
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onUp);
+    }
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
     e.preventDefault();
   });
 }
@@ -148,143 +151,112 @@ function initCursor() {
   document.addEventListener('mouseleave', () => cur.classList.remove('visible'));
 }
 
-/* ── CLIPPY ── */
-const CQA = [
-  { q:['taskin','таскин','фриланс','биржа'],
-    a:'Taskin — фриланс-биржа с канбан-доской и геймификацией.\nЗапуск апрель–май 2026. Рынок: РФ. 🚀' },
-  { q:['контакт','написать','связь','telegram','телеграм','почта','email'],
-    a:'Telegram: @krygerman\nEmail: directstep@mail.ru\nОтвечает быстро!' },
-  { q:['образование','учёба','ранхигс','академия','вуз'],
-    a:'РАНХиГС, менеджмент, бюджет, 2024–н.в.\n+ Skillbox, РУДН, Нетология.' },
-  { q:['навыки','умения','инструменты','стек','скиллы'],
-    a:'Figma, Jira, Notion, Miro\nScrum/Kanban, CustDev, PESTEL\nPython, HTML. Полный PM-стек!' },
-  { q:['опыт','работа','стажировка','x5','перекрёсток'],
-    a:'X5 Group/Перекрёсток (2025–2026)\nЦПР «Просто будущее» (2024–2025)\n15+ проектов с топовыми компаниями.' },
-  { q:['ярославль','москва','откуда','город'],
-    a:'Из Ярославля, сейчас в Москве.\n3 языка: EN (C1), DE (B1), IT (A2).' },
-  { q:['языки','английский','немецкий'],
-    a:'Английский — C1\nНемецкий — B1\nИтальянский — A2\nМногоязычный PM!' },
-  { q:['кто','степан','крылов','расскажи'],
-    a:'Степан Крылов — PM и предприниматель.\nЯрославль → Москва. 15+ проектов\nв IT, финансах и дизайне.' },
-  { q:['проекты','портфолио','кейсы'],
-    a:'Taskin, GRAND PRIX\'25, X5 Employer Brand,\nАльфа-Банк, СберИнвестиции, Яндекс.\nОткрой projects.app!' },
-  { q:['привет','hi','hello','хей','салют'],
-    a:'Привет! Я Скрепкин 📎\nСпроси меня про Степана — знаю всё!' },
+/* ── CLIPPY — интерактивный персонаж без инпута ── */
+
+/* Реплики при открытии конкретного окна */
+const APP_REPLIES = {
+  about:    ['Это про Степана. Читай внимательно.', 'Там есть навыки. Много навыков.', 'Ярославль → Москва. Серьёзный маршрут.'],
+  projects: ['15+ проектов. Не каждый PM столько делает.', 'X5, Сбер, Яндекс. Неплохо для студента.', 'Taskin — самый свежий. Смотри сам.'],
+  folder:   ['Тут пусто. Я предупреждал.', 'Ничего нет. Совсем.', 'Пустая папка. Бывает.'],
+  contact:  ['Пиши в Telegram. Он отвечает быстро.', 'directstep@mail.ru — серьёзная почта.', 'Не стесняйся. Он не кусается.'],
+};
+
+/* Случайные реплики при клике на скрепку */
+const CLIPPY_PHRASES = [
+  'Нажми на иконку — откроется окно.',
+  'About.app — там про Степана.',
+  'Projects.app — там кейсы.',
+  'Contact.app — если хочешь написать.',
+  'Taskin запускается в апреле 2026.',
+  'Степан работал с X5, Сбером и Яндексом.',
+  'Перетащи окно за заголовок.',
+  'Правая кнопка мыши — контекстное меню.',
+  'Три языка: EN C1, DE B1, IT A2.',
+  'Я Скрепкин. Слежу за порядком.',
+  'РАНХиГС, менеджмент, бюджет.',
+  'Не трогай folder_01. Просто не надо.',
 ];
 
-const CDEF = [
-  'Спроси про Taskin, опыт или контакты.',
-  'Степан говорит на 3 языках. Спроси.',
-  'В projects.app — 6 кейсов с топовыми компаниями.',
-  'Сайт на чистом HTML. Без фреймворков.',
-];
+let clippyPhraseIdx = 0;
 
-/* Рандомные фразы Скрепкина */
-const CRAND = [
-  'Taskin — фриланс-биржа нового поколения.\nЗапуск апрель–май 2026.',
-  'Степан прошёл финал X5 GRAND PRIX\'25.\nОткрой projects.app.',
-  'Сайт написан на чистом HTML без фреймворков.',
-  'Нужен PM для проекта?\nЗаходи в contact.app.',
-  'Кликни правой кнопкой по рабочему столу.',
-  'Степан управлял командами до 10 человек.',
-  'Taskin: Kanban + геймификация + низкие комиссии.',
-  '15+ проектов в IT, финансах и дизайне.',
-];
-
-let clippyTimerLock = false;
-
-function clippyRespond(text) {
-  const msg   = document.getElementById('clippy-msg');
-  const chips = document.getElementById('clippy-chips');
-  if (!msg) return;
-
-  const lower = text.toLowerCase();
-  let ans = null;
-  for (const qa of CQA) {
-    if (qa.q.some(k => lower.includes(k))) { ans = qa.a; break; }
-  }
-  if (!ans) ans = CDEF[Math.floor(Math.random() * CDEF.length)];
-
-  if (chips) chips.style.display = 'none';
-  msg.innerHTML = '';
-  let i = 0;
-  function type() {
-    if (i < ans.length) {
-      if (ans[i] === '\n') {
-        msg.appendChild(document.createElement('br'));
-      } else {
-        const last = msg.lastChild;
-        if (last && last.nodeType === Node.TEXT_NODE) last.textContent += ans[i];
-        else msg.appendChild(document.createTextNode(ans[i]));
-      }
-      i++; setTimeout(type, 14);
-    } else {
-      if (chips) chips.style.display = 'flex';
-    }
-  }
-  type();
-}
-
-function clippyShowRandom() {
+function clippyShow(text, showNav) {
   const bubble = document.getElementById('clippy-bubble');
   const msg    = document.getElementById('clippy-msg');
-  const chips  = document.getElementById('clippy-chips');
+  const nav    = document.getElementById('clippy-nav');
   if (!bubble || !msg) return;
 
-  const txt = CRAND[Math.floor(Math.random() * CRAND.length)];
   bubble.classList.remove('hidden');
-  if (chips) chips.style.display = 'none';
-  msg.innerHTML = '';
+  msg.textContent = '';
+
   let i = 0;
   function type() {
-    if (i < txt.length) {
-      if (txt[i] === '\n') msg.appendChild(document.createElement('br'));
-      else {
-        const last = msg.lastChild;
-        if (last && last.nodeType === Node.TEXT_NODE) last.textContent += txt[i];
-        else msg.appendChild(document.createTextNode(txt[i]));
-      }
-      i++; setTimeout(type, 14);
-    } else {
-      if (chips) chips.style.display = 'flex';
+    if (i < text.length) {
+      msg.textContent += text[i]; i++;
+      setTimeout(type, 18);
     }
   }
   type();
+
+  if (nav) nav.style.display = showNav ? 'flex' : 'none';
+}
+
+function clippyReactToApp(appName) {
+  const list = APP_REPLIES[appName];
+  if (!list) return;
+  const txt = list[Math.floor(Math.random() * list.length)];
+  clippyShow(txt, false);
+}
+
+function clippyClick() {
+  const txt = CLIPPY_PHRASES[clippyPhraseIdx % CLIPPY_PHRASES.length];
+  clippyPhraseIdx++;
+  const showNav = clippyPhraseIdx % 3 === 0; // каждый 3й клик — показывать навигацию
+  clippyShow(txt, showNav);
+}
+
+function scheduleClippy() {
+  // Первое приветствие через 2с
+  setTimeout(() => {
+    clippyShow('Привет. Нажми на иконку чтобы открыть.', true);
+  }, 2000);
+
+  // Случайные реплики каждые 30–50с
+  function next() {
+    const delay = 30000 + Math.random() * 20000;
+    setTimeout(() => {
+      const bubble = document.getElementById('clippy-bubble');
+      if (bubble && bubble.classList.contains('hidden')) {
+        const txt = CLIPPY_PHRASES[Math.floor(Math.random() * CLIPPY_PHRASES.length)];
+        clippyShow(txt, Math.random() > 0.6);
+      }
+      next();
+    }, delay);
+  }
+  next();
 }
 
 function initClippy() {
   const char   = document.getElementById('clippy-char');
-  const bubble = document.getElementById('clippy-bubble');
   const close  = document.getElementById('clippy-close');
-  const input  = document.getElementById('clippy-input');
-  if (!char || !bubble || !input) return;
+  const bubble = document.getElementById('clippy-bubble');
+  if (!char) return;
 
-  char.addEventListener('click', () => {
-    bubble.classList.toggle('hidden');
-    if (!bubble.classList.contains('hidden')) setTimeout(() => input.focus(), 80);
-  });
-  close.addEventListener('click', e => { e.stopPropagation(); bubble.classList.add('hidden'); });
-  input.addEventListener('keydown', e => {
-    if (e.key === 'Enter' && input.value.trim()) {
-      clippyRespond(input.value.trim()); input.value = '';
-    }
-  });
-  document.querySelectorAll('.clippy-chip').forEach(ch => {
-    ch.addEventListener('click', () => clippyRespond(ch.dataset.q || ch.textContent));
+  // Клик на скрепку
+  char.addEventListener('click', clippyClick);
+
+  // Закрыть пузырь
+  if (close) close.addEventListener('click', e => {
+    e.stopPropagation();
+    bubble.classList.add('hidden');
   });
 
-  // Рандомные фразы по таймеру
-  function scheduleRandom() {
-    const delay = 22000 + Math.random() * 18000; // 22–40 секунд
-    setTimeout(() => {
-      const bubble = document.getElementById('clippy-bubble');
-      if (bubble && bubble.classList.contains('hidden')) {
-        clippyShowRandom();
-      }
-      scheduleRandom();
-    }, delay);
-  }
-  scheduleRandom();
+  // Навигационные кнопки внутри пузыря
+  document.querySelectorAll('.clippy-nav-btn[data-open]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      openApp(btn.dataset.open);
+      bubble.classList.add('hidden');
+    });
+  });
 }
 
 /* ── CONTEXT MENU ── */
@@ -292,19 +264,19 @@ function initCtxMenu() {
   const menu = document.getElementById('ctx-menu');
   if (!menu) return;
   document.getElementById('desktop')?.addEventListener('contextmenu', e => {
-    if (e.target.closest('.window,.desk-icons,#taskbar,#clippy')) return;
+    if (e.target.closest('.window, #desk-icons, #taskbar, #clippy, #menubar')) return;
     e.preventDefault();
     const x = Math.min(e.clientX, window.innerWidth  - menu.offsetWidth  - 8);
     const y = Math.min(e.clientY, window.innerHeight - menu.offsetHeight - 8);
-    menu.style.left = x+'px'; menu.style.top = y+'px';
+    menu.style.left = x + 'px'; menu.style.top = y + 'px';
     menu.classList.add('visible');
   });
   menu.querySelectorAll('.ctx-item[data-action]').forEach(it => {
     it.addEventListener('click', () => {
       if (it.dataset.action === 'open-all')
-        ['about','projects','folder','contact'].forEach(openApp);
+        ['about', 'projects', 'folder', 'contact'].forEach(openApp);
       else if (it.dataset.action === 'close-all')
-        ['about','projects','folder','contact'].forEach(closeApp);
+        ['about', 'projects', 'folder', 'contact'].forEach(closeApp);
       menu.classList.remove('visible');
     });
   });
@@ -312,9 +284,15 @@ function initCtxMenu() {
   document.addEventListener('keydown', e => { if (e.key === 'Escape') menu.classList.remove('visible'); });
 }
 
+/* ── MENUBAR items ── */
+function initMenubar() {
+  document.querySelectorAll('.mb-item[data-open]').forEach(item => {
+    item.addEventListener('click', () => openApp(item.dataset.open));
+  });
+}
+
 /* ── BIND ── */
 function bind() {
-  // Desktop icon clicks
   document.querySelectorAll('.desk-icon').forEach(ic => {
     ic.addEventListener('click', () => {
       const n = ic.dataset.app;
@@ -323,7 +301,6 @@ function bind() {
     });
   });
 
-  // Window control dots
   document.querySelectorAll('.dot[data-action]').forEach(dot => {
     dot.addEventListener('click', e => {
       e.stopPropagation();
@@ -331,10 +308,8 @@ function bind() {
     });
   });
 
-  // Drag
   document.querySelectorAll('.window-titlebar').forEach(initDrag);
 
-  // Focus on click
   document.querySelectorAll('.window').forEach(win => {
     win.addEventListener('mousedown', () => focusWin(win));
   });
@@ -342,5 +317,5 @@ function bind() {
 
 /* ── INIT ── */
 document.addEventListener('DOMContentLoaded', () => {
-  bind(); initCursor(); initCtxMenu(); initClippy(); boot();
+  bind(); initCursor(); initCtxMenu(); initClippy(); initMenubar(); boot();
 });

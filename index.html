@@ -11,8 +11,18 @@
 </head>
 <body>
 
-<!-- CRT overlay -->
+<!-- CRT -->
 <div id="crt" aria-hidden="true"></div>
+
+<!-- MENUBAR -->
+<div id="menubar">
+  <span class="mb-logo">✦ StepanOS</span>
+  <span class="mb-item" data-open="about">Файл</span>
+  <span class="mb-item" data-open="projects">Вид</span>
+  <span class="mb-item" data-open="contact">Особое</span>
+  <div class="mb-flex"></div>
+  <span class="mb-clock" id="mb-clock">00:00</span>
+</div>
 
 <!-- BOOT -->
 <div id="boot">
@@ -31,29 +41,38 @@
     <path d="M3 2L3 25L8.5 19.5L12.5 30.5L15.5 29.5L11.5 18.5L19.5 18.5L3 2Z"
           fill="white" stroke="#111" stroke-width="1.2" stroke-linejoin="round"/>
   </svg>
-  <div class="cursor-badge">Степан</div>
 </div>
 
 <!-- CONTEXT MENU -->
 <div id="ctx-menu">
-  <div class="ctx-item" data-action="open-all">Открыть все окна</div>
+  <div class="ctx-item" data-action="open-all">Открыть всё</div>
   <div class="ctx-sep"></div>
-  <div class="ctx-item" data-action="close-all">Закрыть все окна</div>
+  <div class="ctx-item" data-action="close-all">Закрыть всё</div>
   <div class="ctx-sep"></div>
-  <div class="ctx-dim">Stepan OS v4.0</div>
+  <div class="ctx-dim">StepanOS v4.0</div>
 </div>
 
 <!-- DESKTOP -->
 <div id="desktop">
 
-  <!-- Desktop icons (left column) -->
+  <!-- HERO CENTER -->
+  <div id="desk-hero">
+    <div class="dh-eyebrow">Project Manager · Предприниматель</div>
+    <div class="dh-name">Степан<br>Крылов</div>
+    <div class="dh-status">
+      <span class="dh-dot"></span>
+      Строю Taskin → апрель 2026
+    </div>
+  </div>
+
+  <!-- DESKTOP ICONS — 2 col grid -->
   <div id="desk-icons">
 
     <div class="desk-icon" data-app="about">
       <div class="desk-icon-img">
-        <svg viewBox="0 0 44 44" fill="none">
-          <circle cx="22" cy="17" r="7" stroke="currentColor" stroke-width="2"/>
-          <path d="M8 40c0-7.73 6.27-14 14-14s14 6.27 14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <svg viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="18" r="8" stroke="currentColor" stroke-width="2.2"/>
+          <path d="M8 44c0-8.84 7.16-16 16-16s16 7.16 16 16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
         </svg>
       </div>
       <div class="desk-icon-label">about.app</div>
@@ -61,12 +80,12 @@
 
     <div class="desk-icon" data-app="projects">
       <div class="desk-icon-img">
-        <svg viewBox="0 0 44 44" fill="none">
-          <rect x="6" y="8" width="32" height="28" stroke="currentColor" stroke-width="2"/>
-          <path d="M6 16h32" stroke="currentColor" stroke-width="2"/>
-          <path d="M15 12V8M29 12V8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <rect x="11" y="22" width="7" height="9" stroke="currentColor" stroke-width="1.5"/>
-          <rect x="22" y="20" width="7" height="11" stroke="currentColor" stroke-width="1.5"/>
+        <svg viewBox="0 0 48 48" fill="none">
+          <rect x="6" y="8" width="36" height="32" stroke="currentColor" stroke-width="2.2"/>
+          <path d="M6 18h36" stroke="currentColor" stroke-width="2.2"/>
+          <path d="M16 13V8M32 13V8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          <rect x="12" y="24" width="8" height="10" stroke="currentColor" stroke-width="1.8"/>
+          <rect x="24" y="22" width="8" height="12" stroke="currentColor" stroke-width="1.8"/>
         </svg>
       </div>
       <div class="desk-icon-label">projects.app</div>
@@ -74,8 +93,8 @@
 
     <div class="desk-icon" data-app="folder">
       <div class="desk-icon-img">
-        <svg viewBox="0 0 44 44" fill="none">
-          <path d="M6 16h10l4 6h18v16H6V16z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <svg viewBox="0 0 48 48" fill="none">
+          <path d="M6 18h12l5 7h19v17H6V18z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
         </svg>
       </div>
       <div class="desk-icon-label">folder_01</div>
@@ -83,9 +102,9 @@
 
     <div class="desk-icon" data-app="contact">
       <div class="desk-icon-img">
-        <svg viewBox="0 0 44 44" fill="none">
-          <rect x="6" y="12" width="32" height="22" stroke="currentColor" stroke-width="2"/>
-          <path d="M6 16l16 12 16-12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg viewBox="0 0 48 48" fill="none">
+          <rect x="6" y="12" width="36" height="26" stroke="currentColor" stroke-width="2.2"/>
+          <path d="M6 17l18 13 18-13" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
       <div class="desk-icon-label">contact.app</div>
@@ -97,8 +116,8 @@
   <div class="window" id="window-about" data-app="about">
     <div class="window-titlebar">
       <div class="window-dots">
-        <span class="dot dot-red"    data-action="close" data-app="about"></span>
-        <span class="dot dot-yellow" data-action="min"   data-app="about"></span>
+        <span class="dot dot-close" data-action="close" data-app="about"></span>
+        <span class="dot dot-min"   data-action="min"   data-app="about"></span>
       </div>
       <div class="window-title">about.app</div>
       <div class="window-dots-spacer"></div>
@@ -113,12 +132,12 @@
         </div>
       </div>
       <div class="w-rule"></div>
-      <p class="about-bio">Имею счастье быть человеком, занимающимся проектами в сфере IT, финансов и дизайна. Развиваюсь в управлении продуктами — запускаю собственные инициативы и веду заказные проекты. Особенно силён в генерации идей и запуске от концепции до первых клиентов.</p>
+      <p class="about-bio">Занимаюсь проектами в IT, финансах и дизайне. Развиваюсь в продуктовом управлении — запускаю собственные инициативы и веду заказные проекты. Силён в генерации идей и запуске от концепции до первых клиентов.</p>
       <div class="about-stats">
         <div class="ab-stat"><div class="ab-n">15+</div><div class="ab-l">проектов</div></div>
         <div class="ab-stat"><div class="ab-n">2+</div><div class="ab-l">года опыта</div></div>
         <div class="ab-stat"><div class="ab-n">3</div><div class="ab-l">языка</div></div>
-        <div class="ab-stat"><div class="ab-n">10</div><div class="ab-l">макс. команда</div></div>
+        <div class="ab-stat"><div class="ab-n">10</div><div class="ab-l">команда</div></div>
       </div>
       <div class="w-rule"></div>
       <div class="w-lbl">Навыки</div>
@@ -129,14 +148,14 @@
         <span class="sk">Python / HTML</span><span class="sk">Miro</span>
         <span class="sk">CJM / SNW</span><span class="sk">Дорожные карты</span>
       </div>
-      <div class="w-rule" style="margin-top:20px"></div>
+      <div class="w-rule"></div>
       <div class="w-lbl">Образование</div>
       <div class="edu-item">
         <div class="edu-name">Президентская Академия (РАНХиГС), ФМ</div>
         <div class="edu-sub">Бакалавриат · Менеджмент · 2024 — н.в. · бюджет</div>
       </div>
       <div class="edu-item" style="margin-top:10px">
-        <div class="edu-sub">+ Skillbox (Продакт-менеджмент) · РУДН · Нетология</div>
+        <div class="edu-sub">+ Skillbox (Продакт) · РУДН · Нетология</div>
       </div>
     </div>
   </div>
@@ -145,8 +164,8 @@
   <div class="window" id="window-projects" data-app="projects">
     <div class="window-titlebar">
       <div class="window-dots">
-        <span class="dot dot-red"    data-action="close" data-app="projects"></span>
-        <span class="dot dot-yellow" data-action="min"   data-app="projects"></span>
+        <span class="dot dot-close" data-action="close" data-app="projects"></span>
+        <span class="dot dot-min"   data-action="min"   data-app="projects"></span>
       </div>
       <div class="window-title">projects.app — 6 / 15+ проектов</div>
       <div class="window-dots-spacer"></div>
@@ -171,7 +190,7 @@
           <span class="proj-s done">✓ Завершён</span>
         </div>
         <div class="proj-sub">5 кейсов от X5 Group — финал хакатона</div>
-        <div class="proj-desc">Руководил командой на серии кейсов: Пакет, Чижик, X5 Import, Зелёная линия. Исследования, концепции, защита на финале.</div>
+        <div class="proj-desc">Руководил командой на серии кейсов: Пакет, Чижик, X5 Import, Зелёная линия.</div>
         <div class="proj-tags">PM · Маркетинг · Product Dev</div>
       </div>
 
@@ -182,7 +201,7 @@
           <span class="proj-s done">✓ Завершён</span>
         </div>
         <div class="proj-sub">Московский Управленческий Хакатон</div>
-        <div class="proj-desc">Стратегия внутреннего бренда X5 Digital: многоканальная коммуникация, геймификация (квест, Digital Бункер, KPI-система).</div>
+        <div class="proj-desc">Стратегия внутреннего бренда X5 Digital: геймификация, Digital Бункер, KPI-система.</div>
         <div class="proj-tags">Employer Brand · Геймификация</div>
       </div>
 
@@ -193,7 +212,7 @@
           <span class="proj-s done">✓ Завершён</span>
         </div>
         <div class="proj-sub">Совместно с ЦБ РФ</div>
-        <div class="proj-desc">Концепт объединения счетов разных банков с цифровым рублём. Дизайн решения, витрина финпродуктов, roadmap.</div>
+        <div class="proj-desc">Концепт объединения счетов с цифровым рублём. Дизайн решения, roadmap.</div>
         <div class="proj-tags">Product Dev · Fintech · ЦБ РФ</div>
       </div>
 
@@ -204,7 +223,7 @@
           <span class="proj-s done">✓ Завершён</span>
         </div>
         <div class="proj-sub">Геймификация брокерского приложения</div>
-        <div class="proj-desc">Концепция для молодёжи: анализ рынка, геймификация, СДР, риски, план-граф Ганта.</div>
+        <div class="proj-desc">Концепция для молодёжи: геймификация, СДР, риски, план Ганта.</div>
         <div class="proj-tags">Marketing · Product Dev · Сбер</div>
       </div>
 
@@ -215,26 +234,26 @@
           <span class="proj-s done">✓ Завершён</span>
         </div>
         <div class="proj-sub">Школа менеджеров Яндекса</div>
-        <div class="proj-desc">Продуктовые инициативы для Алисы: анализ сценариев, гипотезы, архитектура, план внедрения в Яндекс Маркет.</div>
+        <div class="proj-desc">Продуктовые инициативы для Алисы: анализ, гипотезы, план внедрения в Маркет.</div>
         <div class="proj-tags">Product Dev · IT · Яндекс</div>
       </div>
 
     </div>
   </div>
 
-  <!-- WINDOW: FOLDER (пустая папка) -->
+  <!-- WINDOW: FOLDER -->
   <div class="window" id="window-folder" data-app="folder">
     <div class="window-titlebar">
       <div class="window-dots">
-        <span class="dot dot-red"    data-action="close" data-app="folder"></span>
-        <span class="dot dot-yellow" data-action="min"   data-app="folder"></span>
+        <span class="dot dot-close" data-action="close" data-app="folder"></span>
+        <span class="dot dot-min"   data-action="min"   data-app="folder"></span>
       </div>
       <div class="window-title">folder_01</div>
       <div class="window-dots-spacer"></div>
     </div>
     <div class="window-body">
       <div class="folder-empty">
-        <svg viewBox="0 0 72 54" fill="none" style="width:72px;height:54px;">
+        <svg viewBox="0 0 72 54" fill="none" style="width:64px;height:48px;">
           <path d="M2 12h20l6 8h42v30H2V12z" stroke="#000" stroke-width="2" stroke-linejoin="round"/>
         </svg>
         <div class="folder-empty-label">[ папка пуста ]</div>
@@ -246,8 +265,8 @@
   <div class="window" id="window-contact" data-app="contact">
     <div class="window-titlebar">
       <div class="window-dots">
-        <span class="dot dot-red"    data-action="close" data-app="contact"></span>
-        <span class="dot dot-yellow" data-action="min"   data-app="contact"></span>
+        <span class="dot dot-close" data-action="close" data-app="contact"></span>
+        <span class="dot dot-min"   data-action="min"   data-app="contact"></span>
       </div>
       <div class="window-title">contact.app</div>
       <div class="window-dots-spacer"></div>
@@ -272,97 +291,24 @@
 
   <!-- TASKBAR -->
   <div id="taskbar">
-    <div class="tb-brand">Stepan OS</div>
+    <div class="tb-brand">StepanOS</div>
     <div class="tb-apps" id="tb-apps"></div>
     <div class="tb-clock" id="clock">00:00</div>
   </div>
 
-  <!-- CLIPPY -->
+  <!-- CLIPPY — интерактивный персонаж, без инпута -->
   <div id="clippy">
     <div id="clippy-bubble" class="hidden">
       <button class="clippy-x" id="clippy-close">×</button>
-      <div id="clippy-msg">Скрепкин. Спрашивай.</div>
-      <div class="clippy-chips" id="clippy-chips">
-        <button class="clippy-chip" data-q="кто такой степан">Кто такой Степан?</button>
-        <button class="clippy-chip" data-q="taskin">Что такое Taskin?</button>
-        <button class="clippy-chip" data-q="навыки">Навыки и опыт</button>
-        <button class="clippy-chip" data-q="контакт">Как связаться?</button>
+      <div id="clippy-msg">Привет. Я Скрепкин.</div>
+      <div class="clippy-nav-btns" id="clippy-nav">
+        <button class="clippy-nav-btn" data-open="about">→ about.app</button>
+        <button class="clippy-nav-btn" data-open="projects">→ projects.app</button>
+        <button class="clippy-nav-btn" data-open="contact">→ contact.app</button>
       </div>
-      <input id="clippy-input" type="text" placeholder="Задай вопрос...">
     </div>
-    <div id="clippy-char" title="Нажми на меня!">
-      <svg class="clippy-svg" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="cg1" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%"   stop-color="#d8d8e4"/>
-            <stop offset="50%"  stop-color="#9494a8"/>
-            <stop offset="100%" stop-color="#555565"/>
-          </linearGradient>
-          <linearGradient id="cg2" x1="1" y1="0" x2="0" y2="1">
-            <stop offset="0%"   stop-color="#c8c8d8"/>
-            <stop offset="50%"  stop-color="#8080938"/>
-            <stop offset="100%" stop-color="#484858"/>
-          </linearGradient>
-          <filter id="ws" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="1" dy="2" stdDeviation="1.5" flood-color="#000" flood-opacity="0.4"/>
-          </filter>
-        </defs>
-
-        <!-- Grid paper — строгая, без наклона -->
-        <rect x="22" y="20" width="64" height="84" rx="1" fill="#f0f0e8" stroke="#c0c8a0" stroke-width="0.8"/>
-        <line x1="22" y1="34" x2="86" y2="34" stroke="#c0c8a0" stroke-width="0.7"/>
-        <line x1="22" y1="47" x2="86" y2="47" stroke="#c0c8a0" stroke-width="0.7"/>
-        <line x1="22" y1="60" x2="86" y2="60" stroke="#c0c8a0" stroke-width="0.7"/>
-        <line x1="22" y1="73" x2="86" y2="73" stroke="#c0c8a0" stroke-width="0.7"/>
-        <line x1="22" y1="86" x2="86" y2="86" stroke="#c0c8a0" stroke-width="0.7"/>
-        <line x1="22" y1="99" x2="86" y2="99" stroke="#c0c8a0" stroke-width="0.7"/>
-        <line x1="34" y1="20" x2="34" y2="104" stroke="#e8a0a0" stroke-width="0.7" opacity="0.5"/>
-
-        <!-- OUTER wire — shadow -->
-        <path d="M18 92 L18 32 C18 10 32 3 50 3 C68 3 82 10 82 32 L82 80 C82 100 68 110 50 110 C36 110 26 102 24 92"
-              stroke="#2a2a38" stroke-width="10" stroke-linecap="round" filter="url(#ws)"/>
-        <!-- OUTER wire — main -->
-        <path d="M18 92 L18 32 C18 10 32 3 50 3 C68 3 82 10 82 32 L82 80 C82 100 68 110 50 110 C36 110 26 102 24 92"
-              stroke="url(#cg1)" stroke-width="7.5" stroke-linecap="round"/>
-        <!-- OUTER wire — highlight -->
-        <path d="M19.5 90 L19.5 32 C19.5 13 32 5.5 50 5.5"
-              stroke="#e8e8f8" stroke-width="1.8" stroke-linecap="round" opacity="0.4"/>
-
-        <!-- Left foot curl -->
-        <path d="M18 92 C12 102 16 114 26 114 C36 114 38 104 30 96"
-              stroke="#2a2a38" stroke-width="10" stroke-linecap="round" fill="none" filter="url(#ws)"/>
-        <path d="M18 92 C12 102 16 114 26 114 C36 114 38 104 30 96"
-              stroke="url(#cg1)" stroke-width="7.5" stroke-linecap="round" fill="none"/>
-
-        <!-- EYES — строгие, чуть прищуренные -->
-        <!-- Left eye -->
-        <ellipse cx="37" cy="53" rx="13" ry="12.5" fill="white" stroke="#a0a0b4" stroke-width="1"/>
-        <circle  cx="38.5" cy="54.5" r="9.5" fill="#0a0a0a"/>
-        <circle  cx="34.5" cy="50.5" r="4"   fill="white"/>
-        <circle  cx="34.5" cy="50.5" r="1.6" fill="rgba(255,255,255,0.55)"/>
-        <!-- Прищур левый — верхнее веко опущено -->
-        <path d="M24 47 Q37 41 50 47" fill="#f0f0e8" stroke="none"/>
-
-        <!-- Right eye -->
-        <ellipse cx="63" cy="50" rx="11" ry="10.5" fill="white" stroke="#a0a0b4" stroke-width="1"/>
-        <circle  cx="64.5" cy="51.5" r="8" fill="#0a0a0a"/>
-        <circle  cx="61"   cy="47.5" r="3.2" fill="white"/>
-        <circle  cx="61"   cy="47.5" r="1.2" fill="rgba(255,255,255,0.55)"/>
-        <!-- Прищур правый -->
-        <path d="M52 44 Q63 38 74 44" fill="#f0f0e8" stroke="none"/>
-
-        <!-- INNER wire — ON TOP of eyes -->
-        <path d="M30 96 L30 36 C30 18 38 12 50 12 C62 12 70 18 70 36 L70 80"
-              stroke="#2a2a38" stroke-width="10" stroke-linecap="round" filter="url(#ws)"/>
-        <path d="M30 96 L30 36 C30 18 38 12 50 12 C62 12 70 18 70 36 L70 80"
-              stroke="url(#cg1)" stroke-width="7.5" stroke-linecap="round"/>
-        <path d="M31.5 94 L31.5 36 C31.5 20 38.5 14 50 14"
-              stroke="#e8e8f8" stroke-width="1.6" stroke-linecap="round" opacity="0.4"/>
-
-        <!-- EYEBROWS — нахмуренные, строгие (опускаются к носу) -->
-        <path d="M24 42 Q36 36 50 41" stroke="#0e0e18" stroke-width="4.2" fill="none" stroke-linecap="round"/>
-        <path d="M52 38 Q64 33 76 38" stroke="#0e0e18" stroke-width="3.6" fill="none" stroke-linecap="round"/>
-      </svg>
+    <div id="clippy-char" title="Нажми на меня">
+      <img src="clippy.png" class="clippy-img" alt="Скрепкин">
     </div>
   </div>
 
