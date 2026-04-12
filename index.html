@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=8">
+  <link rel="stylesheet" href="style.css?v=9">
 </head>
 <body>
 
@@ -348,23 +348,14 @@
     const container = document.getElementById('dos-doom');
     if (!btn || !container) return;
     btn.addEventListener('click', function() {
-      btn.textContent = '[ загружаю... ]';
-      btn.disabled = true;
-      const s = document.createElement('script');
-      s.src = 'https://v8.js-dos.com/latest/js-dos.js';
-      s.onload = function() {
-        container.style.display = 'block';
-        btn.style.display = 'none';
-        Dos(container, {
-          url: 'https://storage.js-dos.com/DOOM-shareware/DOOM-shareware.jsdos',
-        });
-      };
-      s.onerror = function() {
-        btn.textContent = '▶ ЗАПУСТИТЬ DOOM';
-        btn.disabled = false;
-        alert('Не удалось загрузить js-dos. Проверь интернет.');
-      };
-      document.head.appendChild(s);
+      btn.style.display = 'none';
+      container.style.display = 'block';
+      const iframe = document.createElement('iframe');
+      iframe.src = 'https://dos.zone/player/?bundleUrl=https%3A%2F%2Fcdn.dos.zone%2Fcustom%2Fdos%2Fdoom.jsdos&anonymous=1';
+      iframe.style.cssText = 'width:100%;height:100%;border:none;';
+      iframe.allowFullscreen = true;
+      iframe.setAttribute('allow', 'autoplay; fullscreen');
+      container.appendChild(iframe);
     });
   })();
   </script>
