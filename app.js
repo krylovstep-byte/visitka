@@ -167,8 +167,9 @@ function initCursor() {
 const APP_REPLIES = {
   about:    ['Это про Степана. Читай внимательно.', 'Там есть навыки. Много навыков.', 'Ярославль → Москва. Серьёзный маршрут.'],
   projects: ['15+ проектов. Не каждый PM столько делает.', 'X5, Сбер, Яндекс. Неплохо для студента.', 'Taskin — самый свежий. Смотри сам.'],
-  folder:   ['Тут пусто. Я предупреждал.', 'Ничего нет. Совсем.', 'Пустая папка. Бывает.'],
+  folder:   ['Там две игры. Я не говорил? Говорил.', 'Крестики-нолики. ИИ там не дурак, предупреждаю.', 'Кликер на 5 секунд. Рекорд — побей.'],
   contact:  ['Пиши в Telegram. Он отвечает быстро.', 'directstep@mail.ru — серьёзная почта.', 'Не стесняйся. Он не кусается.'],
+  terminal: ['Нашёл терминал. Уважаю.', 'Введи "help" если потерялся.', 'Попробуй "neofetch". Серьёзно.'],
 };
 
 /* Случайные реплики при клике на скрепку */
@@ -257,6 +258,12 @@ function initClippy() {
   // Клик на скрепку
   char.addEventListener('click', clippyClick);
 
+  // Двойной клик — секретная реплика
+  char.addEventListener('dblclick', e => {
+    e.stopPropagation();
+    clippyShow('Ладно, признаюсь. Я просто скрепка. Но с характером.', false);
+  });
+
   // Закрыть пузырь
   if (close) close.addEventListener('click', e => {
     e.stopPropagation();
@@ -269,6 +276,113 @@ function initClippy() {
       openApp(btn.dataset.open);
       bubble.classList.add('hidden');
     });
+  });
+
+  // Proximity detection — реагирует на приближение курсора
+  document.addEventListener('mousemove', e => {
+    const r = char.getBoundingClientRect();
+    const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+    const dx = e.clientX - cx, dy = e.clientY - cy;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist < 180) {
+      const angle = Math.atan2(dy, dx) * (180 / Math.PI) * 0.07;
+      char.style.transform = `scale(1.05) rotate(${angle}deg)`;
+      char.style.animationPlayState = 'paused';
+    } else {
+      char.style.transform = '';
+      char.style.animationPlayState = 'running';
+    }
+  });
+
+  // Idle escalation — 20с без движения → Скрепочка подаёт знак
+  let idleTimer = null;
+  function resetIdle() {
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(() => {
+      if (bubble.classList.contains('hidden')) {
+        clippyShow('Эй. Ты там вообще?', false);
+      }
+    }, 20000);
+  }
+  document.addEventListener('mousemove', resetIdle);
+  document.addEventListener('click', resetIdle);
+  resetIdle();
+}
+
+/* ── STICKY NOTE DRAG ── */
+function initNoteDrag() {
+  const el = document.getElementById('desk-note');
+  if (!el) return;
+  el.addEventListener('mousedown', e => {
+    const r = el.getBoundingClientRect();
+    const ox = e.clientX - r.left, oy = e.clientY - r.top;
+    function onMove(e) {
+      el.style.left = Math.max(0, e.clientX - ox) + 'px';
+      el.style.top  = Math.max(22, e.clientY - oy) + 'px';
+    }
+    function onUp() {
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onUp);
+    }
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+    e.preventDefault();
+  });
+}
+
+/* ── TERMINAL ── */
+const TERM_CMDS = {
+  help: '  whoami\n  ls\n  ping\n  uptime\n  neofetch\n  clear',
+  whoami: 'stepan_krylov — PM, предприниматель, создатель этого сайта',
+  ls: 'about.app   projects.app   folder_01   contact.app   terminal.app   clippy.exe',
+  ping: 'PING @krygerman ... 12ms  reply from Telegram ✓',
+  uptime: () => 'StepanOS v4.0 — uptime: ' + (Math.floor(Math.random() * 72) + 1) + 'h ' + (Math.floor(Math.random() * 59) + 1) + 'm',
+  neofetch: '  ██████  OS: StepanOS v4.0\n  █ СК █  Host: Yaroslavl → Moscow\n  ██████  PM: Степан Крылов\n          Projects: 15+\n          Languages: RU EN DE IT\n          Shell: ideas → execution',
+  taskin: 'taskin.app — фриланс-биржа. В разработке. Следи.',
+  cv: 'Открой about.app — там всё про него.',
+  clear: '__clear__',
+};
+
+function initTerminal() {
+  const input  = document.getElementById('term-input');
+  const output = document.getElementById('term-output');
+  if (!input || !output) return;
+
+  function addLine(text, cls) {
+    (text + '').split('\n').forEach(t => {
+      const d = document.createElement('div');
+      d.className = 'term-line' + (cls ? ' ' + cls : '');
+      d.textContent = t;
+      output.appendChild(d);
+    });
+    output.parentElement.scrollTop = output.parentElement.scrollHeight;
+  }
+
+  addLine('StepanOS Terminal v1.0', 'info');
+  addLine('введи "help" для списка команд', 'info');
+  addLine('');
+
+  // focus input when terminal body clicked
+  output.parentElement.addEventListener('click', () => input.focus());
+
+  input.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    const raw = input.value.trim();
+    const cmd = raw.toLowerCase();
+    input.value = '';
+    addLine('stepanos:~$ ' + raw);
+    if (!cmd) return;
+    const res = TERM_CMDS[cmd];
+    if (res === '__clear__') {
+      output.innerHTML = '';
+    } else if (typeof res === 'function') {
+      addLine(res());
+    } else if (res) {
+      addLine(res);
+    } else {
+      addLine('command not found: ' + cmd + '  (try "help")', 'err');
+    }
+    addLine('');
   });
 }
 
@@ -284,12 +398,15 @@ function initCtxMenu() {
     menu.style.left = x + 'px'; menu.style.top = y + 'px';
     menu.classList.add('visible');
   });
-  menu.querySelectorAll('.ctx-item[data-action]').forEach(it => {
+  menu.querySelectorAll('.ctx-item').forEach(it => {
     it.addEventListener('click', () => {
-      if (it.dataset.action === 'open-all')
+      if (it.dataset.open) {
+        openApp(it.dataset.open);
+      } else if (it.dataset.action === 'open-all') {
         ['about', 'projects', 'folder', 'contact'].forEach(openApp);
-      else if (it.dataset.action === 'close-all')
-        ['about', 'projects', 'folder', 'contact'].forEach(closeApp);
+      } else if (it.dataset.action === 'close-all') {
+        ['about', 'projects', 'folder', 'contact', 'terminal'].forEach(closeApp);
+      }
       menu.classList.remove('visible');
     });
   });
@@ -342,5 +459,7 @@ function bind() {
 
 /* ── INIT ── */
 document.addEventListener('DOMContentLoaded', () => {
-  bind(); initCursor(); initCtxMenu(); initClippy(); initMenubar(); boot();
+  bind(); initCursor(); initCtxMenu(); initClippy(); initMenubar();
+  initNoteDrag(); initTerminal();
+  boot();
 });

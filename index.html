@@ -20,6 +20,7 @@
   <span class="mb-item" data-open="about">Файл</span>
   <span class="mb-item" data-open="projects">Вид</span>
   <span class="mb-item" data-open="contact">Особое</span>
+  <span class="mb-item" data-open="terminal">Terminal</span>
   <div class="mb-flex"></div>
   <span class="mb-clock" id="mb-clock">00:00</span>
 </div>
@@ -45,8 +46,9 @@
 
 <!-- CONTEXT MENU -->
 <div id="ctx-menu">
-  <div class="ctx-item" data-action="open-all">Открыть всё</div>
+  <div class="ctx-item" data-open="terminal">Терминал</div>
   <div class="ctx-sep"></div>
+  <div class="ctx-item" data-action="open-all">Открыть всё</div>
   <div class="ctx-item" data-action="close-all">Закрыть всё</div>
   <div class="ctx-sep"></div>
   <div class="ctx-dim">StepanOS v4.0</div>
@@ -63,10 +65,17 @@
 
   <!-- DESK CARD — закреплённая карточка справа вверху -->
   <div id="desk-card">
-    <img src="avatar.png" class="dc-avatar" alt="Степан Крылов">
     <div class="dc-role">Project Manager · Предприниматель</div>
     <div class="dc-name">Степан Крылов</div>
     <div class="dc-line">Ярославль → Москва · 2026</div>
+  </div>
+
+  <!-- STICKY NOTE — перетаскиваемый стикер на десктопе -->
+  <div id="desk-note">
+    <div class="note-pin">📌 сейчас</div>
+    <div class="note-body">
+      <div class="note-text">Строю Taskin.<br>Пиши → @krygerman</div>
+    </div>
   </div>
 
   <!-- DESKTOP ICONS — 2 col grid -->
@@ -390,6 +399,25 @@
       </a>
       <div class="w-rule" style="margin-top:20px"></div>
       <p class="ct-note">Открой <code>projects.app</code> — там кейсы и проекты</p>
+    </div>
+  </div>
+
+  <!-- WINDOW: TERMINAL -->
+  <div class="window" id="window-terminal" data-app="terminal" style="min-width:420px;">
+    <div class="window-titlebar">
+      <div class="window-dots">
+        <span class="dot dot-close" data-action="close" data-app="terminal"></span>
+        <span class="dot dot-min"   data-action="min"   data-app="terminal"></span>
+      </div>
+      <div class="window-title">terminal.app</div>
+      <div class="window-dots-spacer"></div>
+    </div>
+    <div class="window-body term-body">
+      <div id="term-output"></div>
+      <div class="term-input-row">
+        <span class="term-prompt">stepanos:~$&nbsp;</span>
+        <input id="term-input" autocomplete="off" spellcheck="false" placeholder="">
+      </div>
     </div>
   </div>
 
