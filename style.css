@@ -482,21 +482,24 @@ html, body {
 .ttt-x { color: var(--ink); font-weight: bold; }
 .ttt-o { color: var(--muted); }
 
-/* Clicker */
-.clk-score {
-  font-size: 64px; color: var(--ink); line-height: 1;
-  font-family: var(--font); text-align: center;
+/* DOOM */
+.doom-box {
+  grid-column: 1 / -1;
 }
-.clk-main {
-  font-size: 24px; padding: 10px 28px;
-  border-width: 2px;
+#dos-doom {
+  display: none;
+  width: 100%; height: 320px;
+  background: #000;
+  border: 2px solid var(--ink);
+  margin-bottom: 8px;
 }
-.clk-main.clk-go {
-  background: var(--ink); color: var(--paper);
-  animation: clk-pulse .15s ease-in-out;
+.doom-launch-btn {
+  font-size: 22px; padding: 8px 24px;
+  border-width: 2px; margin-bottom: 6px;
 }
-@keyframes clk-pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
-.clk-best { font-size: 15px; color: var(--dim); margin-top: 2px; }
+.doom-controls {
+  font-size: 15px; color: var(--dim); text-align: center;
+}
 
 /* ── MOBILE DOCK и HEADER (скрыты на десктопе) ── */
 #mobile-dock   { display: none; }

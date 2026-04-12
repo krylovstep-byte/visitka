@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=7">
+  <link rel="stylesheet" href="style.css?v=8">
 </head>
 <body>
 
@@ -279,13 +279,12 @@
           <button class="game-btn" id="ttt-reset">[ сначала ]</button>
         </div>
 
-        <!-- GAME 2: Кликер -->
-        <div class="game-box">
-          <div class="game-title">[ кликер · 5 сек ]</div>
-          <div class="clk-score" id="clk-score">0</div>
-          <button class="game-btn clk-main" id="clk-btn">КЛИК</button>
-          <div class="game-status" id="clk-status">Нажми и кликай!</div>
-          <div class="clk-best" id="clk-best">Рекорд: —</div>
+        <!-- GAME 2: DOOM -->
+        <div class="game-box doom-box">
+          <div class="game-title">[ doom · shareware ep.1 ]</div>
+          <div id="dos-doom"></div>
+          <button class="game-btn doom-launch-btn" id="doom-launch">▶ ЗАПУСТИТЬ DOOM</button>
+          <div class="game-status doom-controls">WASD / стрелки — движение · Ctrl — стрельба · Пробел — двери · Enter — выбор</div>
         </div>
 
       </div>
@@ -343,33 +342,29 @@
     render();
   })();
 
-  /* ── GAME 2: Clicker ── */
+  /* ── GAME 2: DOOM ── */
   (function(){
-    const scoreEl  = document.getElementById('clk-score');
-    const btn      = document.getElementById('clk-btn');
-    const statusEl = document.getElementById('clk-status');
-    const bestEl   = document.getElementById('clk-best');
-    let count=0, running=false, best=0, timer=null;
-
-    btn.addEventListener('click', ()=>{
-      if(!running) {
-        running=true; count=0; scoreEl.textContent=0;
-        statusEl.textContent='Кликай!!!';
-        btn.classList.add('clk-go');
-        let t=5;
-        timer = setInterval(()=>{
-          t--;
-          if(t>0) { statusEl.textContent='Кликай!!! ('+t+'с)'; }
-          else {
-            clearInterval(timer); running=false;
-            btn.classList.remove('clk-go');
-            if(count>best){best=count;bestEl.textContent='Рекорд: '+best;}
-            statusEl.textContent='Результат: '+count+' кликов';
-          }
-        },1000);
-      } else {
-        count++; scoreEl.textContent=count;
-      }
+    const btn = document.getElementById('doom-launch');
+    const container = document.getElementById('dos-doom');
+    if (!btn || !container) return;
+    btn.addEventListener('click', function() {
+      btn.textContent = '[ загружаю... ]';
+      btn.disabled = true;
+      const s = document.createElement('script');
+      s.src = 'https://v8.js-dos.com/latest/js-dos.js';
+      s.onload = function() {
+        container.style.display = 'block';
+        btn.style.display = 'none';
+        Dos(container, {
+          url: 'https://storage.js-dos.com/DOOM-shareware/DOOM-shareware.jsdos',
+        });
+      };
+      s.onerror = function() {
+        btn.textContent = '▶ ЗАПУСТИТЬ DOOM';
+        btn.disabled = false;
+        alert('Не удалось загрузить js-dos. Проверь интернет.');
+      };
+      document.head.appendChild(s);
     });
   })();
   </script>
