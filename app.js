@@ -187,6 +187,7 @@ const CLIPPY_PHRASES = [
 ];
 
 let clippyPhraseIdx = 0;
+let clippyTypingId  = 0; // отменяет старый typing при новом вызове
 
 function clippyShow(text, showNav) {
   const bubble = document.getElementById('clippy-bubble');
@@ -197,11 +198,14 @@ function clippyShow(text, showNav) {
   bubble.classList.remove('hidden');
   msg.textContent = '';
 
+  // Каждый новый вызов инвалидирует предыдущий typing loop
+  const myId = ++clippyTypingId;
   let i = 0;
   function type() {
+    if (myId !== clippyTypingId) return; // старый вызов — стоп
     if (i < text.length) {
       msg.textContent += text[i]; i++;
-      setTimeout(type, 18);
+      setTimeout(type, 26);
     }
   }
   type();

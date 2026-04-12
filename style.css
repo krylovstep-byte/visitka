@@ -187,8 +187,8 @@ html, body {
   margin: -10px -16px 10px;
   border-bottom: 2px solid var(--ink);
   background: #000;
-  /* Вытаскиваем пиксели портрета из темноты */
-  filter: brightness(8) contrast(60) grayscale(1);
+  /* Вытаскиваем пиксели: любой не-чёрный → белый, чёрный → чёрный */
+  filter: brightness(50) contrast(500) grayscale(1);
 }
 .dc-role { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 2px; }
 .dc-name { font-size: 24px; color: var(--ink); font-weight: 700; line-height: 1.1; margin-bottom: 4px; }
