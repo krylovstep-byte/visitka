@@ -187,7 +187,8 @@ html, body {
   margin: -10px -16px 10px;
   border-bottom: 2px solid var(--ink);
   background: #000;
-  filter: contrast(3) brightness(2.2) grayscale(1);
+  /* Вытаскиваем пиксели портрета из темноты */
+  filter: brightness(8) contrast(60) grayscale(1);
 }
 .dc-role { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 2px; }
 .dc-name { font-size: 24px; color: var(--ink); font-weight: 700; line-height: 1.1; margin-bottom: 4px; }
@@ -472,8 +473,9 @@ html, body {
 @keyframes clk-pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
 .clk-best { font-size: 15px; color: var(--dim); margin-top: 2px; }
 
-/* ── MOBILE DOCK (скрыт на десктопе) ── */
-#mobile-dock { display: none; }
+/* ── MOBILE DOCK и HEADER (скрыты на десктопе) ── */
+#mobile-dock   { display: none; }
+#mobile-header { display: none; }
 
 /* ── MOBILE ── */
 @media (max-width: 600px) {
@@ -488,7 +490,7 @@ html, body {
   #ctx-menu   { display: none; }
 
   /* Десктоп занимает весь экран */
-  #desktop { top: 0; bottom: 64px; background: #000; }
+  #desktop { top: 0; bottom: 64px; background: var(--desk); }
 
   /* Мобильный header */
   #mobile-header {
