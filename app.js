@@ -58,6 +58,7 @@ function getWin(n) { return document.getElementById('window-' + n); }
 function focusWin(win) { state.z++; win.style.zIndex = state.z; }
 
 function centerWin(win) {
+  if (window.innerWidth <= 600) return; // на мобиле позиция через CSS
   const vw = window.innerWidth, vh = window.innerHeight;
   const menuH = 22, tbH = 28, pad = 16;
   const ww = win.offsetWidth || 500, wh = win.offsetHeight || 400;
