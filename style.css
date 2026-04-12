@@ -127,37 +127,40 @@ html, body {
 }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
 
-/* ── DESKTOP ICONS — 2-column grid ── */
+/* ── DESKTOP ICONS — 2-column grid, centered ── */
 #desk-icons {
-  position: absolute; top: 20px; left: 20px;
-  display: grid; grid-template-columns: repeat(2, 110px);
-  gap: 10px 8px; z-index: 10;
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid; grid-template-columns: repeat(2, 148px);
+  gap: 16px 14px; z-index: 10;
 }
 .desk-icon {
-  display: flex; flex-direction: column; align-items: center; gap: 6px;
-  width: 110px; padding: 10px 6px 8px;
+  display: flex; flex-direction: column; align-items: center; gap: 7px;
+  width: 148px; padding: 12px 8px 10px;
   border: 1px solid transparent;
   transition: background .08s, border-color .08s;
 }
-.desk-icon:hover   { background: rgba(0,0,0,0.1); border-color: rgba(0,0,0,0.15); }
+.desk-icon:hover   { background: rgba(0,0,0,0.1); border-color: rgba(0,0,0,0.18); }
 .desk-icon.is-open { background: var(--ink); }
 
 .desk-icon-img {
-  width: 80px; height: 80px;
+  width: 112px; height: 112px;
   background: var(--paper); border: 2px solid var(--ink);
   display: flex; align-items: center; justify-content: center; color: var(--ink);
+  transition: filter .08s;
 }
-.desk-icon-img svg { width: 48px; height: 48px; }
+.desk-icon-img svg { width: 64px; height: 64px; }
 .desk-icon:hover    .desk-icon-img,
 .desk-icon.is-open  .desk-icon-img { filter: invert(1); }
 
 .desk-icon-label {
-  font-size: 18px; color: var(--ink); text-align: center;
+  font-size: 20px; color: var(--ink); text-align: center;
   line-height: 1.2; white-space: nowrap;
-  background: rgba(168,168,168,0.85); padding: 0 4px;
+  background: rgba(168,168,168,0.88); padding: 1px 6px;
   text-shadow: 0 1px 2px rgba(255,255,255,0.6);
 }
-.desk-icon.is-open .desk-icon-label { background: var(--ink); color: var(--paper); }
+.desk-icon.is-open .desk-icon-label { background: var(--ink); color: var(--paper); text-shadow: none; }
 
 /* ── DESK CARD ── */
 #desk-card {
@@ -174,9 +177,19 @@ html, body {
   z-index: 5;
   box-shadow: 3px 3px 0 rgba(0,0,0,0.35);
 }
-.dc-role { font-size: 14px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 2px; }
-.dc-name { font-size: 26px; color: var(--ink); font-weight: 700; line-height: 1.1; margin-bottom: 4px; }
-.dc-line { font-size: 14px; color: var(--dim); border-top: 1px solid rgba(0,0,0,0.15); padding-top: 6px; margin-top: 4px; }
+.dc-avatar {
+  width: 100%; height: 90px;
+  object-fit: cover; object-position: top;
+  image-rendering: pixelated;
+  display: block;
+  border-bottom: 2px solid var(--ink);
+  margin: -10px -16px 10px;
+  width: calc(100% + 32px);
+  filter: grayscale(1) contrast(1.3);
+}
+.dc-role { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 2px; }
+.dc-name { font-size: 24px; color: var(--ink); font-weight: 700; line-height: 1.1; margin-bottom: 4px; }
+.dc-line { font-size: 13px; color: var(--dim); border-top: 1px solid rgba(0,0,0,0.15); padding-top: 6px; margin-top: 4px; }
 
 /* ── CONTEXT MENU ── */
 #ctx-menu {
@@ -401,6 +414,62 @@ html, body {
 }
 .clippy-nav-btn:hover { background: var(--ink); color: var(--paper); }
 
+/* ── GAMES ── */
+.games-wrap {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  min-height: 260px;
+}
+.game-box {
+  border: 2px solid var(--ink); padding: 12px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+.game-title {
+  font-size: 18px; color: var(--ink); text-transform: uppercase;
+  letter-spacing: .06em; align-self: flex-start; margin-bottom: 4px;
+}
+.game-status {
+  font-size: 17px; color: var(--muted); text-align: center; min-height: 22px;
+}
+.game-btn {
+  font-family: var(--font); font-size: 18px;
+  border: 2px solid var(--ink); background: var(--paper); color: var(--ink);
+  padding: 4px 16px; cursor: pointer; margin-top: 4px;
+  transition: background .07s, color .07s;
+}
+.game-btn:hover { background: var(--ink); color: var(--paper); }
+
+/* Tic-tac-toe */
+.ttt-grid {
+  display: grid; grid-template-columns: repeat(3, 52px);
+  grid-template-rows: repeat(3, 52px);
+  border: 2px solid var(--ink); gap: 0;
+}
+.ttt-cell {
+  width: 52px; height: 52px; display: flex; align-items: center; justify-content: center;
+  font-size: 28px; border: 1px solid rgba(0,0,0,0.3); cursor: pointer;
+  font-family: var(--font); color: var(--ink);
+  transition: background .07s;
+}
+.ttt-cell:hover { background: rgba(0,0,0,0.07); }
+.ttt-x { color: var(--ink); font-weight: bold; }
+.ttt-o { color: var(--muted); }
+
+/* Clicker */
+.clk-score {
+  font-size: 64px; color: var(--ink); line-height: 1;
+  font-family: var(--font); text-align: center;
+}
+.clk-main {
+  font-size: 24px; padding: 10px 28px;
+  border-width: 2px;
+}
+.clk-main.clk-go {
+  background: var(--ink); color: var(--paper);
+  animation: clk-pulse .15s ease-in-out;
+}
+@keyframes clk-pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
+.clk-best { font-size: 15px; color: var(--dim); margin-top: 2px; }
+
 /* ── MOBILE DOCK (скрыт на десктопе) ── */
 #mobile-dock { display: none; }
 
@@ -461,4 +530,13 @@ html, body {
 
   /* Boot screen корректировка */
   .boot-inner { width: 90vw; }
+
+  /* Games на мобиле — в колонку */
+  .games-wrap { grid-template-columns: 1fr; }
+
+  /* Icons на мобиле */
+  #desk-icons {
+    position: static; transform: none;
+    display: none; /* скрыты на мобиле, там dock */
+  }
 }

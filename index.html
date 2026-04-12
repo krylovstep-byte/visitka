@@ -65,14 +65,11 @@
   <div id="desk-hero">
     <div class="dh-eyebrow">Project Manager · Предприниматель</div>
     <div class="dh-name">Степан<br>Крылов</div>
-    <div class="dh-status">
-      <span class="dh-dot"></span>
-      Строю Taskin → апрель 2026
-    </div>
   </div>
 
   <!-- DESK CARD — закреплённая карточка справа вверху -->
   <div id="desk-card">
+    <img src="avatar.png" class="dc-avatar" alt="Степан Крылов">
     <div class="dc-role">Project Manager · Предприниматель</div>
     <div class="dc-name">Степан Крылов</div>
     <div class="dc-line">Ярославль → Москва · 2026</div>
@@ -264,15 +261,115 @@
       <div class="window-title">folder_01</div>
       <div class="window-dots-spacer"></div>
     </div>
-    <div class="window-body">
-      <div class="folder-empty">
-        <svg viewBox="0 0 72 54" fill="none" style="width:64px;height:48px;">
-          <path d="M2 12h20l6 8h42v30H2V12z" stroke="#000" stroke-width="2" stroke-linejoin="round"/>
-        </svg>
-        <div class="folder-empty-label">[ папка пуста ]</div>
+    <div class="window-body" style="padding:14px 16px;">
+      <div class="games-wrap">
+
+        <!-- GAME 1: Крестики-нолики -->
+        <div class="game-box">
+          <div class="game-title">[ крестики-нолики ]</div>
+          <div class="ttt-grid" id="ttt-grid">
+            <div class="ttt-cell" data-i="0"></div><div class="ttt-cell" data-i="1"></div><div class="ttt-cell" data-i="2"></div>
+            <div class="ttt-cell" data-i="3"></div><div class="ttt-cell" data-i="4"></div><div class="ttt-cell" data-i="5"></div>
+            <div class="ttt-cell" data-i="6"></div><div class="ttt-cell" data-i="7"></div><div class="ttt-cell" data-i="8"></div>
+          </div>
+          <div class="game-status" id="ttt-status">Твой ход (X)</div>
+          <button class="game-btn" id="ttt-reset">[ сначала ]</button>
+        </div>
+
+        <!-- GAME 2: Кликер -->
+        <div class="game-box">
+          <div class="game-title">[ кликер · 5 сек ]</div>
+          <div class="clk-score" id="clk-score">0</div>
+          <button class="game-btn clk-main" id="clk-btn">КЛИК</button>
+          <div class="game-status" id="clk-status">Нажми и кликай!</div>
+          <div class="clk-best" id="clk-best">Рекорд: —</div>
+        </div>
+
       </div>
     </div>
   </div>
+
+  <script>
+  /* ── GAME 1: Tic-Tac-Toe ── */
+  (function(){
+    const cells = Array(9).fill(null);
+    let active = true;
+    const grid   = document.getElementById('ttt-grid');
+    const status = document.getElementById('ttt-status');
+    const reset  = document.getElementById('ttt-reset');
+    const WINS   = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+
+    function render() {
+      grid.querySelectorAll('.ttt-cell').forEach((c,i) => {
+        c.textContent = cells[i] || '';
+        c.className = 'ttt-cell' + (cells[i] === 'X' ? ' ttt-x' : cells[i] === 'O' ? ' ttt-o' : '');
+      });
+    }
+    function checkWin(p) {
+      return WINS.some(([a,b,c]) => cells[a]===p && cells[b]===p && cells[c]===p);
+    }
+    function aiMove() {
+      // Try to win, then block, then random
+      for(let p of ['O','X']) {
+        for(let i=0;i<9;i++) {
+          if(!cells[i]) { cells[i]=p; if(checkWin(p)){cells[i]=null;if(p==='O'){cells[i]='O';return;}}cells[i]=null; }
+        }
+      }
+      const free = cells.map((v,i)=>v?null:i).filter(v=>v!==null);
+      if(free.length) cells[free[Math.floor(Math.random()*free.length)]] = 'O';
+    }
+    grid.addEventListener('click', e => {
+      const cell = e.target.closest('.ttt-cell');
+      if(!cell || !active) return;
+      const i = +cell.dataset.i;
+      if(cells[i]) return;
+      cells[i] = 'X'; render();
+      if(checkWin('X')) { status.textContent = '✓ Ты выиграл!'; active=false; return; }
+      if(cells.every(Boolean)) { status.textContent = '[ ничья ]'; active=false; return; }
+      status.textContent = 'Думаю...';
+      setTimeout(()=>{
+        aiMove(); render();
+        if(checkWin('O')) { status.textContent = '× Ты проиграл!'; active=false; return; }
+        if(cells.every(Boolean)) { status.textContent = '[ ничья ]'; active=false; return; }
+        status.textContent = 'Твой ход (X)';
+      }, 220);
+    });
+    reset.addEventListener('click', ()=>{
+      cells.fill(null); active=true; render(); status.textContent='Твой ход (X)';
+    });
+    render();
+  })();
+
+  /* ── GAME 2: Clicker ── */
+  (function(){
+    const scoreEl  = document.getElementById('clk-score');
+    const btn      = document.getElementById('clk-btn');
+    const statusEl = document.getElementById('clk-status');
+    const bestEl   = document.getElementById('clk-best');
+    let count=0, running=false, best=0, timer=null;
+
+    btn.addEventListener('click', ()=>{
+      if(!running) {
+        running=true; count=0; scoreEl.textContent=0;
+        statusEl.textContent='Кликай!!!';
+        btn.classList.add('clk-go');
+        let t=5;
+        timer = setInterval(()=>{
+          t--;
+          if(t>0) { statusEl.textContent='Кликай!!! ('+t+'с)'; }
+          else {
+            clearInterval(timer); running=false;
+            btn.classList.remove('clk-go');
+            if(count>best){best=count;bestEl.textContent='Рекорд: '+best;}
+            statusEl.textContent='Результат: '+count+' кликов';
+          }
+        },1000);
+      } else {
+        count++; scoreEl.textContent=count;
+      }
+    });
+  })();
+  </script>
 
   <!-- WINDOW: CONTACT -->
   <div class="window" id="window-contact" data-app="contact">
