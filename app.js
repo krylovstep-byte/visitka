@@ -70,6 +70,14 @@ function centerWin(win) {
 function openApp(n) {
   const win = getWin(n);
   if (!win) return;
+  // На мобиле — сбрасываем все inline-позиции, чтобы CSS !important взял управление
+  if (window.innerWidth <= 600) {
+    win.style.removeProperty('left');
+    win.style.removeProperty('top');
+    win.style.removeProperty('width');
+    win.style.removeProperty('height');
+    win.style.removeProperty('transform');
+  }
   state.open.add(n); state.min.delete(n);
   win.classList.remove('minimized');
   if (!win.dataset.pos) {
