@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=11">
+  <link rel="stylesheet" href="style.css?v=12">
 </head>
 <body>
 
@@ -288,7 +288,14 @@
           </div>
           <button class="game-btn" id="snake-btn">[ старт ]</button>
           <canvas id="snake-canvas" width="200" height="200"></canvas>
-          <div class="game-status" id="snake-status">стрелки / WASD</div>
+          <div class="snake-dpad">
+            <div class="snake-dpad-row"><button class="dpad-btn" data-dir="up">▲</button></div>
+            <div class="snake-dpad-row">
+              <button class="dpad-btn" data-dir="left">◀</button>
+              <button class="dpad-btn dpad-center" data-dir="down">▼</button>
+              <button class="dpad-btn" data-dir="right">▶</button>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -410,15 +417,16 @@
       const n=KEYS[e.key];
       if(n&&!(n.x===-dir.x&&n.y===-dir.y)){next=n;}
     });
-    // touch swipe
-    let tx=0,ty=0;
-    canvas.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
-    canvas.addEventListener('touchend',e=>{
-      if(!running) return;
-      const dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
-      if(Math.abs(dx)>Math.abs(dy)){next=dx>0?{x:1,y:0}:{x:-1,y:0};}
-      else{next=dy>0?{x:0,y:1}:{x:0,y:-1};}
-    },{passive:true});
+    // d-pad buttons
+    const DMAP={up:{x:0,y:-1},down:{x:0,y:1},left:{x:-1,y:0},right:{x:1,y:0}};
+    document.querySelectorAll('.dpad-btn').forEach(b=>{
+      b.addEventListener('click',e=>{
+        e.preventDefault();
+        if(!running) return;
+        const n=DMAP[b.dataset.dir];
+        if(n&&!(n.x===-dir.x&&n.y===-dir.y)) next=n;
+      });
+    });
 
     // initial draw
     ctx.fillStyle='#000'; ctx.fillRect(0,0,canvas.width,canvas.height);
