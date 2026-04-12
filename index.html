@@ -55,6 +55,12 @@
 <!-- DESKTOP -->
 <div id="desktop">
 
+  <!-- MOBILE HEADER (только на мобиле) -->
+  <div id="mobile-header">
+    <span class="mh-logo">StepanOS</span>
+    <span class="mh-clock" id="mb-clock2">00:00</span>
+  </div>
+
   <!-- HERO CENTER -->
   <div id="desk-hero">
     <div class="dh-eyebrow">Project Manager · Предприниматель</div>
@@ -63,6 +69,13 @@
       <span class="dh-dot"></span>
       Строю Taskin → апрель 2026
     </div>
+  </div>
+
+  <!-- DESK CARD — закреплённая карточка справа вверху -->
+  <div id="desk-card">
+    <div class="dc-role">Project Manager · Предприниматель</div>
+    <div class="dc-name">Степан Крылов</div>
+    <div class="dc-line">Ярославль → Москва · 2026</div>
   </div>
 
   <!-- DESKTOP ICONS — 2 col grid -->
@@ -310,6 +323,38 @@
     <div id="clippy-char" title="Нажми на меня">
       <img src="clippy.png" class="clippy-img" alt="Скрепкин">
     </div>
+  </div>
+
+  <!-- MOBILE DOCK -->
+  <div id="mobile-dock">
+    <button class="dock-btn" data-app="about">
+      <svg viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="18" r="8" stroke="currentColor" stroke-width="2.2"/>
+        <path d="M8 44c0-8.84 7.16-16 16-16s16 7.16 16 16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+      <span>О себе</span>
+    </button>
+    <button class="dock-btn" data-app="projects">
+      <svg viewBox="0 0 48 48" fill="none">
+        <rect x="6" y="8" width="36" height="32" stroke="currentColor" stroke-width="2.2"/>
+        <path d="M6 18h36" stroke="currentColor" stroke-width="2.2"/>
+        <path d="M16 13V8M32 13V8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+      <span>Проекты</span>
+    </button>
+    <button class="dock-btn" data-app="folder">
+      <svg viewBox="0 0 48 48" fill="none">
+        <path d="M6 18h12l5 7h19v17H6V18z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+      </svg>
+      <span>Папка</span>
+    </button>
+    <button class="dock-btn" data-app="contact">
+      <svg viewBox="0 0 48 48" fill="none">
+        <rect x="6" y="12" width="36" height="26" stroke="currentColor" stroke-width="2.2"/>
+        <path d="M6 17l18 13 18-13" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>Контакт</span>
+    </button>
   </div>
 
 </div><!-- /desktop -->

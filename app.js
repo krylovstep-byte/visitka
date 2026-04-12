@@ -38,15 +38,17 @@ function boot() {
 
 /* ── CLOCKS ── */
 function startClocks() {
-  const tbC  = document.getElementById('clock');
-  const mbC  = document.getElementById('mb-clock');
+  const tbC   = document.getElementById('clock');
+  const mbC   = document.getElementById('mb-clock');
+  const mbC2  = document.getElementById('mb-clock2');
   function tick() {
     const d  = new Date();
     const hh = String(d.getHours()).padStart(2,'0');
     const mm = String(d.getMinutes()).padStart(2,'0');
     const t  = hh + ':' + mm;
-    if (tbC) tbC.textContent = t;
-    if (mbC) mbC.textContent = t;
+    if (tbC)  tbC.textContent  = t;
+    if (mbC)  mbC.textContent  = t;
+    if (mbC2) mbC2.textContent = t;
   }
   tick(); setInterval(tick, 1000);
 }
@@ -109,6 +111,14 @@ function updateTaskbar() {
     b.textContent = n + '.app';
     b.addEventListener('click', () => minApp(n));
     c.appendChild(b);
+  });
+  updateDock();
+}
+
+function updateDock() {
+  document.querySelectorAll('.dock-btn').forEach(b => {
+    const n = b.dataset.app;
+    b.classList.toggle('active', state.open.has(n) && !state.min.has(n));
   });
 }
 
@@ -312,6 +322,18 @@ function bind() {
 
   document.querySelectorAll('.window').forEach(win => {
     win.addEventListener('mousedown', () => focusWin(win));
+  });
+
+  /* ── MOBILE DOCK ── */
+  document.querySelectorAll('.dock-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const n = btn.dataset.app;
+      if (state.open.has(n) && !state.min.has(n)) {
+        closeApp(n);
+      } else {
+        openApp(n);
+      }
+    });
   });
 }
 

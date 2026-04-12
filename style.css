@@ -8,7 +8,7 @@
   --mono:   'VT323', 'Courier New', monospace;
   --ink:    #000000;
   --paper:  #ffffff;
-  --desk:   #e8e4db;   /* тёплый нейтральный — не бежевый, не серый */
+  --desk:   #a8a8a8;   /* Mac OS 9 Platinum grey */
   --muted:  #555555;
   --dim:    #888888;
 }
@@ -112,8 +112,8 @@ html, body {
 .dh-name {
   font-size: clamp(52px, 8vw, 100px);
   line-height: .88; letter-spacing: -.01em;
-  color: rgba(0,0,0,0.09);
-  -webkit-text-stroke: 1px rgba(0,0,0,0.11);
+  color: rgba(0,0,0,0.15);
+  -webkit-text-stroke: 1px rgba(0,0,0,0.18);
 }
 .dh-status {
   display: inline-flex; align-items: center; gap: 8px;
@@ -154,9 +154,29 @@ html, body {
 .desk-icon-label {
   font-size: 18px; color: var(--ink); text-align: center;
   line-height: 1.2; white-space: nowrap;
-  background: rgba(232,228,219,0.8); padding: 0 4px;
+  background: rgba(168,168,168,0.85); padding: 0 4px;
+  text-shadow: 0 1px 2px rgba(255,255,255,0.6);
 }
 .desk-icon.is-open .desk-icon-label { background: var(--ink); color: var(--paper); }
+
+/* ── DESK CARD ── */
+#desk-card {
+  position: absolute;
+  top: calc(var(--menu-h) + 12px);
+  right: 16px;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  padding: 10px 16px 12px;
+  font-family: var(--font);
+  line-height: 1.3;
+  pointer-events: none;
+  user-select: none;
+  z-index: 5;
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.35);
+}
+.dc-role { font-size: 14px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 2px; }
+.dc-name { font-size: 26px; color: var(--ink); font-weight: 700; line-height: 1.1; margin-bottom: 4px; }
+.dc-line { font-size: 14px; color: var(--dim); border-top: 1px solid rgba(0,0,0,0.15); padding-top: 6px; margin-top: 4px; }
 
 /* ── CONTEXT MENU ── */
 #ctx-menu {
@@ -214,7 +234,7 @@ html, body {
 
 .window-title { font-size: 18px; color: var(--ink); text-align: center; flex: 1; }
 
-.window-body { padding: 22px 24px; overflow-y: auto; flex: 1; }
+.window-body { padding: 16px 20px; overflow-y: auto; flex: 1; }
 .window-body::-webkit-scrollbar { width: 12px; }
 .window-body::-webkit-scrollbar-track { background: #d8d8d8; border-left: 1px solid var(--ink); }
 .window-body::-webkit-scrollbar-thumb { background: #888; border: 1px solid var(--ink); }
@@ -239,7 +259,7 @@ html, body {
 
 .about-stats {
   display: grid; grid-template-columns: repeat(4,1fr);
-  border: 2px solid var(--ink); overflow: hidden; margin-bottom: 18px;
+  border: 2px solid var(--ink); overflow: hidden; margin-bottom: 14px;
 }
 .ab-stat { padding: 12px 6px; text-align: center; border-right: 1px solid var(--ink); }
 .ab-stat:last-child { border-right: none; }
@@ -381,23 +401,64 @@ html, body {
 }
 .clippy-nav-btn:hover { background: var(--ink); color: var(--paper); }
 
+/* ── MOBILE DOCK (скрыт на десктопе) ── */
+#mobile-dock { display: none; }
+
 /* ── MOBILE ── */
-@media (max-width: 768px) {
-  #cursor { display: none; }
-  #desk-icons { grid-template-columns: repeat(2, 90px); gap: 8px; }
-  .desk-icon { width: 90px; }
-  .desk-icon-img { width: 64px; height: 64px; }
-  #menubar { display: none; }
-  #desktop { top: 0; }
-  .window {
-    position: fixed !important; left: 0 !important; top: 0 !important;
-    width: 100vw !important; min-width: unset;
-    height: calc(100vh - var(--tb-h)); max-height: calc(100vh - var(--tb-h));
-    border-left: none; border-right: none; border-top: none;
+@media (max-width: 600px) {
+  /* Скрыть десктопные элементы */
+  #cursor     { display: none; }
+  #menubar    { display: none; }
+  #desk-icons { display: none; }
+  #desk-hero  { display: none; }
+  #desk-card  { display: none; }
+  #taskbar    { display: none; }
+  #clippy     { display: none; }
+  #ctx-menu   { display: none; }
+
+  /* Десктоп занимает весь экран */
+  #desktop { top: 0; bottom: 64px; background: #000; }
+
+  /* Мобильный header */
+  #mobile-header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+    height: 48px; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 16px;
+    background: var(--paper); border-bottom: 2px solid var(--ink);
+    font-family: var(--font);
   }
-  .tb-brand { display: none; }
-  #clippy { right: 4px; }
-  .clippy-img { width: 100px; }
-  #clippy-bubble { width: 210px; }
-  #desk-hero { display: none; }
+  .mh-logo { font-size: 22px; color: var(--ink); font-weight: 700; }
+  .mh-clock { font-size: 20px; color: var(--ink); }
+
+  /* Окна — полноэкранные (под header, над dock) */
+  .window {
+    position: fixed !important;
+    top: 48px !important; left: 0 !important;
+    width: 100vw !important; min-width: unset !important;
+    height: calc(100vh - 48px - 64px) !important;
+    max-height: calc(100vh - 48px - 64px) !important;
+    border-left: none; border-right: none;
+  }
+
+  /* Dock */
+  #mobile-dock {
+    display: flex;
+    position: fixed; bottom: 0; left: 0; right: 0;
+    height: 64px; z-index: 9999;
+    background: var(--paper); border-top: 2px solid var(--ink);
+  }
+  .dock-btn {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 3px;
+    border: none; border-right: 1px solid rgba(0,0,0,0.2);
+    background: none; font-family: var(--font); font-size: 13px;
+    color: var(--ink); cursor: pointer; padding: 6px 4px;
+    transition: background .08s, color .08s;
+  }
+  .dock-btn:last-child { border-right: none; }
+  .dock-btn svg { width: 24px; height: 24px; stroke: currentColor; }
+  .dock-btn.active { background: var(--ink); color: var(--paper); }
+
+  /* Boot screen корректировка */
+  .boot-inner { width: 90vw; }
 }
