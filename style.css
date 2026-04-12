@@ -178,14 +178,16 @@ html, body {
   box-shadow: 3px 3px 0 rgba(0,0,0,0.35);
 }
 .dc-avatar {
-  width: 100%; height: 90px;
-  object-fit: cover; object-position: top;
-  image-rendering: pixelated;
   display: block;
-  border-bottom: 2px solid var(--ink);
-  margin: -10px -16px 10px;
   width: calc(100% + 32px);
-  filter: grayscale(1) contrast(1.3);
+  height: 110px;
+  object-fit: cover;
+  object-position: center top;
+  image-rendering: pixelated;
+  margin: -10px -16px 10px;
+  border-bottom: 2px solid var(--ink);
+  background: #000;
+  filter: contrast(3) brightness(2.2) grayscale(1);
 }
 .dc-role { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 2px; }
 .dc-name { font-size: 24px; color: var(--ink); font-weight: 700; line-height: 1.1; margin-bottom: 4px; }
