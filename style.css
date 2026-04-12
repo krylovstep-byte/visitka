@@ -346,6 +346,8 @@ html, body {
 /* ── CONTACT ── */
 .ct-head { font-size: 54px; line-height: .92; color: var(--ink); }
 .ct-head em { font-style: normal; }
+.ct-rule-top    { margin: 22px 0; }
+.ct-rule-bottom { margin-top: 20px; }
 .ct-link {
   display: flex; align-items: center; gap: 12px; padding: 15px 0;
   text-decoration: none; color: inherit;
@@ -562,24 +564,25 @@ html, body {
 
   /* Шапка окна — крупнее на мобиле */
   .window-titlebar {
-    height: 44px;
-    padding: 0 10px;
+    height: 44px !important;
+    padding: 0 10px !important;
   }
-  .window-title { font-size: 24px; }
+  .window-title { font-size: 24px !important; }
   .dot {
-    width: 26px; height: 26px;
-    font-size: 18px;
+    width: 26px !important; height: 26px !important;
+    font-size: 18px !important;
   }
-  .window-dots-spacer { width: 56px; }
+  .window-dots-spacer { width: 56px !important; }
 
   /* Contact — убрать избыточную высоту */
-  .ct-head { font-size: 34px; }
-  .ct-link { padding: 10px 0; }
-  .ct-platform { font-size: 18px; min-width: 80px; }
-  .ct-handle   { font-size: 16px; }
-  .ct-arrow    { font-size: 18px; }
-  .ct-note     { font-size: 15px; }
-  .w-rule { margin: 10px 0; }
+  .ct-head { font-size: 34px !important; }
+  .ct-link { padding: 10px 0 !important; }
+  .ct-platform { font-size: 18px !important; min-width: 80px !important; }
+  .ct-handle   { font-size: 16px !important; }
+  .ct-arrow    { font-size: 18px !important; }
+  .ct-note     { font-size: 15px !important; }
+  .ct-rule-top    { margin: 10px 0 !important; }
+  .ct-rule-bottom { margin: 8px 0 0 !important; }
 
   /* Boot */
   .boot-inner { width: 90vw; }
