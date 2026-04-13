@@ -1,6 +1,115 @@
 /* STEPAN OS v4.0 */
 'use strict';
 
+/* ── SOUNDS (Web Audio API — no external files) ── */
+let _ac = null;
+
+function getAC() {
+  if (!_ac) _ac = new (window.AudioContext || window.webkitAudioContext)();
+  return _ac;
+}
+
+function snd(fn) {
+  try {
+    const c = getAC();
+    if (c.state === 'suspended') c.resume().then(() => fn(c));
+    else fn(c);
+  } catch(e) {}
+}
+
+// Window open: ascending chirp — like a window snapping into existence
+function playOpen() {
+  snd(c => {
+    const o = c.createOscillator(), g = c.createGain();
+    o.connect(g); g.connect(c.destination);
+    o.type = 'triangle';
+    const t = c.currentTime;
+    o.frequency.setValueAtTime(280, t);
+    o.frequency.exponentialRampToValueAtTime(820, t + 0.065);
+    g.gain.setValueAtTime(0.13, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.14);
+    o.start(t); o.stop(t + 0.14);
+  });
+}
+
+// Window close: descending pop
+function playClose() {
+  snd(c => {
+    const o = c.createOscillator(), g = c.createGain();
+    o.connect(g); g.connect(c.destination);
+    o.type = 'triangle';
+    const t = c.currentTime;
+    o.frequency.setValueAtTime(720, t);
+    o.frequency.exponentialRampToValueAtTime(170, t + 0.075);
+    g.gain.setValueAtTime(0.1, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.11);
+    o.start(t); o.stop(t + 0.11);
+  });
+}
+
+// Minimize / UI click: tight mechanical noise burst
+function playClick() {
+  snd(c => {
+    const len = Math.floor(c.sampleRate * 0.022);
+    const buf = c.createBuffer(1, len, c.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < len; i++) d[i] = (Math.random()*2-1) * Math.pow(1 - i/len, 6);
+    const src = c.createBufferSource(), g = c.createGain();
+    src.buffer = buf; src.connect(g); g.connect(c.destination);
+    g.gain.value = 0.3;
+    src.start();
+  });
+}
+
+// Clippy: spring boing — bouncy frequency sweep
+function playBoing() {
+  snd(c => {
+    const o = c.createOscillator(), g = c.createGain();
+    o.connect(g); g.connect(c.destination);
+    o.type = 'sine';
+    const t = c.currentTime;
+    o.frequency.setValueAtTime(210, t);
+    o.frequency.exponentialRampToValueAtTime(680, t + 0.055);
+    o.frequency.exponentialRampToValueAtTime(320, t + 0.16);
+    o.frequency.exponentialRampToValueAtTime(440, t + 0.22);
+    g.gain.setValueAtTime(0.11, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.28);
+    o.start(t); o.stop(t + 0.28);
+  });
+}
+
+// Terminal Enter: short percussive key click
+function playKey() {
+  snd(c => {
+    const len = Math.floor(c.sampleRate * 0.016);
+    const buf = c.createBuffer(1, len, c.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < len; i++) d[i] = (Math.random()*2-1) * Math.pow(1 - i/len, 4);
+    const src = c.createBufferSource(), g = c.createGain();
+    src.buffer = buf; src.connect(g); g.connect(c.destination);
+    g.gain.value = 0.2;
+    src.start();
+  });
+}
+
+// Boot: Mac startup chord — F major stacked sines, slow bloom
+function playBoot() {
+  snd(c => {
+    // F3 A3 C4 F4 A4 — classic Mac-style major chord
+    [174.6, 220, 261.6, 349.2, 440].forEach(freq => {
+      const o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sine'; o.frequency.value = freq;
+      const t = c.currentTime + 0.05;
+      g.gain.setValueAtTime(0, t);
+      g.gain.linearRampToValueAtTime(0.052, t + 0.09);
+      g.gain.setValueAtTime(0.052, t + 0.55);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 2.1);
+      o.start(t); o.stop(t + 2.1);
+    });
+  });
+}
+
 const state = { z: 100, open: new Set(), min: new Set() };
 
 /* ── BOOT ── */
@@ -31,6 +140,7 @@ function boot() {
   setTimeout(() => {
     bootEl.classList.add('hidden');
     desk.classList.add('visible');
+    playBoot();
     startClocks();
     scheduleClippy();
   }, last + 700);
@@ -70,6 +180,7 @@ function centerWin(win) {
 function openApp(n) {
   const win = getWin(n);
   if (!win) return;
+  playOpen();
   // На мобиле — сбрасываем все inline-позиции, чтобы CSS !important взял управление
   if (window.innerWidth <= 600) {
     win.style.removeProperty('left');
@@ -93,6 +204,7 @@ function openApp(n) {
 function closeApp(n) {
   const win = getWin(n);
   if (!win) return;
+  playClose();
   win.classList.remove('open', 'minimized');
   state.open.delete(n); state.min.delete(n);
   updateTaskbar(); updateIcon(n, false);
@@ -101,6 +213,7 @@ function closeApp(n) {
 function minApp(n) {
   const win = getWin(n);
   if (!win) return;
+  playClick();
   if (state.min.has(n)) {
     state.min.delete(n);
     win.classList.remove('minimized'); win.classList.add('open');
@@ -231,6 +344,7 @@ function clippyReactToApp(appName) {
 }
 
 function clippyClick() {
+  playBoing();
   const txt = CLIPPY_PHRASES[clippyPhraseIdx % CLIPPY_PHRASES.length];
   clippyPhraseIdx++;
   const showNav = clippyPhraseIdx % 3 === 0; // каждый 3й клик — показывать навигацию
@@ -276,6 +390,7 @@ function initClippy() {
   // Закрыть пузырь
   if (close) close.addEventListener('click', e => {
     e.stopPropagation();
+    playClick();
     bubble.classList.add('hidden');
   });
 
@@ -376,6 +491,7 @@ function initTerminal() {
 
   input.addEventListener('keydown', e => {
     if (e.key !== 'Enter') return;
+    playKey();
     const raw = input.value.trim();
     const cmd = raw.toLowerCase();
     input.value = '';
