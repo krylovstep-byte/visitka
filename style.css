@@ -90,7 +90,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   top: 0; bottom: 0; left: 0;
   width: 0;
   background: #e0e0e0;
-  animation: boot-fill 1.8s ease-out forwards;
+  animation: boot-fill 1s ease-out forwards;
 }
 @keyframes boot-fill {
   0%   { width: 0; }
@@ -948,11 +948,18 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
     margin-top: 2px;
     overflow-y: auto; overflow-x: hidden;
     padding: 12px 14px;
-    font-family: var(--f-sys);
-    font-size: 14px;
+    font-family: var(--f-mono);
+    font-size: 17px;
     color: #0a0a0a;
-    line-height: 1.35;
+    line-height: 1.3;
   }
+  /* Все дочерние, которые не задали свой font-family явно, — пиксельным VT323.
+     Исключения (.p-my ярлычок, .sk-бейдж и т.д.) уже имеют свой f-mono. */
+  .mm-body * { font-family: inherit; }
+  /* но заголовок секции — пиксельным Press Start 2P (как якорь раздела) */
+  .mm-body .sec-h { font-family: var(--f-pixel); }
+  /* Крестик на кнопке закрытия — шрифт system-sans, чтобы глиф рендерился красиво */
+  #mm-close { font-family: var(--f-sys); }
   .mm-body::-webkit-scrollbar { width: 14px; }
   .mm-body::-webkit-scrollbar-track { background: #d4d0c8; }
   .mm-body::-webkit-scrollbar-thumb {
@@ -962,23 +969,55 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
 
   /* Контент внутри модалки — разрешаем display:block всем секциям */
   .mm-body .mw-section { display: block !important; animation: none; }
-  .mm-body .sec-h { font-size: 20px; margin-bottom: 8px; }
-  .mm-body .sec-h-cnt { font-size: 12px; }
-  .mm-body .p-name { font-size: 17px; }
-  .mm-body .ab-name { font-size: 19px; }
+  .mm-body .sec-h { font-size: 18px; margin-bottom: 10px; letter-spacing: 1px; }
+  .mm-body .sec-h-cnt { font-size: 13px; }
+  .mm-body .p-name { font-size: 18px; }
+  .mm-body .ab-name { font-size: 20px; }
   .mm-body .c-card { padding: 10px 12px; }
-  .mm-body .c-val { font-size: 16px; }
+  .mm-body .c-val { font-size: 17px; }
 
-  /* Игры-модалка и корзина — адаптируем под узкий экран */
-  .gm-frame { width: 94vw; max-height: 88vh; }
+  /* Увеличиваем крестик на мобильной модалке — чтобы было удобно тапнуть */
+  #mm-close { width: 32px; height: 24px; font-size: 17px; }
+  .mm-titlebar { height: 30px; }
+  .mm-tb-title { font-size: 14px; }
+
+  /* ── Игры-модалка на мобилке: FULLSCREEN + фиксированный титлбар ──
+     До этого max-height: 88vh уезжал за экран, крестик не было видно.
+     Теперь модалка на весь экран, титлбар всегда вверху, тело скроллится. */
+  #games-modal { padding: 0; align-items: stretch; justify-content: stretch; }
+  .gm-frame {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100vh;
+    max-height: 100vh;
+    border-width: 0;
+  }
+  .gm-titlebar { height: 30px; padding: 0 3px 0 5px; font-size: 13px; }
+  .gm-titlebar .mw-tb-icon { width: 18px; height: 18px; font-size: 10px; }
+  .gm-titlebar .mw-tb-btn { width: 32px; height: 24px; font-size: 17px; }
   .gm-body {
     grid-template-columns: 1fr;
-    gap: 10px;
-    padding: 10px;
+    gap: 14px;
+    padding: 14px;
+    flex: 1;
+    overflow-y: auto;
+    /* Достаточно места снизу, чтобы снэйк не упирался в хоум-бар iOS */
+    padding-bottom: 40px;
   }
-  .tm-frame { width: 86vw; }
 
-  /* Модалка статусбар — сохраняем стили */
+  /* Корзина — тоже fullscreen */
+  #trash-modal { padding: 0; align-items: stretch; justify-content: stretch; }
+  .tm-frame {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100vh;
+    border-width: 0;
+    display: flex; flex-direction: column;
+  }
+  .tm-frame .gm-titlebar { height: 30px; padding: 0 3px 0 5px; font-size: 13px; }
+  .tm-frame .gm-titlebar .mw-tb-icon { width: 18px; height: 18px; font-size: 10px; }
+  .tm-frame .gm-titlebar .mw-tb-btn { width: 32px; height: 24px; font-size: 17px; }
+  .tm-body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
 }
 
 /* Очень узкий (≤ 360px — iPhone SE, старые Android) — чуть ужимаем крупные иконки */

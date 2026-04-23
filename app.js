@@ -11,7 +11,7 @@ const $$ = (s, r=document) => [...r.querySelectorAll(s)];
 const on = (el, ev, fn) => el && el.addEventListener(ev, fn);
 const pad = (n) => String(n).padStart(2, '0');
 
-/* ═══════════════ BOOT SEQUENCE (Win95-splash, ~2 sec) ═══════════════ */
+/* ═══════════════ BOOT SEQUENCE (Win95-splash, ~1.1 sec) ═══════════════ */
 function boot() {
   const bootEl = $('#boot');
   const msgEl  = $('#boot-msg');
@@ -30,11 +30,11 @@ function boot() {
       mi++;
       if (mi >= msgs.length) { clearInterval(msgTimer); return; }
       msgEl.textContent = msgs[mi];
-    }, 500);
+    }, 280);
   }
 
-  // Через 2 сек прячем сплэш
-  setTimeout(() => bootEl.classList.add('hidden'), 2000);
+  // Через ~1.1 сек прячем сплэш (CSS boot-fill тоже 1 сек)
+  setTimeout(() => bootEl.classList.add('hidden'), 1100);
 
   // Клик — скипнуть
   on(bootEl, 'click', () => bootEl.classList.add('hidden'));
