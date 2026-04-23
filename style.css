@@ -474,15 +474,15 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
 .home-icons {
   flex: 1;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-  gap: 12px 8px;
-  padding: 8px 14px 14px;
+  grid-template-columns: repeat(auto-fill, minmax(108px, 1fr));
+  gap: 14px 10px;
+  padding: 10px 16px 16px;
   align-content: start;
 }
 .mw-icon {
   display: flex; flex-direction: column; align-items: center;
-  gap: 4px;
-  padding: 5px 2px 3px;
+  gap: 5px;
+  padding: 6px 2px 4px;
   cursor: pointer;
   user-select: none;
   border: 1px dotted transparent;
@@ -495,31 +495,31 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
   border: 1px dotted rgba(255, 255, 0, 0.9);
 }
 .mw-icon-img {
-  width: 56px; height: 56px;
+  width: 68px; height: 68px;
   display: flex; align-items: center; justify-content: center;
 }
 .mw-icon-img img,
 .mw-icon-img .folder-svg {
-  width: 56px; height: 56px;
+  width: 68px; height: 68px;
   object-fit: contain;
   filter: drop-shadow(1px 1px 0 rgba(0,0,0,.6));
 }
 /* Telegram icon — bigger, its PNG has more whitespace around glyph */
 .mw-icon[data-app="telegram"] .mw-icon-img {
-  width: 72px; height: 72px;
+  width: 84px; height: 84px;
 }
 .mw-icon[data-app="telegram"] .mw-icon-img img {
-  width: 72px; height: 72px;
+  width: 84px; height: 84px;
 }
 .mw-icon-lbl {
   font-family: var(--f-sys);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: bold;
   color: #fff;
   text-align: center;
-  line-height: 1.1;
+  line-height: 1.15;
   padding: 1px 3px;
-  max-width: 90px;
+  max-width: 108px;
   text-shadow:
     1px 1px 0 #000,
     -1px 1px 0 #000,
@@ -849,7 +849,7 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
   }
 
   .home-head {
-    padding: 10px 4px 4px;
+    padding: 7px 4px 2px;
     text-align: center;
     flex-shrink: 0;
   }
@@ -857,37 +857,42 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
     font-size: 12px;
     letter-spacing: .8px;
     margin: 0;
-    line-height: 1.15;
+    line-height: 1.1;
     text-shadow: 1px 1px 0 rgba(0,0,0,.7);
   }
 
-  /* Сетка 3×2, иконки большие — CRT на новом фоне 46.4%×22.7%.
-     align-content: start — прижимаем сетку сразу под имя, чтобы
-     контент не "уезжал вниз" при росте картинок. */
+  /* Сетка 3×2. Важно: ВСЕ иконки одного размера (в т.ч. Telegram),
+     иначе первый ряд распухает и второй ряд с "Игры/Мусор" вылетает
+     за нижний край CRT. */
   .home-icons {
     flex: 1;
     grid-template-columns: repeat(3, 1fr);
-    gap: 5px 4px;
-    padding: 4px 6px 8px;
+    gap: 3px;
+    padding: 2px 5px 4px;
     align-content: start;
     overflow: hidden;
   }
   .mw-icon {
-    padding: 2px 0 0;
-    gap: 2px;
+    padding: 1px 0 0;
+    gap: 1px;
     border-width: 0;
+    min-width: 0;
   }
   .mw-icon-img { width: 40px; height: 40px; }
   .mw-icon-img img, .mw-icon-img .folder-svg { width: 40px; height: 40px; }
+  /* Telegram на мобилке — тот же размер, что и остальные (не 48!) */
   .mw-icon[data-app="telegram"] .mw-icon-img,
-  .mw-icon[data-app="telegram"] .mw-icon-img img { width: 48px; height: 48px; }
+  .mw-icon[data-app="telegram"] .mw-icon-img img { width: 40px; height: 40px; }
   .mw-icon-lbl {
-    font-size: 9.5px;
+    font-size: 9px;
     max-width: 100%;
-    padding: 0 2px;
-    margin-top: 1px;
-    line-height: 1.05;
+    padding: 0 1px;
+    margin-top: 0;
+    line-height: 1;
     letter-spacing: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     text-shadow:
       1px 1px 0 #000,
       -1px 1px 0 #000,
