@@ -849,44 +849,45 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
   }
 
   .home-head {
-    padding: 7px 4px 2px;
+    padding: 6px 4px 3px;
     text-align: center;
     flex-shrink: 0;
   }
   .hero-name {
-    font-size: 12px;
-    letter-spacing: .8px;
+    font-size: 11px;
+    letter-spacing: .6px;
     margin: 0;
-    line-height: 1.1;
+    line-height: 1;
     text-shadow: 1px 1px 0 rgba(0,0,0,.7);
   }
 
-  /* Сетка 3×2. Важно: ВСЕ иконки одного размера (в т.ч. Telegram),
-     иначе первый ряд распухает и второй ряд с "Игры/Мусор" вылетает
-     за нижний край CRT. */
+  /* Сетка 5×1 — ВСЕ 5 иконок в один горизонтальный ряд.
+     Раньше было 3×2, но второй ряд ("Игры/Мусор") постоянно
+     вылетал за низ CRT из-за iOS-метрик шрифта и округлений.
+     Один ряд = гарантированно влезает в 22.7% высоту CRT. */
   .home-icons {
-    flex: 1;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 3px;
-    padding: 2px 5px 4px;
+    flex: 0 0 auto;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    padding: 0 3px 3px;
     align-content: start;
     overflow: hidden;
   }
   .mw-icon {
-    padding: 1px 0 0;
+    padding: 0;
     gap: 1px;
     border-width: 0;
     min-width: 0;
   }
-  .mw-icon-img { width: 40px; height: 40px; }
-  .mw-icon-img img, .mw-icon-img .folder-svg { width: 40px; height: 40px; }
-  /* Telegram на мобилке — тот же размер, что и остальные (не 48!) */
+  .mw-icon-img { width: 30px; height: 30px; }
+  .mw-icon-img img, .mw-icon-img .folder-svg { width: 30px; height: 30px; }
+  /* Telegram на мобилке — тот же размер, что и остальные */
   .mw-icon[data-app="telegram"] .mw-icon-img,
-  .mw-icon[data-app="telegram"] .mw-icon-img img { width: 40px; height: 40px; }
+  .mw-icon[data-app="telegram"] .mw-icon-img img { width: 30px; height: 30px; }
   .mw-icon-lbl {
-    font-size: 9px;
+    font-size: 8px;
     max-width: 100%;
-    padding: 0 1px;
+    padding: 0;
     margin-top: 0;
     line-height: 1;
     letter-spacing: 0;
@@ -1042,12 +1043,12 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
   .tm-p { font-size: 16px; }
 }
 
-/* Очень узкий (≤ 360px — iPhone SE, старые Android) — чуть ужимаем крупные иконки */
+/* Очень узкий (≤ 360px — iPhone SE, старые Android) — чуть ужимаем иконки под узкую 5-колоночную сетку */
 @media (max-width: 360px) {
-  .mw-icon-img { width: 24px; height: 24px; }
-  .mw-icon-img img, .mw-icon-img .folder-svg { width: 24px; height: 24px; }
+  .mw-icon-img { width: 26px; height: 26px; }
+  .mw-icon-img img, .mw-icon-img .folder-svg { width: 26px; height: 26px; }
   .mw-icon[data-app="telegram"] .mw-icon-img,
-  .mw-icon[data-app="telegram"] .mw-icon-img img { width: 28px; height: 28px; }
-  .mw-icon-lbl { font-size: 6px; }
-  .hero-name { font-size: 8px; }
+  .mw-icon[data-app="telegram"] .mw-icon-img img { width: 26px; height: 26px; }
+  .mw-icon-lbl { font-size: 7px; }
+  .hero-name { font-size: 10px; }
 }
