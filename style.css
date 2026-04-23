@@ -790,32 +790,31 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
     background-image: url('bg-mobile.png');
   }
 
-  /* CRT-координаты на мобильной сцене — верхняя треть, по центру */
+  /* CRT-координаты на мобильной сцене — чёрный экран монитора в верхней четверти */
   #monitor-win {
-    left:   25%;
-    top:    22%;
-    width:  50%;
-    height: 16%;
-    /* уменьшаем скейл декораций, чтобы было почище */
+    left:   27%;
+    top:     8%;
+    width:  46%;
+    height: 18%;
     box-shadow:
       inset 1px 1px 0 rgba(255,255,255,.4),
       inset -1px -1px 0 rgba(0,0,0,.25),
       0 2px 8px rgba(0,0,0,.5);
   }
 
-  /* Внутри monitor-win на мобиле — упрощаем: прячем титлбар и табы,
-     оставляем только home-content (имя + иконки) */
+  /* Внутри monitor-win на мобиле — прячем ВСЁ лишнее: титлбар, табы, статусбар, шапку с именем/био.
+     Оставляем ТОЛЬКО сетку иконок — тап открывает fullscreen-модалку. */
   #monitor-win .mw-titlebar { display: none; }
   #monitor-win .mw-tabs { display: none; }
   #monitor-win .mw-statusbar { display: none; }
+  #monitor-win .home-head { display: none; }
 
   .mw-body {
     padding: 0;
-    font-size: 10px;
     overflow: hidden;
   }
 
-  /* Home-секция на мобилке — всегда показана внутри CRT */
+  /* Home-секция на мобилке — всегда показана внутри CRT, занимает весь экран монитора */
   .mw-section.home-desk {
     display: flex !important;
     flex-direction: column;
@@ -823,50 +822,29 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
     min-height: 100%;
     height: 100%;
     animation: none;
-  }
-
-  .home-head {
-    padding: 6px 7px 2px;
-  }
-  .hero-name {
-    font-size: 10px;
-    letter-spacing: .3px;
-    margin: 0 0 3px;
-    text-shadow: 1px 1px 0 rgba(0,0,0,.6);
-  }
-  .hero-role {
-    font-size: 8px;
-    margin-bottom: 2px;
-    line-height: 1;
-  }
-  .hero-bio {
-    font-size: 7px;
-    padding: 2px 4px;
-    line-height: 1.15;
-    border: 1px solid #000;
-    box-shadow: none;
-  }
-  .hero-bio b {
-    font-size: 6px;
-    padding: 0 2px;
-    border-width: 1px;
+    /* на мобилке не нужны обои внутри CRT — пусть будет тёмно */
+    background-image: none;
+    background-color: #0a1530;
   }
 
   .home-icons {
+    flex: 1;
     grid-template-columns: repeat(5, 1fr);
-    gap: 2px 1px;
-    padding: 2px 4px 4px;
+    gap: 1px;
+    padding: 3px 2px;
+    align-content: center;
   }
-  .mw-icon { padding: 1px 0 0; gap: 0; }
-  .mw-icon-img { width: 18px; height: 18px; }
-  .mw-icon-img img, .mw-icon-img .folder-svg { width: 18px; height: 18px; }
+  .mw-icon { padding: 1px 0 0; gap: 1px; border-width: 0; }
+  .mw-icon-img { width: 16px; height: 16px; }
+  .mw-icon-img img, .mw-icon-img .folder-svg { width: 16px; height: 16px; }
   .mw-icon[data-app="telegram"] .mw-icon-img,
-  .mw-icon[data-app="telegram"] .mw-icon-img img { width: 22px; height: 22px; }
+  .mw-icon[data-app="telegram"] .mw-icon-img img { width: 20px; height: 20px; }
   .mw-icon-lbl {
-    font-size: 6px;
-    max-width: 30px;
+    font-size: 5.5px;
+    max-width: 100%;
     padding: 0;
     line-height: 1;
+    letter-spacing: 0;
     text-shadow:
       1px 1px 0 #000,
       -1px 1px 0 #000,
