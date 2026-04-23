@@ -804,12 +804,12 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
   }
 
   /* ТОЧНЫЕ координаты чёрного CRT-экрана на финальном bg-mobile.png
-     (измерено попиксельно: x=33.7..71.6%, y=33.0..52.3%) */
+     (измерено попиксельно: x=29.0..75.5%, y=33.7..56.3%) */
   #monitor-win {
-    left:   33.7%;
-    top:    33.0%;
-    width:  37.9%;
-    height: 19.3%;
+    left:   29.0%;
+    top:    33.7%;
+    width:  46.4%;
+    height: 22.7%;
     box-shadow:
       inset 1px 1px 0 rgba(255,255,255,.4),
       inset -1px -1px 0 rgba(0,0,0,.25),
@@ -849,37 +849,40 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
   }
 
   .home-head {
-    padding: 11px 4px 3px;
+    padding: 10px 4px 4px;
     text-align: center;
     flex-shrink: 0;
   }
   .hero-name {
-    font-size: 11px;
-    letter-spacing: .7px;
+    font-size: 12px;
+    letter-spacing: .8px;
     margin: 0;
     line-height: 1.15;
     text-shadow: 1px 1px 0 rgba(0,0,0,.7);
   }
 
-  /* Сетка 3×2, иконки больше — CRT теперь 37.9%×19.3% от экрана. */
+  /* Сетка 3×2, иконки большие — CRT на новом фоне 46.4%×22.7%.
+     align-content: start — прижимаем сетку сразу под имя, чтобы
+     контент не "уезжал вниз" при росте картинок. */
   .home-icons {
     flex: 1;
     grid-template-columns: repeat(3, 1fr);
-    gap: 4px 3px;
-    padding: 4px 4px 6px;
-    align-content: center;
+    gap: 5px 4px;
+    padding: 4px 6px 8px;
+    align-content: start;
+    overflow: hidden;
   }
   .mw-icon {
     padding: 2px 0 0;
     gap: 2px;
     border-width: 0;
   }
-  .mw-icon-img { width: 36px; height: 36px; }
-  .mw-icon-img img, .mw-icon-img .folder-svg { width: 36px; height: 36px; }
+  .mw-icon-img { width: 40px; height: 40px; }
+  .mw-icon-img img, .mw-icon-img .folder-svg { width: 40px; height: 40px; }
   .mw-icon[data-app="telegram"] .mw-icon-img,
-  .mw-icon[data-app="telegram"] .mw-icon-img img { width: 44px; height: 44px; }
+  .mw-icon[data-app="telegram"] .mw-icon-img img { width: 48px; height: 48px; }
   .mw-icon-lbl {
-    font-size: 8.5px;
+    font-size: 9.5px;
     max-width: 100%;
     padding: 0 2px;
     margin-top: 1px;
