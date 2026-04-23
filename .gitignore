@@ -1,0 +1,7 @@
+# Local planning notes, never pushed
+tmp/
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+desktop.ini
