@@ -234,6 +234,11 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
 
 /* ═══════════════ MONITOR WINDOW (overlay on CRT screen) ═══════════════ */
 /* Background CRT screen coords: left:32.89% top:14.13% w:34.63% h:43.57% */
+/* Monitor window — «утоплен» в CRT-стекло.
+   Окно ~500×400. Внутри .mw-body имеет свой белый/цветной фон,
+   поэтому inset-shadow у #monitor-win перекрывается контентом.
+   Реальная глубина создаётся ПОВЕРХ контента через ::before vignette
+   (z-index выше всего, pointer-events: none — не мешает кликам). */
 #monitor-win {
   position: absolute;
   left:  33.0%;
@@ -243,19 +248,39 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
   z-index: 200;
   background: #ece9d8;
   border: 1px solid #000;
+  border-radius: 8px;
   box-shadow:
-    inset 1px 1px 0 rgba(255,255,255,.55),
-    inset -1px -1px 0 rgba(0,0,0,.25),
-    inset 0 0 22px rgba(0,0,0,.35),
-    0 0 0 1px rgba(255,255,255,.08),
-    0 4px 18px rgba(0, 0, 0, 0.5),
-    0 0 22px rgba(0, 255, 65, 0.10);
+    inset 0 0 0 1px rgba(0,0,0,.55),
+    inset 0 1px 0 rgba(255,255,255,.28),
+    /* outer — монитор висит над фоном */
+    0 8px 24px rgba(0,0,0,.7),
+    0 18px 48px rgba(0,0,0,.4),
+    /* холодный CRT-ореол */
+    0 0 36px rgba(0,255,65,.14);
   display: flex; flex-direction: column;
   overflow: hidden;
   font-family: var(--f-sys);
   font-size: 12px;
   color: #000;
   animation: crt-on .6s ease-out;
+}
+/* Vignette-overlay — кладётся ПОВЕРХ всего содержимого окна.
+   Радиальный градиент: прозрачный центр → плотная тень по углам.
+   Создаёт ощущение, что экран «утоплен» в выпуклое CRT-стекло.
+   pointer-events: none — клики проходят сквозь к иконкам/табам. */
+#monitor-win::before {
+  content: '';
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 78% 72% at center,
+    transparent 38%,
+    rgba(0,0,0,.22) 72%,
+    rgba(0,0,0,.55) 92%,
+    rgba(0,0,0,.85) 100%
+  );
+  z-index: 999;
+  border-radius: inherit;
 }
 @keyframes crt-on {
   0%   { transform: scaleY(0.02); filter: brightness(3); }
@@ -842,7 +867,9 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
     font-size: 12px;
     letter-spacing: .6px;
     margin: 0;
-    line-height: 1;
+    /* 1.35 — пиксельный Press Start 2P без просвета визуально слипается
+       между СТЕПАН/КРЫЛОВ, нужна явная дыра между строками */
+    line-height: 1.35;
     text-shadow: 1px 1px 0 rgba(0,0,0,.7);
   }
 
