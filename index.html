@@ -11,11 +11,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap" rel="stylesheet">
 <!-- Параллельная загрузка критичных ассетов — убирает задержку старта звука и фона -->
-<link rel="preload" as="audio" href="bg.mp3?v=26" type="audio/mpeg">
-<link rel="preload" as="image" href="bg.jpg?v=26">
-<link rel="preload" as="image" href="bg-mobile.jpg?v=26">
-<link rel="preload" as="video" href="boot-loader.mp4?v=26" type="video/mp4">
-<link rel="stylesheet" href="style.css?v=26">
+<link rel="preload" as="audio" href="bg.mp3?v=27" type="audio/mpeg">
+<link rel="preload" as="image" href="bg.jpg?v=27">
+<link rel="preload" as="image" href="bg-mobile.jpg?v=27">
+<link rel="preload" as="video" href="boot-loader.mp4?v=27" type="video/mp4">
+<link rel="stylesheet" href="style.css?v=27">
 </head>
 <body>
 
@@ -23,12 +23,12 @@
      Видео квадратное 1200×1200, чёрный фон вокруг через CSS (desktop — полосы по бокам, mobile — сверху/снизу). -->
 <div id="boot">
   <video id="boot-media" autoplay muted loop playsinline preload="auto" disableremoteplayback>
-    <source src="boot-loader.mp4?v=26" type="video/mp4">
+    <source src="boot-loader.mp4?v=27" type="video/mp4">
   </video>
 </div>
 
 <!-- Фоновый звук — автоплей заблокирован, запускается по первому тапу -->
-<audio id="bg-audio" src="bg.mp3?v=26" loop preload="auto"></audio>
+<audio id="bg-audio" src="bg.mp3?v=27" loop preload="auto"></audio>
 
 <!-- ═══════════════ WINDOW FRAME (Win95-стиль, обрамляет всю сцену) ═══════════════ -->
 <div id="scene-frame">
@@ -330,6 +330,6 @@
   </div>
 </div>
 
-<script src="app.js?v=26"></script>
+<script src="app.js?v=27"></script>
 </body>
 </html>
