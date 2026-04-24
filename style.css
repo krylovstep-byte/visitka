@@ -804,12 +804,12 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
   }
 
   /* ТОЧНЫЕ координаты чёрного CRT-экрана на финальном bg-mobile.png
-     (измерено попиксельно: x=29.0..75.5%, y=33.7..56.3%) */
+     (измерено попиксельно через measure_crt.py: x=27.5..72.6%, y=25.8..51.3%) */
   #monitor-win {
-    left:   29.0%;
-    top:    33.7%;
-    width:  46.4%;
-    height: 22.7%;
+    left:   27.5%;
+    top:    25.8%;
+    width:  45.1%;
+    height: 25.4%;
     box-shadow:
       inset 1px 1px 0 rgba(255,255,255,.4),
       inset -1px -1px 0 rgba(0,0,0,.25),
@@ -849,43 +849,44 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
   }
 
   .home-head {
-    padding: 6px 4px 3px;
+    padding: 5px 4px 3px;
     text-align: center;
     flex-shrink: 0;
   }
   .hero-name {
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: .6px;
     margin: 0;
     line-height: 1;
     text-shadow: 1px 1px 0 rgba(0,0,0,.7);
   }
 
-  /* Сетка 5×1 — ВСЕ 5 иконок в один горизонтальный ряд.
-     Раньше было 3×2, но второй ряд ("Игры/Мусор") постоянно
-     вылетал за низ CRT из-за iOS-метрик шрифта и округлений.
-     Один ряд = гарантированно влезает в 22.7% высоту CRT. */
+  /* Сетка 3×2 — 5 иконок в 2 ряда (первый: 3, второй: 2).
+     Таргет — iPhone 12/13/14/15 (390×844) и аналоги. SE игнорируем.
+     CRT width = 45.1% × 390 = 176 → колонка (176−6−4)/3 = 55.3 → иконка 52 с запасом 3px.
+     Минимальная поддержка — iPhone 13 mini (375×812): CRT 169 → col 53 → icon 52 запас 1px.
+     По высоте: home-head 20 + 2×(52 + gap2 + label10) + row-gap2 + pad3 = 153 → запас 23px на 390-вьюпорте. */
   .home-icons {
-    flex: 0 0 auto;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 1px;
+    flex: 1;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
     padding: 0 3px 3px;
     align-content: start;
     overflow: hidden;
   }
   .mw-icon {
     padding: 0;
-    gap: 1px;
+    gap: 2px;
     border-width: 0;
     min-width: 0;
   }
-  .mw-icon-img { width: 30px; height: 30px; }
-  .mw-icon-img img, .mw-icon-img .folder-svg { width: 30px; height: 30px; }
+  .mw-icon-img { width: 52px; height: 52px; }
+  .mw-icon-img img, .mw-icon-img .folder-svg { width: 52px; height: 52px; }
   /* Telegram на мобилке — тот же размер, что и остальные */
   .mw-icon[data-app="telegram"] .mw-icon-img,
-  .mw-icon[data-app="telegram"] .mw-icon-img img { width: 30px; height: 30px; }
+  .mw-icon[data-app="telegram"] .mw-icon-img img { width: 52px; height: 52px; }
   .mw-icon-lbl {
-    font-size: 8px;
+    font-size: 10px;
     max-width: 100%;
     padding: 0;
     margin-top: 0;
@@ -1043,12 +1044,14 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
   .tm-p { font-size: 16px; }
 }
 
-/* Очень узкий (≤ 360px — iPhone SE, старые Android) — чуть ужимаем иконки под узкую 5-колоночную сетку */
+/* Очень узкий (≤ 360px — iPhone SE 1st 320px, старые Android 360px).
+   На iPhone SE 1st (320×568) CRT width = 137px → колонка (137-6-4)/3 = 42.3
+   → иконка 40 с запасом 1px. */
 @media (max-width: 360px) {
-  .mw-icon-img { width: 26px; height: 26px; }
-  .mw-icon-img img, .mw-icon-img .folder-svg { width: 26px; height: 26px; }
+  .mw-icon-img { width: 40px; height: 40px; }
+  .mw-icon-img img, .mw-icon-img .folder-svg { width: 40px; height: 40px; }
   .mw-icon[data-app="telegram"] .mw-icon-img,
-  .mw-icon[data-app="telegram"] .mw-icon-img img { width: 26px; height: 26px; }
-  .mw-icon-lbl { font-size: 7px; }
-  .hero-name { font-size: 10px; }
+  .mw-icon[data-app="telegram"] .mw-icon-img img { width: 40px; height: 40px; }
+  .mw-icon-lbl { font-size: 8px; }
+  .hero-name { font-size: 11px; }
 }
