@@ -47,59 +47,34 @@ html, body {
 button { font-family: inherit; font-size: inherit; cursor: pointer; }
 img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
-/* ═══════════════ BOOT SCREEN — CRT TV turn-on ═══════════════
-   Сценарий: чёрный экран → горизонтальная "линия развёртки"
-   в центре вспыхивает и ползёт по ширине → экран ВСПЫХИВАЕТ
-   ЯРКО-БЕЛЫМ (чистый #fff, держит пик ~500мс) → затухает →
-   scene открывается. Без текста — как у старых ЭЛТ-телевизоров.
-   Общая длительность: 1.4с. */
+/* ═══════════════ BOOT SCREEN — статика старого ТВ ═══════════════
+   Показываем gif-заставку (цветные полосы с шумом) на 1.5с.
+   Смягчаем: плавный fade-in 300мс, hold ~900мс, fade-out 300мс —
+   чтобы не было резких переходов и никакой эпилепсии. */
 #boot {
   position: fixed; inset: 0; z-index: 99999;
   background: #000;
   overflow: hidden;
+  opacity: 0;
+  animation: boot-fade-in .3s ease-out forwards;
   transition: opacity .4s ease, visibility .4s;
 }
 #boot.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
-/* Горизонтальная "линия развёртки" — белая полоска по центру, растёт по ширине.
-   Ширина 150vmax — с запасом для любого экрана. */
-#boot .tv-line {
-  position: absolute;
-  left: 50%; top: 50%;
-  width: 150vmax; height: 2px;
-  transform: translate(-50%, -50%) scaleX(0);
-  background: #ffffff;
-  box-shadow:
-    0 0 24px rgba(255,255,255,1),
-    0 0 56px rgba(255,255,255,.85),
-    0 0 110px rgba(255,255,255,.55);
-  opacity: 0;
-  animation: tv-line 1.4s cubic-bezier(.2,.8,.25,1) forwards;
-}
-@keyframes tv-line {
-  0%   { opacity: 0;   transform: translate(-50%, -50%) scaleX(0); }
-  8%   { opacity: 1;   transform: translate(-50%, -50%) scaleX(0.008); }  /* яркая точка */
-  20%  { opacity: 1;   transform: translate(-50%, -50%) scaleX(1); }       /* линия во всю ширину */
-  28%  { opacity: 0; }                                                     /* растворяется в общей вспышке */
-  100% { opacity: 0; }
+@keyframes boot-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
-/* Белая вспышка — ПОЛНОЦВЕТНЫЙ чистый белый на весь экран,
-   долго держит пик, потом плавно затухает. */
-#boot .tv-flash {
+/* Сам gif — на весь экран, object-fit cover чтобы без белых полей.
+   Анимированный шум воспроизводится браузером автоматически. */
+#boot-gif {
   position: absolute; inset: 0;
-  background: #ffffff;
-  opacity: 0;
-  animation: tv-flash 1.4s ease-out forwards;
-  will-change: opacity;
-}
-@keyframes tv-flash {
-  0%   { opacity: 0; }
-  18%  { opacity: 0; }     /* ждём формирования линии (~250мс) */
-  26%  { opacity: 1; }     /* rapid rise (~110мс) до пика */
-  62%  { opacity: 1; }     /* peak hold ~500мс — яркая чистая вспышка */
-  85%  { opacity: .25; }   /* fade start (~320мс) */
-  100% { opacity: 0; }     /* полностью прозрачно */
+  width: 100%; height: 100%;
+  object-fit: cover;
+  user-select: none;
+  pointer-events: none;
+  image-rendering: auto;
 }
 
 /* ═══════════════ WINDOW FRAME: окно обтягивает СЦЕНУ вплотную ═══════════════
@@ -497,13 +472,9 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
   object-fit: contain;
   filter: drop-shadow(1px 1px 0 rgba(0,0,0,.6));
 }
-/* Telegram icon — bigger, its PNG has more whitespace around glyph */
-.mw-icon[data-app="telegram"] .mw-icon-img {
-  width: 84px; height: 84px;
-}
-.mw-icon[data-app="telegram"] .mw-icon-img img {
-  width: 84px; height: 84px;
-}
+/* Все иконки одного размера — подписи на одной линии.
+   Новая иконка Telegram "плотная" (без whitespace), поэтому её
+   не нужно делать больше остальных. */
 .mw-icon-lbl {
   font-family: var(--f-sys);
   font-size: 14px;

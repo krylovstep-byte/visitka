@@ -11,7 +11,7 @@ const $$ = (s, r=document) => [...r.querySelectorAll(s)];
 const on = (el, ev, fn) => el && el.addEventListener(ev, fn);
 const pad = (n) => String(n).padStart(2, '0');
 
-/* ═══════════════ BOOT SEQUENCE (CRT TV turn-on, ~1.4 sec) ═══════════════ */
+/* ═══════════════ BOOT SEQUENCE (TV-static gif, ~1.5 sec) ═══════════════ */
 function boot() {
   const bootEl = $('#boot');
   if (!bootEl) return;
@@ -19,8 +19,8 @@ function boot() {
   // Звук стартует СРАЗУ при загрузке — не ждём конца анимации
   startBgAudio();
 
-  // CSS-анимация длится 1.4с
-  setTimeout(() => bootEl.classList.add('hidden'), 1400);
+  // 1500мс = fade-in 300мс (CSS) + hold ~800мс + fade-out 400мс (через .hidden)
+  setTimeout(() => bootEl.classList.add('hidden'), 1500);
 
   // Клик по boot — пропуск
   on(bootEl, 'click', () => bootEl.classList.add('hidden'));
