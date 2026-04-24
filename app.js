@@ -11,31 +11,17 @@ const $$ = (s, r=document) => [...r.querySelectorAll(s)];
 const on = (el, ev, fn) => el && el.addEventListener(ev, fn);
 const pad = (n) => String(n).padStart(2, '0');
 
-/* ═══════════════ BOOT SEQUENCE (TV-static gif, ~1.5 sec) ═══════════════ */
-function boot() {
-  const bootEl = $('#boot');
-  if (!bootEl) return;
-
-  // Звук стартует СРАЗУ при загрузке — не ждём конца анимации
-  startBgAudio();
-
-  // 1500мс = fade-in 300мс (CSS) + hold ~800мс + fade-out 400мс (через .hidden)
-  setTimeout(() => bootEl.classList.add('hidden'), 1500);
-
-  // Клик по boot — пропуск
-  on(bootEl, 'click', () => bootEl.classList.add('hidden'));
-}
-
-/* ═══════════════ BACKGROUND AUDIO ═══════════════
-   Автоплей заблокирован браузерами (особенно iOS Safari).
-   Стратегия: пробуем play() сразу; если Promise отклонён —
-   вешаем одноразовые листенеры (pointerdown/touchstart/keydown) —
-   первый же user gesture запустит звук без задержки. */
+/* ═══════════════ BACKGROUND AUDIO — СТАРТУЕТ СРАЗУ ═══════════════
+   Вызываем на этапе парсинга скрипта (скрипт в конце body,
+   значит <audio> уже в DOM). Не ждём DOMContentLoaded — это экономит ~50-200мс. */
 let audioStarted = false;
 function startBgAudio() {
   const audio = $('#bg-audio');
   if (!audio || audioStarted) return;
   audio.volume = 0.6;
+  // Форсируем скачивание буфера — preload="auto" в HTML тоже помогает,
+  // но load() явно запускает/пере-запускает загрузку
+  try { audio.load(); } catch {}
 
   const markStarted = () => { audioStarted = true; };
   const unlock = () => {
@@ -46,10 +32,47 @@ function startBgAudio() {
   audio.play()
     .then(markStarted)
     .catch(() => {
+      // Автоплей заблокирован (iOS Safari, Chrome без interaction) —
+      // ловим первый же user gesture и стартуем
       document.addEventListener('pointerdown', unlock, { once: true });
       document.addEventListener('keydown', unlock, { once: true });
       document.addEventListener('touchstart', unlock, { once: true });
+      document.addEventListener('click', unlock, { once: true });
     });
+}
+// ВЫЗЫВАЕМ СРАЗУ — не ждём DOMContentLoaded
+startBgAudio();
+
+/* ═══════════════ BOOT SEQUENCE (Windows84 mp4, ~3 sec) ═══════════════
+   Тайминг: 0 → fade-in (300мс из CSS) → 2750мс .fading (плавное затемнение видео 250мс)
+           → 3000мс .hidden (весь #boot уходит за 400мс) */
+const BOOT_TOTAL   = 3000;  // общая длительность экрана загрузки
+const BOOT_FADE    = 250;   // длительность затемнения в конце
+
+function boot() {
+  const bootEl = $('#boot');
+  if (!bootEl) return;
+
+  // Заставляем видео стартовать (на iOS Safari autoplay работает при muted+playsinline,
+  // но иногда нужно явно .play() чтобы не ждать paint-тайминга).
+  const vid = $('#boot-media');
+  if (vid) {
+    try { vid.play().catch(() => {}); } catch {}
+  }
+
+  // Звук — на всякий случай повторяем startBgAudio (idempotent через audioStarted флаг)
+  startBgAudio();
+
+  // За 250мс до конца — плавное затемнение картинки в чёрный
+  setTimeout(() => bootEl.classList.add('fading'), BOOT_TOTAL - BOOT_FADE);
+  // В конце — скрываем весь boot (fade opacity из CSS = .4s)
+  setTimeout(() => bootEl.classList.add('hidden'), BOOT_TOTAL);
+
+  // Клик по boot — пропуск (также разблокирует звук)
+  on(bootEl, 'click', () => {
+    bootEl.classList.add('hidden');
+    startBgAudio();
+  });
 }
 
 /* ═══════════════ MONITOR WINDOW TABS ═══════════════ */

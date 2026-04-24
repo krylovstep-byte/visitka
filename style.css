@@ -66,15 +66,26 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   to   { opacity: 1; }
 }
 
-/* Сам gif — на весь экран, object-fit cover чтобы без белых полей.
-   Анимированный шум воспроизводится браузером автоматически. */
-#boot-gif {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
+/* Квадратное видео (1200×1200) по центру, object-fit: contain = чёрные поля вокруг.
+   На десктопе полосы по бокам, на мобилке — сверху/снизу (как Стёпа просил). */
+#boot-media {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  /* Вписываем квадрат в меньшую сторону viewport, с запасом 5% по краям */
+  width: min(90vw, 90vh);
+  height: min(90vw, 90vh);
+  object-fit: contain;
   user-select: none;
   pointer-events: none;
   image-rendering: auto;
+  /* Плавное затемнение видео в конце лоадера */
+  transition: filter .25s ease, opacity .25s ease;
+}
+/* Последние 250мс — видео уходит в чёрный (boot остаётся на чёрном фоне) */
+#boot.fading #boot-media {
+  filter: brightness(0);
+  opacity: 0;
 }
 
 /* ═══════════════ WINDOW FRAME: окно обтягивает СЦЕНУ вплотную ═══════════════
@@ -204,7 +215,7 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
 }
 #desk-bg {
   position: absolute; inset: 0;
-  background-image: url('bg.png');
+  background-image: url('bg.jpg');
   background-size: 100% 100%;       /* stage сам имеет аспект 1672/941 → без деформации */
   background-repeat: no-repeat;
   z-index: 1;
@@ -764,7 +775,7 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
 
   /* Мобильная сцена */
   #desk-bg {
-    background-image: url('bg-mobile.png');
+    background-image: url('bg-mobile.jpg');
   }
 
   /* ТОЧНЫЕ координаты чёрного CRT-экрана на финальном bg-mobile.png
@@ -849,6 +860,13 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
   /* Telegram на мобилке — тот же размер, что и остальные */
   .mw-icon[data-app="telegram"] .mw-icon-img,
   .mw-icon[data-app="telegram"] .mw-icon-img img { width: 52px; height: 52px; }
+  /* Projects-icon имеет аспект 647:549 (шире чем высокая),
+     object-fit:contain вписывает её как 52×44 и она смотрится мельче остальных.
+     Даём ей небольшой scale, чтобы оптически сравнять. */
+  .mw-icon[data-app="projects"] .mw-icon-img img {
+    transform: scale(1.22);
+    transform-origin: center;
+  }
   .mw-icon-lbl {
     font-size: 10px;
     max-width: 100%;
