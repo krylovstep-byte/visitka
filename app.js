@@ -11,34 +11,31 @@ const $$ = (s, r=document) => [...r.querySelectorAll(s)];
 const on = (el, ev, fn) => el && el.addEventListener(ev, fn);
 const pad = (n) => String(n).padStart(2, '0');
 
-/* ═══════════════ BOOT SEQUENCE (CRT TV turn-on, ~1.1 sec) ═══════════════ */
+/* ═══════════════ BOOT SEQUENCE (CRT TV turn-on, ~1.4 sec) ═══════════════ */
 function boot() {
   const bootEl = $('#boot');
   if (!bootEl) return;
 
-  // CSS-анимация длится 1.1с — в конце прячем оверлей и включаем звук
-  setTimeout(() => {
-    bootEl.classList.add('hidden');
-    startBgAudio();
-  }, 1100);
+  // Звук стартует СРАЗУ при загрузке — не ждём конца анимации
+  startBgAudio();
 
-  // Клик по boot — сразу пропуск
-  on(bootEl, 'click', () => {
-    bootEl.classList.add('hidden');
-    startBgAudio();
-  });
+  // CSS-анимация длится 1.4с
+  setTimeout(() => bootEl.classList.add('hidden'), 1400);
+
+  // Клик по boot — пропуск
+  on(bootEl, 'click', () => bootEl.classList.add('hidden'));
 }
 
 /* ═══════════════ BACKGROUND AUDIO ═══════════════
    Автоплей заблокирован браузерами (особенно iOS Safari).
    Стратегия: пробуем play() сразу; если Promise отклонён —
-   вешаем одноразовый листенер на pointerdown/keydown
-   (любой первый tap/клик по странице запустит звук). */
+   вешаем одноразовые листенеры (pointerdown/touchstart/keydown) —
+   первый же user gesture запустит звук без задержки. */
 let audioStarted = false;
 function startBgAudio() {
   const audio = $('#bg-audio');
   if (!audio || audioStarted) return;
-  audio.volume = 0.75;
+  audio.volume = 0.6;
 
   const markStarted = () => { audioStarted = true; };
   const unlock = () => {
@@ -49,7 +46,6 @@ function startBgAudio() {
   audio.play()
     .then(markStarted)
     .catch(() => {
-      // Safari / Chrome без user gesture не даст. Ждём первый тап.
       document.addEventListener('pointerdown', unlock, { once: true });
       document.addEventListener('keydown', unlock, { once: true });
       document.addEventListener('touchstart', unlock, { once: true });

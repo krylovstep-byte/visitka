@@ -49,53 +49,57 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 /* ═══════════════ BOOT SCREEN — CRT TV turn-on ═══════════════
    Сценарий: чёрный экран → горизонтальная "линия развёртки"
-   в центре вспыхивает и ползёт по ширине → расширяется в белую
-   вспышку по всему экрану → гаснет → scene открывается.
-   Без текста — как у старых ЭЛТ-телевизоров. */
+   в центре вспыхивает и ползёт по ширине → экран ВСПЫХИВАЕТ
+   ЯРКО-БЕЛЫМ (чистый #fff, держит пик ~500мс) → затухает →
+   scene открывается. Без текста — как у старых ЭЛТ-телевизоров.
+   Общая длительность: 1.4с. */
 #boot {
   position: fixed; inset: 0; z-index: 99999;
   background: #000;
   overflow: hidden;
-  transition: opacity .35s ease, visibility .35s;
+  transition: opacity .4s ease, visibility .4s;
 }
 #boot.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
-/* Горизонтальная "линия развёртки" — белая полоска по центру, растёт по ширине */
+/* Горизонтальная "линия развёртки" — белая полоска по центру, растёт по ширине.
+   Ширина 150vmax — с запасом для любого экрана. */
 #boot .tv-line {
   position: absolute;
   left: 50%; top: 50%;
-  width: 100vw; height: 2px;
+  width: 150vmax; height: 2px;
   transform: translate(-50%, -50%) scaleX(0);
-  background: #f4f4f4;
+  background: #ffffff;
   box-shadow:
-    0 0 18px rgba(255,255,255,.95),
-    0 0 36px rgba(255,255,255,.6),
-    0 0 72px rgba(255,255,255,.35);
+    0 0 24px rgba(255,255,255,1),
+    0 0 56px rgba(255,255,255,.85),
+    0 0 110px rgba(255,255,255,.55);
   opacity: 0;
-  animation: tv-line 1.1s cubic-bezier(.2,.7,.3,1) forwards;
+  animation: tv-line 1.4s cubic-bezier(.2,.8,.25,1) forwards;
 }
 @keyframes tv-line {
   0%   { opacity: 0;   transform: translate(-50%, -50%) scaleX(0); }
-  18%  { opacity: 1;   transform: translate(-50%, -50%) scaleX(0.012); }  /* точка */
-  45%  { opacity: 1;   transform: translate(-50%, -50%) scaleX(1); }       /* тонкая линия во всю ширину */
-  55%  { opacity: 1;   transform: translate(-50%, -50%) scaleX(1); }       /* задержка перед вспышкой */
-  65%  { opacity: 0; }
+  8%   { opacity: 1;   transform: translate(-50%, -50%) scaleX(0.008); }  /* яркая точка */
+  20%  { opacity: 1;   transform: translate(-50%, -50%) scaleX(1); }       /* линия во всю ширину */
+  28%  { opacity: 0; }                                                     /* растворяется в общей вспышке */
   100% { opacity: 0; }
 }
 
-/* Белая вспышка — бахает поверх линии, быстро гаснет */
+/* Белая вспышка — ПОЛНОЦВЕТНЫЙ чистый белый на весь экран,
+   долго держит пик, потом плавно затухает. */
 #boot .tv-flash {
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse at center, #fff 0%, rgba(255,255,255,.75) 40%, rgba(255,255,255,0) 80%);
+  background: #ffffff;
   opacity: 0;
-  animation: tv-flash 1.1s ease-out forwards;
+  animation: tv-flash 1.4s ease-out forwards;
+  will-change: opacity;
 }
 @keyframes tv-flash {
-  0%   { opacity: 0; transform: scaleY(0); }
-  50%  { opacity: 0; transform: scaleY(0); }
-  58%  { opacity: 1; transform: scaleY(1); }    /* пик вспышки */
-  75%  { opacity: .4; transform: scaleY(1); }
-  100% { opacity: 0; transform: scaleY(1); }
+  0%   { opacity: 0; }
+  18%  { opacity: 0; }     /* ждём формирования линии (~250мс) */
+  26%  { opacity: 1; }     /* rapid rise (~110мс) до пика */
+  62%  { opacity: 1; }     /* peak hold ~500мс — яркая чистая вспышка */
+  85%  { opacity: .25; }   /* fade start (~320мс) */
+  100% { opacity: 0; }     /* полностью прозрачно */
 }
 
 /* ═══════════════ WINDOW FRAME: окно обтягивает СЦЕНУ вплотную ═══════════════
