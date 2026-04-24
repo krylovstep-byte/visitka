@@ -11,33 +11,49 @@ const $$ = (s, r=document) => [...r.querySelectorAll(s)];
 const on = (el, ev, fn) => el && el.addEventListener(ev, fn);
 const pad = (n) => String(n).padStart(2, '0');
 
-/* ═══════════════ BOOT SEQUENCE (Win95-splash, ~1.1 sec) ═══════════════ */
+/* ═══════════════ BOOT SEQUENCE (CRT TV turn-on, ~1.1 sec) ═══════════════ */
 function boot() {
   const bootEl = $('#boot');
-  const msgEl  = $('#boot-msg');
   if (!bootEl) return;
 
-  // Меняем подпись под полосой — чуть оживляет статичный сплэш
-  const msgs = [
-    'Starting StepanOS...',
-    'Loading system files...',
-    'Preparing desktop...',
-    'Welcome'
-  ];
-  let mi = 0;
-  if (msgEl) {
-    const msgTimer = setInterval(() => {
-      mi++;
-      if (mi >= msgs.length) { clearInterval(msgTimer); return; }
-      msgEl.textContent = msgs[mi];
-    }, 280);
-  }
+  // CSS-анимация длится 1.1с — в конце прячем оверлей и включаем звук
+  setTimeout(() => {
+    bootEl.classList.add('hidden');
+    startBgAudio();
+  }, 1100);
 
-  // Через ~1.1 сек прячем сплэш (CSS boot-fill тоже 1 сек)
-  setTimeout(() => bootEl.classList.add('hidden'), 1100);
+  // Клик по boot — сразу пропуск
+  on(bootEl, 'click', () => {
+    bootEl.classList.add('hidden');
+    startBgAudio();
+  });
+}
 
-  // Клик — скипнуть
-  on(bootEl, 'click', () => bootEl.classList.add('hidden'));
+/* ═══════════════ BACKGROUND AUDIO ═══════════════
+   Автоплей заблокирован браузерами (особенно iOS Safari).
+   Стратегия: пробуем play() сразу; если Promise отклонён —
+   вешаем одноразовый листенер на pointerdown/keydown
+   (любой первый tap/клик по странице запустит звук). */
+let audioStarted = false;
+function startBgAudio() {
+  const audio = $('#bg-audio');
+  if (!audio || audioStarted) return;
+  audio.volume = 0.75;
+
+  const markStarted = () => { audioStarted = true; };
+  const unlock = () => {
+    if (audioStarted) return;
+    audio.play().then(markStarted).catch(() => {});
+  };
+
+  audio.play()
+    .then(markStarted)
+    .catch(() => {
+      // Safari / Chrome без user gesture не даст. Ждём первый тап.
+      document.addEventListener('pointerdown', unlock, { once: true });
+      document.addEventListener('keydown', unlock, { once: true });
+      document.addEventListener('touchstart', unlock, { once: true });
+    });
 }
 
 /* ═══════════════ MONITOR WINDOW TABS ═══════════════ */
