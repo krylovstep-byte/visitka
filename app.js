@@ -11,6 +11,23 @@ const $$ = (s, r=document) => [...r.querySelectorAll(s)];
 const on = (el, ev, fn) => el && el.addEventListener(ev, fn);
 const pad = (n) => String(n).padStart(2, '0');
 
+/* ═══════════════ COMPACT-VH DETECT ═══════════════
+   Telegram WebView (и другие in-app браузеры) рапортуют media-query
+   и vh-юнитам полную высоту экрана, игнорируя собственный тулбар.
+   window.innerHeight же возвращает РЕАЛЬНУЮ visible-area, поэтому
+   используем его для детекта компактных viewport (≤ 750px высоты)
+   и навешиваем класс на body — CSS подхватывает компактный layout
+   home-сетки иконок (44px вместо 52px). */
+function applyCompactVH() {
+  const h = (window.visualViewport && window.visualViewport.height) || window.innerHeight;
+  document.body.classList.toggle('compact-vh', h < 750);
+}
+applyCompactVH();
+window.addEventListener('resize', applyCompactVH);
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', applyCompactVH);
+}
+
 /* ═══════════════ BACKGROUND AUDIO — СТАРТУЕТ СРАЗУ ═══════════════
    Вызываем на этапе парсинга скрипта (скрипт в конце body,
    значит <audio> уже в DOM). Не ждём DOMContentLoaded — это экономит ~50-200мс. */

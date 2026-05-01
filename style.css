@@ -1113,7 +1113,25 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
    тулбар, который сжимает viewport до ~660-720px на iPhone Pro. CRT-окно
    рассчитано впритык под 52px иконки на 844-вьюпорте, и при сжатии CRT
    подписи нижнего ряда ("Игры"/"Корзина") не влезают.
-   На низкой высоте — компактный layout с 44px-иконками. */
+   На низкой высоте — компактный layout с 44px-иконками.
+
+   Активация — два пути:
+   1) JS-класс body.compact-vh (в app.js через window.innerHeight) —
+      ОСНОВНОЙ путь, работает в Telegram WebView, где media-query height врёт.
+   2) @media (max-height: 740px) — fallback, если JS почему-то не сработал. */
+@media (max-width: 768px) {
+  body.compact-vh .home-head { padding: 3px 4px 2px; }
+  body.compact-vh .hero-name { font-size: 11px; line-height: 1.3; }
+  body.compact-vh .home-icons { gap: 1px; padding: 0 3px 2px; }
+  body.compact-vh .mw-icon { gap: 1px; }
+  body.compact-vh .mw-icon-img,
+  body.compact-vh .mw-icon-img img,
+  body.compact-vh .mw-icon-img .folder-svg { width: 44px; height: 44px; }
+  body.compact-vh .mw-icon[data-app="telegram"] .mw-icon-img,
+  body.compact-vh .mw-icon[data-app="telegram"] .mw-icon-img img { width: 44px; height: 44px; }
+  body.compact-vh .mw-icon-lbl { font-size: 9px; }
+}
+
 @media (max-width: 768px) and (max-height: 740px) and (orientation: portrait) {
   .home-head { padding: 3px 4px 2px; }
   .hero-name { font-size: 11px; line-height: 1.3; }
