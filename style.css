@@ -808,6 +808,18 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
   .ft-close { font-size: 11px; }
   #frame-titlebar .ft-right { gap: 6px; }
 
+  /* Расширенный touch target 44×44 — визуал кнопки не меняем,
+     но кликабельная область становится комфортной для пальца. */
+  .ft-btn, .mw-tb-btn { position: relative; }
+  .ft-btn::before,
+  .mw-tb-btn::before {
+    content: "";
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 44px; height: 44px;
+    transform: translate(-50%, -50%);
+  }
+
   /* Мобильная сцена */
   #desk-bg {
     background-image: url('bg-mobile.jpg');
@@ -977,6 +989,7 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
     border-color: var(--w98-lo2) var(--w98-white) var(--w98-white) var(--w98-lo2);
     margin-top: 2px;
     overflow-y: auto; overflow-x: hidden;
+    overscroll-behavior: contain;
     padding: 12px 14px;
     font-family: var(--f-mono);
     font-size: 17px;
@@ -1034,6 +1047,7 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
     padding: 12px 12px calc(24px + env(safe-area-inset-bottom));
     flex: 1;
     overflow-y: auto;
+    overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
   }
   /* Снейк и крестики — чуть компактнее, чтобы без скролла влезла хотя бы
@@ -1064,6 +1078,27 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
   .tm-frame .gm-titlebar .mw-tb-btn { width: 22px; height: 18px; font-size: 13px; }
   .tm-body { padding: 22px 18px; margin: 4px; }
   .tm-p { font-size: 16px; }
+}
+
+/* Промежуточный брейкпоинт (≤ 480px — большинство Android-телефонов
+   в портрете между 360 и 480 шириной). Точечная полировка читаемости. */
+@media (max-width: 480px) {
+  .hero-name { font-size: 14px; }
+  .mw-icon-img { width: 46px; height: 46px; }
+  .mw-icon-img img, .mw-icon-img .folder-svg { width: 46px; height: 46px; }
+}
+
+/* Ландшафт телефонов (узкая высота, любая ширина). Боремся с тем,
+   что mobile-modal и games-modal использовали 100dvh от высоты —
+   при низкой высоте контент еле влезает. Сжимаем тайтлбары, убираем
+   лишний voice-padding и отключаем decorative-анимации входа. */
+@media (max-height: 500px) and (orientation: landscape) {
+  #mobile-modal { padding: 0; }
+  .mm-titlebar { height: 26px; }
+  .mm-tb-title { font-size: 12px; }
+  .mm-body { padding: 8px 12px; font-size: 14px; }
+  .gm-titlebar { height: 26px; }
+  .gm-body { padding: 8px 12px calc(12px + env(safe-area-inset-bottom)); }
 }
 
 /* Очень узкий (≤ 360px — iPhone SE 1st 320px, старые Android 360px).
