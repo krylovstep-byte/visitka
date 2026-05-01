@@ -99,8 +99,13 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
 :root {
   --frame-overhead-x: 12px;
   --frame-overhead-y: 44px;
+  /* fallback для старых браузеров без dvh */
   --stage-w: min(calc(100vw - var(--frame-overhead-x)), calc((100vh - var(--frame-overhead-y)) * 1672 / 941));
   --stage-h: min(calc(100vh - var(--frame-overhead-y)), calc((100vw - var(--frame-overhead-x)) * 941 / 1672));
+  /* dvh учитывает динамические UI (тулбар Telegram WebView, address bar Safari).
+     Если dvh поддерживается — перезатирает значения выше. */
+  --stage-w: min(calc(100vw - var(--frame-overhead-x)), calc((100dvh - var(--frame-overhead-y)) * 1672 / 941));
+  --stage-h: min(calc(100dvh - var(--frame-overhead-y)), calc((100vw - var(--frame-overhead-x)) * 941 / 1672));
 }
 
 #scene-frame {
@@ -782,8 +787,12 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
   :root {
     --frame-overhead-x: 0px;
     --frame-overhead-y: 26px;
+    /* fallback для старых браузеров без dvh */
     --stage-w: min(calc(100vw - var(--frame-overhead-x)), calc((100vh - var(--frame-overhead-y)) * 941 / 1672));
     --stage-h: min(calc(100vh - var(--frame-overhead-y)), calc((100vw - var(--frame-overhead-x)) * 1672 / 941));
+    /* dvh учитывает динамические UI (тулбар Telegram WebView, address bar Safari) */
+    --stage-w: min(calc(100vw - var(--frame-overhead-x)), calc((100dvh - var(--frame-overhead-y)) * 941 / 1672));
+    --stage-h: min(calc(100dvh - var(--frame-overhead-y)), calc((100vw - var(--frame-overhead-x)) * 1672 / 941));
     --titlebar-h: 26px;
   }
 
