@@ -208,6 +208,69 @@ function modals() {
   on($('#mobile-modal'), 'click', (e) => { if (e.target.id === 'mobile-modal') closeMobileModal(); });
 }
 
+/* ═══════════════ POKE WINDOW — шутка при клике по сцене ═══════════════
+   Клик мимо «компуктера» (по столу, фону, чёрным полям) → маленькое
+   Win95-окошко с случайной фразой в точке клика. Само тает через 4с. */
+const POKES = [
+  'Это стол. По нему можно только стучать.',
+  'Клик мимо. Но я ценю настойчивость.',
+  'Здесь ничего нет. Честно, я проверял.',
+  'Не трогай монитор — он старенький, нервный.',
+  'Ошибка 404: смысл клика не найден.',
+  'Пыль успешно потревожена.',
+  'Это пиксели. Им приятно, кстати.',
+  'Системе нравится твой энтузиазм.',
+  'Тут могла быть ваша реклама. Но нет.',
+  'Анжуманя. Потом пресс качат.',
+  'Кофе в кружке остыл ещё вчера.',
+  'Загрузка смысла... 99%... зависло.',
+  'Стол несёт декоративную функцию.',
+  'А мог бы уже написать в телегу.',
+  'Win95 не виноват. Это ты кликнул.'
+];
+
+function pokeWindow() {
+  const win = $('#poke-win');
+  const txt = $('#pw-text');
+  if (!win || !txt) return;
+
+  let hideTimer;
+  let lastIdx = -1;
+  const close = () => { win.classList.add('hidden'); clearTimeout(hideTimer); };
+
+  // Клик в любое место окошка закрывает его (крестик — для красоты, но тоже работает)
+  on(win, 'click', (e) => { e.stopPropagation(); close(); });
+
+  on(document, 'click', (e) => {
+    // Только «пустая» сцена: не компуктер, не иконки, не модалки, не титлбар, не бут
+    if (e.target.closest('#monitor-win, .mw-icon, #mobile-modal, #games-modal, #trash-modal, #poke-win, #frame-titlebar, #rotate-overlay, #boot')) return;
+
+    // Случайная фраза без повтора подряд
+    let i;
+    do { i = Math.floor(Math.random() * POKES.length); } while (i === lastIdx && POKES.length > 1);
+    lastIdx = i;
+    txt.textContent = POKES[i];
+
+    // Показ с гарантированным перезапуском анимации появления
+    win.classList.add('hidden');
+    void win.offsetWidth;
+    win.classList.remove('hidden');
+
+    // Позиция у точки клика, с клампом в границы вьюпорта
+    const r = win.getBoundingClientRect();
+    let x = e.clientX + 6, y = e.clientY + 8;
+    if (x + r.width  > innerWidth  - 8) x = innerWidth  - r.width  - 8;
+    if (y + r.height > innerHeight - 8) y = innerHeight - r.height - 8;
+    if (x < 8) x = 8;
+    if (y < 8) y = 8;
+    win.style.left = x + 'px';
+    win.style.top  = y + 'px';
+
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(close, 4000);
+  });
+}
+
 /* ═══════════════ CLOCK (МСК) ═══════════════ */
 
 // Moscow-time formatter (always MSK regardless of user's local timezone)
@@ -386,6 +449,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const goto = monitorTabs();
   desktopIcons(goto);
   modals();
+  pokeWindow();
   initTTT();
   initSnake();
 

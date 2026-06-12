@@ -22,12 +22,12 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap" rel="stylesheet">
 <!-- Параллельная загрузка критичных ассетов — убирает задержку старта звука и фона -->
-<link rel="preload" as="audio" href="bg.mp3?v=29" type="audio/mpeg">
+<link rel="preload" as="audio" href="bg.mp3?v=30" type="audio/mpeg">
 <!-- URL фонов должны совпадать с url() в CSS (там без ?v=) — иначе preload не засчитывается и картинка качается дважды -->
 <link rel="preload" as="image" href="bg.jpg">
 <link rel="preload" as="image" href="bg-mobile.jpg">
-<link rel="preload" as="video" href="boot-loader.mp4?v=29" type="video/mp4">
-<link rel="stylesheet" href="style.css?v=29">
+<link rel="preload" as="video" href="boot-loader.mp4?v=30" type="video/mp4">
+<link rel="stylesheet" href="style.css?v=30">
 </head>
 <body>
 
@@ -35,12 +35,12 @@
      Видео квадратное 1200×1200, чёрный фон вокруг через CSS (desktop — полосы по бокам, mobile — сверху/снизу). -->
 <div id="boot">
   <video id="boot-media" autoplay muted loop playsinline preload="auto" disableremoteplayback>
-    <source src="boot-loader.mp4?v=29" type="video/mp4">
+    <source src="boot-loader.mp4?v=30" type="video/mp4">
   </video>
 </div>
 
 <!-- Фоновый звук — автоплей заблокирован, запускается по первому тапу -->
-<audio id="bg-audio" src="bg.mp3?v=29" loop preload="auto"></audio>
+<audio id="bg-audio" src="bg.mp3?v=30" loop preload="auto"></audio>
 
 <!-- ═══════════════ WINDOW FRAME (Win95-стиль, обрамляет всю сцену) ═══════════════ -->
 <div id="scene-frame">
@@ -385,6 +385,16 @@
   </div>
 </div>
 
-<script src="app.js?v=29"></script>
+<!-- ═══════════════ POKE WINDOW — окошко-шутка при клике по сцене ═══════════════
+     Появляется в точке клика мимо «компуктера», само исчезает через 4с. -->
+<div id="poke-win" class="hidden" role="status">
+  <div class="pw-tb">
+    <span class="pw-title">StepanOS</span>
+    <button class="pw-close" aria-label="Закрыть">×</button>
+  </div>
+  <div class="pw-body" id="pw-text"></div>
+</div>
+
+<script src="app.js?v=30"></script>
 </body>
 </html>

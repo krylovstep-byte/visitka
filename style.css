@@ -798,6 +798,7 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
 @media (prefers-reduced-motion: reduce) {
   .t-line { opacity: 1; animation: none; }
   .t-cursor { animation: none; }
+  #poke-win { animation: none; }
 }
 
 /* Status bar */
@@ -928,6 +929,53 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
 .tm-p.dim { font-size: 14px; color: #666; }
 
 .hidden { display: none !important; }
+
+/* ═══════════════ POKE WINDOW — окошко-шутка при клике по сцене ═══════════════
+   Маленький Win95-диалог в точке клика. Ненавязчивый: сам тает через 4с,
+   закрывается кликом в любое место окошка. Один экземпляр на страницу. */
+#poke-win {
+  position: fixed;
+  z-index: 3000; /* над сценой, под модалками (4000+) */
+  max-width: 250px;
+  background: var(--w98-gray);
+  border: 2px solid;
+  border-color: var(--w98-white) var(--w98-lo2) var(--w98-lo2) var(--w98-white);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, .45);
+  font-family: var(--f-sys);
+  animation: pw-in .12s ease-out;
+}
+.pw-tb {
+  height: 18px;
+  background: linear-gradient(to right, var(--w98-blue), var(--w98-blue2));
+  color: #fff;
+  display: flex; align-items: center;
+  gap: 6px;
+  padding: 0 2px 0 6px;
+  font-size: 10px; font-weight: bold;
+  user-select: none;
+}
+.pw-title { flex: 1; white-space: nowrap; }
+.pw-close {
+  width: 14px; height: 12px;
+  background: var(--w98-gray);
+  border: 1px solid;
+  border-color: var(--w98-white) var(--w98-lo2) var(--w98-lo2) var(--w98-white);
+  color: #000;
+  font-family: var(--f-sys); font-size: 9px;
+  line-height: 1; padding: 0 0 1px;
+  display: flex; align-items: center; justify-content: center;
+}
+.pw-body {
+  padding: 8px 11px 9px;
+  font-family: var(--f-mono);
+  font-size: 15px;
+  line-height: 1.25;
+  color: #000;
+}
+@keyframes pw-in {
+  from { opacity: 0; transform: scale(.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
 
 /* ═══════════════ РЕТРО-КУРСОРЫ WIN95 ═══════════════
    Пиксельные PNG 2×-масштаба. Fallback на системные, если PNG не загрузился.
