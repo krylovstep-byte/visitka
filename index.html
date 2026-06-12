@@ -22,11 +22,12 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap" rel="stylesheet">
 <!-- Параллельная загрузка критичных ассетов — убирает задержку старта звука и фона -->
-<link rel="preload" as="audio" href="bg.mp3?v=28" type="audio/mpeg">
-<link rel="preload" as="image" href="bg.jpg?v=28">
-<link rel="preload" as="image" href="bg-mobile.jpg?v=28">
-<link rel="preload" as="video" href="boot-loader.mp4?v=28" type="video/mp4">
-<link rel="stylesheet" href="style.css?v=28">
+<link rel="preload" as="audio" href="bg.mp3?v=29" type="audio/mpeg">
+<!-- URL фонов должны совпадать с url() в CSS (там без ?v=) — иначе preload не засчитывается и картинка качается дважды -->
+<link rel="preload" as="image" href="bg.jpg">
+<link rel="preload" as="image" href="bg-mobile.jpg">
+<link rel="preload" as="video" href="boot-loader.mp4?v=29" type="video/mp4">
+<link rel="stylesheet" href="style.css?v=29">
 </head>
 <body>
 
@@ -34,12 +35,12 @@
      Видео квадратное 1200×1200, чёрный фон вокруг через CSS (desktop — полосы по бокам, mobile — сверху/снизу). -->
 <div id="boot">
   <video id="boot-media" autoplay muted loop playsinline preload="auto" disableremoteplayback>
-    <source src="boot-loader.mp4?v=28" type="video/mp4">
+    <source src="boot-loader.mp4?v=29" type="video/mp4">
   </video>
 </div>
 
 <!-- Фоновый звук — автоплей заблокирован, запускается по первому тапу -->
-<audio id="bg-audio" src="bg.mp3?v=28" loop preload="auto"></audio>
+<audio id="bg-audio" src="bg.mp3?v=29" loop preload="auto"></audio>
 
 <!-- ═══════════════ WINDOW FRAME (Win95-стиль, обрамляет всю сцену) ═══════════════ -->
 <div id="scene-frame">
@@ -99,8 +100,8 @@
       <!-- ── HOME (desktop-style with icons) ── -->
       <section class="mw-section active home-desk" data-sec="home">
         <div class="home-head">
-          <h1 class="hero-name">СТЕПАН<br>КРЫЛОВ</h1>
-          <div class="hero-role">/ Project Manager · Предприниматель</div>
+          <h1 class="hero-name">СТЕПАН <br>КРЫЛОВ</h1>
+          <div class="hero-role">/ Project Manager <span class="hr-ext">· Предприниматель</span></div>
           <div class="hero-bio">Запускаю digital-продукты от идеи до первых пользователей. Сейчас строю <b>Taskin</b>.</div>
         </div>
 
@@ -118,6 +119,12 @@
           <div class="mw-icon" data-app="telegram" title="Telegram">
             <div class="mw-icon-img"><img src="icon_telegram.png" alt=""></div>
             <div class="mw-icon-lbl">Телеграм</div>
+          </div>
+
+          <!-- Только мобилка (CSS): на десктопе contact живёт в табах, а тут — единственный путь к почте -->
+          <div class="mw-icon" data-app="contact" title="Контакты">
+            <div class="mw-icon-img"><img src="icon_contact.png" alt=""></div>
+            <div class="mw-icon-lbl">Контакты</div>
           </div>
 
           <div class="mw-icon" data-app="games" title="Игры (скоро)">
@@ -187,7 +194,7 @@
       <section class="mw-section" data-sec="about">
         <h2 class="sec-h">/ about /</h2>
         <div class="ab-top">
-          <div class="ab-ava">СК</div>
+          <div class="ab-ava"><img src="icon_about.png" alt="Степан Крылов — пиксельный портрет"></div>
           <div class="ab-head">
             <div class="ab-name">Степан Крылов</div>
             <div class="ab-role">PM · Предприниматель</div>
@@ -199,17 +206,24 @@
         <div class="ab-stats">
           <div class="ab-stat"><div class="ab-n">15+</div><div class="ab-l">проектов</div></div>
           <div class="ab-stat"><div class="ab-n">2+</div><div class="ab-l">года опыта</div></div>
-          <div class="ab-stat"><div class="ab-n">3</div><div class="ab-l">языка</div></div>
+          <div class="ab-stat" title="русский · английский · итальянский · немецкий"><div class="ab-n">4</div><div class="ab-l">RU·EN·IT·DE</div></div>
           <div class="ab-stat"><div class="ab-n">10</div><div class="ab-l">в команде</div></div>
         </div>
         <div class="h-rule"></div>
         <div class="sec-lbl">/ skills</div>
+        <!-- Топ-5 — сегментированные полосы как в инсталляторе Win95.
+             Уровень задаётся инлайн-переменной --lvl (поправить = поменять процент) -->
+        <div class="ab-skbars">
+          <div class="skb"><span class="skb-name">Scrum/Kanban</span><span class="skb-bar"><span class="skb-fill" style="--lvl:90%"></span></span></div>
+          <div class="skb"><span class="skb-name">CustDev</span><span class="skb-bar"><span class="skb-fill" style="--lvl:85%"></span></span></div>
+          <div class="skb"><span class="skb-name">Notion/Jira</span><span class="skb-bar"><span class="skb-fill" style="--lvl:85%"></span></span></div>
+          <div class="skb"><span class="skb-name">MVP</span><span class="skb-bar"><span class="skb-fill" style="--lvl:80%"></span></span></div>
+          <div class="skb"><span class="skb-name">Figma</span><span class="skb-bar"><span class="skb-fill" style="--lvl:75%"></span></span></div>
+        </div>
         <div class="ab-skills">
-          <span class="sk">Scrum/Kanban</span><span class="sk">CustDev</span>
-          <span class="sk">PESTEL/SWOT</span><span class="sk">Figma</span>
-          <span class="sk">Notion/Jira</span><span class="sk">MVP</span>
-          <span class="sk">Python/HTML</span><span class="sk">Miro</span>
-          <span class="sk">CJM/SNW</span><span class="sk">Roadmaps</span>
+          <span class="sk">PESTEL/SWOT</span><span class="sk">Python/HTML</span>
+          <span class="sk">Miro</span><span class="sk">CJM/SNW</span>
+          <span class="sk">Roadmaps</span>
         </div>
         <div class="h-rule"></div>
         <div class="sec-lbl">/ education</div>
@@ -220,6 +234,11 @@
         <div class="ab-edu" style="margin-top:6px">
           <div class="edu-sub">+ Skillbox (Продакт), РУДН, Нетология</div>
         </div>
+        <div class="h-rule"></div>
+        <a class="ab-cta" href="https://t.me/krygerman" target="_blank" rel="noopener">
+          <img class="cta-ico" src="icon_telegram.png" alt="">
+          <span>написать в telegram</span><span class="cta-cursor">_</span>
+        </a>
       </section>
 
       <!-- ── CONTACT ── -->
@@ -243,7 +262,14 @@
             </div>
           </a>
         </div>
-        <div class="h-rule"></div>
+
+        <!-- Фейковый терминал — строки «выводятся» по очереди при открытии вкладки (CSS-анимация) -->
+        <div class="c-term" aria-hidden="true">
+          <div class="t-line t1">C:\&gt; ping @krygerman <span class="t-dim">... ok 12ms</span></div>
+          <div class="t-line t2">C:\&gt; status <span class="t-dim">... ● открыт к проектам</span></div>
+          <div class="t-line t3">C:\&gt; <span class="t-cursor">_</span></div>
+        </div>
+
         <div class="c-foot">
           <div>локация: <b>Москва</b> (ранее Ярославль)</div>
           <div>статус: <b class="st-ok">● открыт к проектам</b></div>
@@ -359,6 +385,6 @@
   </div>
 </div>
 
-<script src="app.js?v=28"></script>
+<script src="app.js?v=29"></script>
 </body>
 </html>
