@@ -437,14 +437,14 @@ async function launchDoomImpl() {
     window.emulatorsUi.dom.storage.setItem('ui.autolockTipsV2', 'false');
     instance = window.Dos(root, {
       clickToStart: false,
-      scaleControls: isMobile() ? 0.82 : 1,
+      scaleControls: 1,
       noSideBar: true,
       noSocialLinks: true,
       withNetworkingApi: false,
       preventUnload: false
     });
     doomPlayer = instance;
-    await instance.run('games/doom-shareware.jsdos?v=1');
+    await instance.run('games/doom-shareware.jsdos?v=2');
     if (isMobile()) await instance.enableMobileControls();
 
     // При закрытии cleanup уже принадлежит closeDoom(); второй stop опасен для worker API.
