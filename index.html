@@ -27,7 +27,7 @@
 <link rel="preload" as="image" href="bg.jpg">
 <link rel="preload" as="image" href="bg-mobile.jpg">
 <link rel="preload" as="video" href="boot-loader.mp4?v=30" type="video/mp4">
-<link rel="stylesheet" href="style.css?v=30">
+<link rel="stylesheet" href="style.css?v=32">
 </head>
 <body>
 
@@ -102,7 +102,7 @@
         <div class="home-head">
           <h1 class="hero-name">СТЕПАН <br>КРЫЛОВ</h1>
           <div class="hero-role">/ Project Manager <span class="hr-ext">· Предприниматель</span></div>
-          <div class="hero-bio">Запускаю digital-продукты от идеи до первых пользователей. Сейчас строю <b>Taskin</b>.</div>
+          <div class="hero-bio">Запускаю digital-продукты от идеи до первых пользователей. Сейчас строю <b>будущее</b>.</div>
         </div>
 
         <div class="home-icons">
@@ -140,54 +140,8 @@
       </section>
 
       <!-- ── PROJECTS ── -->
-      <section class="mw-section" data-sec="projects">
-        <h2 class="sec-h">/ projects / <span class="sec-h-cnt">6 из 15+</span></h2>
-
-        <div class="p-item feat">
-          <div class="p-row">
-            <span class="p-num">01</span>
-            <span class="p-name">Taskin <em class="p-my">мой</em></span>
-            <span class="p-st wip">● в работе</span>
-          </div>
-          <div class="p-sub">Фриланс-биржа · запуск апр–май'26</div>
-          <div class="p-desc">Канбан, геймификация, минимальные комиссии. Рынок: РФ, B2C.</div>
-          <div class="p-tags">Канбан · Геймификация · Фриланс</div>
-        </div>
-
-        <div class="p-item">
-          <div class="p-row"><span class="p-num">02</span><span class="p-name">GRAND PRIX'25</span><span class="p-st done">✓ done</span></div>
-          <div class="p-sub">5 кейсов от X5 Group · финал хакатона</div>
-          <div class="p-desc">Вёл команду: Пакет, Чижик, X5 Import, Зелёная линия.</div>
-          <div class="p-tags">PM · Marketing · Product</div>
-        </div>
-
-        <div class="p-item">
-          <div class="p-row"><span class="p-num">03</span><span class="p-name">X5 · Employer Brand</span><span class="p-st done">✓ done</span></div>
-          <div class="p-sub">Московский управленческий хакатон</div>
-          <div class="p-desc">Стратегия внутреннего бренда X5 Digital: геймификация, Digital Бункер, KPI.</div>
-          <div class="p-tags">Employer Brand · Геймификация</div>
-        </div>
-
-        <div class="p-item">
-          <div class="p-row"><span class="p-num">04</span><span class="p-name">Альфа-Банк · Мультибанк</span><span class="p-st done">✓ done</span></div>
-          <div class="p-sub">Совместно с ЦБ РФ</div>
-          <div class="p-desc">Концепт объединения счетов с цифровым рублём. Дизайн решения + roadmap.</div>
-          <div class="p-tags">Product · Fintech · ЦБ РФ</div>
-        </div>
-
-        <div class="p-item">
-          <div class="p-row"><span class="p-num">05</span><span class="p-name">СберИнвестиции</span><span class="p-st done">✓ done</span></div>
-          <div class="p-sub">Геймификация брокерского приложения</div>
-          <div class="p-desc">Концепция под молодую аудиторию: механики, риски, план Ганта.</div>
-          <div class="p-tags">Product · Marketing · Сбер</div>
-        </div>
-
-        <div class="p-item last">
-          <div class="p-row"><span class="p-num">06</span><span class="p-name">Яндекс · Алиса</span><span class="p-st done">✓ done</span></div>
-          <div class="p-sub">Школа менеджеров Яндекса</div>
-          <div class="p-desc">Продуктовые инициативы для Алисы: гипотезы, внедрение в Маркет.</div>
-          <div class="p-tags">Product · IT · Яндекс</div>
-        </div>
+      <section class="mw-section project-explorer" data-sec="projects" data-explorer="desktop">
+        <div class="project-explorer-root"></div>
       </section>
 
       <!-- ── ABOUT ── -->
@@ -293,7 +247,7 @@
 <!-- ═══════════════ MOBILE FULLSCREEN MODAL (variant B) ═══════════════
      На мобилке клик по иконке в CRT открывает контент поверх сцены.
      JS клонирует нужную .mw-section в .mm-body при открытии. -->
-<div id="mobile-modal" class="hidden" aria-hidden="true">
+<div id="mobile-modal" class="hidden" role="dialog" aria-modal="true" aria-labelledby="mm-title" aria-hidden="true">
   <div class="mm-frame">
     <div class="mm-titlebar">
       <div class="mm-tb-left">
@@ -395,6 +349,6 @@
   <div class="pw-body" id="pw-text"></div>
 </div>
 
-<script src="app.js?v=30"></script>
+<script src="app.js?v=32"></script>
 </body>
 </html>

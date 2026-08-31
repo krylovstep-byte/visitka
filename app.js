@@ -11,6 +11,160 @@ const $$ = (s, r=document) => [...r.querySelectorAll(s)];
 const on = (el, ev, fn) => el && el.addEventListener(ev, fn);
 const pad = (n) => String(n).padStart(2, '0');
 
+const PORTFOLIO_URL = 'https://disk.yandex.ru/d/CUsa3mXcSa4nTg';
+const project = (id, name, kicker, description, tags) => ({ id, name, kicker, description, tags, type: 'project' });
+const folder = (id, name, description, children) => ({ id, name, description, children, type: 'folder' });
+
+const PORTFOLIO = folder('root', 'projects', 'Выберите папку, чтобы посмотреть проекты.', [
+  folder('x5', 'X5 Group · Grand Prix', 'Пять продуктовых и маркетинговых кейсов для бизнес-единиц X5 Group.', [
+    project('x5-digital', 'X5 Digital', 'Внутренний бренд работодателя', 'Стратегия повышения узнаваемости X5 Digital внутри группы: события, игровые форматы, цифровые коммуникации и система оценки вовлечённости.', 'Employer Brand · Strategy · Gamification'),
+    project('x5-green', 'Зелёная линия', 'Развитие бренда СТМ', 'Исследование рынка и аудитории, новые продуктовые линейки и план расширения ассортимента бренда здорового питания.', 'Research · Product · Retail'),
+    project('x5-import', 'X5 Import', 'B2B-стратегия на 2025–2026', 'Стратегия развития импортного направления: ассортимент, ценообразование, маркетплейс, логистика и карта рисков.', 'B2B · Strategy · Logistics'),
+    project('x5-paket', 'Сервис «Пакет»', 'Привлечение студенческой аудитории', 'Маркетинговая стратегия для студентов с офлайн-активациями, межвузовской механикой и игровым сценарием.', 'Marketing · Gen Z · Gamification'),
+    project('x5-chizhik', 'Чижик', 'Логистика в Красноярском крае', 'Модель складской и транспортной логистики: сеть кросс-доков, сценарии поставок и план развития инфраструктуры.', 'Operations · Logistics · Retail')
+  ]),
+  folder('yandex', 'Яндекс · серия проектов', 'Четыре этапа продуктовой проработки Алисы и её интеграции в Маркет.', [
+    project('yandex-ideas', 'Инициативы для Алисы', 'Пять продуктовых концепций', 'Сценарии развития Алисы: ТВ-компаньон, образовательный ассистент, режим для старшего поколения, магазин расширений и трекер здоровья.', 'Product Discovery · Ecosystem · AI'),
+    project('yandex-market', 'Алиса в Маркете', 'Продуктовая концепция', 'Голосовой и текстовый помощник для поиска, сравнения и выбора товаров в Яндекс Маркете на основе проблем пользовательского пути.', 'CJM · Research · Product'),
+    project('yandex-architecture', 'Архитектура интеграции', 'Алиса × Яндекс Маркет', 'Схема сервисов и инфраструктуры для быстрой и устойчивой обработки запросов: API Gateway, Kafka, Redis, наблюдаемость и контроль доступа.', 'Architecture · API · Reliability'),
+    project('yandex-plan', 'План запуска интеграции', 'Управление проектом', 'План работ по Scrum на десять спринтов: роли, зависимости, критический путь, тестирование, артефакты и релиз.', 'Scrum · Roadmap · Delivery')
+  ]),
+  folder('alfa', 'Альфа-Банк', 'Два финтех-кейса: мультибанкинг и финал кейс-чемпионата.', [
+    project('alfa-cbr', 'Проект с ЦБ РФ', 'Концепция мультибанковской системы', 'Пользовательские сценарии, архитектура и стратегия запуска сервиса, объединяющего финансовые продукты разных банков.', 'Fintech · Product · Roadmap'),
+    project('alfa-final', 'Финал кейс-чемпионата 2026', 'Финальный проект Альфа-Банка', 'Комплексная продуктовая концепция, подготовленная для финала кейс-чемпионата Альфа-Банка.', 'Product · Case Championship · Pitch')
+  ]),
+  folder('hackathons', 'Серия хакатонов по России', 'Научно-управленческие R&D-хакатоны для регионов.', [
+    project('hackathons-concept', 'Конструктор хакатонов', 'Наука × бизнес × регионы', 'Адаптируемая модель регионального хакатона: карта стейкхолдеров, механика формирования кейсов, бренд, цифровая платформа и экономика события.', 'Events · R&D · Project Management')
+  ]),
+  folder('level', 'Level Group', 'Продуктовый проект для девелоперской компании.', [
+    project('level-case', 'Проект Level Group', 'Исследование и продуктовая концепция', 'Командный проект с аналитической частью, концепцией решения и презентацией для заказчика.', 'Research · Product · Real Estate')
+  ]),
+  folder('sber', 'Сбер', 'Развитие приложения «СберИнвестиции» для молодой аудитории.', [
+    project('sber-invest', 'СберИнвестиции', 'Привычка инвестировать', 'Концепции для начинающих инвесторов: помощник на базе GigaChat, бонусные механики и игровые сценарии обучения.', 'Fintech · Gamification · Product')
+  ]),
+  folder('loov', 'LOOV', 'Концепция бренда кастомизируемых очков для азиатского рынка.', [
+    project('loov-brand', 'LOOV · Brand Identity', 'Одна оправа — множество образов', 'Позиционирование, аудитория, визуальная система и бизнес-модель очков со сменными шармами.', 'Brand Strategy · Identity · Unit Economics')
+  ]),
+  folder('certificates', 'Сертификаты и грамоты', 'Обучение, кейс-чемпионаты и подтверждения проектной работы.', [
+    project('cert-learning', 'Обучение', 'Курсы и программы', 'Сертификаты по продуктовому и проектному менеджменту, исследованиям и работе с цифровыми инструментами.', 'Education · Product · Management'),
+    project('cert-cases', 'Кейс-чемпионаты', 'Финалы и призовые места', 'Грамоты и сертификаты участника, финалиста и призёра проектных соревнований.', 'Awards · Cases · Teamwork')
+  ]),
+  folder('other', 'Прочее', 'Дополнительные материалы о работе и опыте.', [
+    project('other-figma', 'Работа в Figma', 'Пример интерфейсной работы', 'Пример самостоятельной работы с макетами и интерфейсами в Figma.', 'Figma · UI · Prototype'),
+    project('other-cv', 'Резюме', 'Опыт и компетенции', 'Краткая версия профессионального опыта, образования, навыков и избранных проектов.', 'CV · Project Management')
+  ]),
+  { id: 'nda', name: '+3 проекта под NDA', type: 'locked' }
+]);
+
+function explorerMarkup() {
+  return `
+    <h2 class="sec-h"><span class="pe-title" tabindex="-1">/ projects /</span><span class="sec-h-cnt pe-count"></span></h2>
+    <div class="pe-toolbar" aria-label="Навигация по проектам">
+      <button class="pe-nav pe-back" type="button" aria-label="Назад" title="Назад">◀</button>
+      <button class="pe-nav pe-forward" type="button" aria-label="Вперёд" title="Вперёд">▶</button>
+      <nav class="pe-path" aria-label="Текущая папка"></nav>
+      <a class="pe-disk" href="${PORTFOLIO_URL}" target="_blank" rel="noopener">Яндекс Диск ↗</a>
+    </div>
+    <div class="pe-intro"></div>
+    <div class="pe-grid"></div>
+    <div class="pe-preview" aria-live="polite"></div>`;
+}
+
+function nodeAt(path) {
+  return path.reduce((node, id) => node.children?.find(child => child.id === id), PORTFOLIO);
+}
+
+function initProjectExplorer(section) {
+  const root = $('.project-explorer-root', section);
+  if (!root) return;
+  root.innerHTML = explorerMarkup();
+
+  const state = { history: [[]], historyIndex: 0, selected: null };
+  const path = () => state.history[state.historyIndex];
+
+  const go = (nextPath) => {
+    state.history = state.history.slice(0, state.historyIndex + 1);
+    state.history.push(nextPath);
+    state.historyIndex += 1;
+    state.selected = null;
+    render();
+    $('.pe-title', root).focus();
+  };
+
+  const renderPreview = (item) => {
+    const preview = $('.pe-preview', root);
+    if (!item) {
+      preview.innerHTML = '<span class="pe-preview-empty">Выберите проект — здесь появится короткое описание.</span>';
+      return;
+    }
+    if (item.type === 'locked') {
+      preview.innerHTML = '<div class="pe-preview-head">🔒 Доступ ограничен</div><p>Ещё три проекта существуют, но их содержание защищено NDA.</p>';
+      return;
+    }
+    preview.innerHTML = `<div class="pe-preview-head">${item.name}</div><div class="pe-preview-kicker">${item.kicker}</div><p>${item.description}</p><div class="pe-preview-tags">${item.tags}</div>`;
+  };
+
+  const render = () => {
+    const current = nodeAt(path());
+    const items = current.children || [];
+    $('.pe-count', root).textContent = `${items.length} объект${items.length === 1 ? '' : items.length < 5 ? 'а' : 'ов'}`;
+    $('.pe-intro', root).textContent = current.description;
+    $('.pe-back', root).disabled = state.historyIndex === 0;
+    $('.pe-forward', root).disabled = state.historyIndex === state.history.length - 1;
+
+    const crumbs = [{ id: 'root', name: 'projects', crumbPath: [] }];
+    path().forEach((id, index) => {
+      const crumbPath = path().slice(0, index + 1);
+      crumbs.push({ id, name: nodeAt(crumbPath).name, crumbPath });
+    });
+    $('.pe-path', root).innerHTML = crumbs.map((crumb, index) => {
+      const active = index === crumbs.length - 1;
+      return `${index ? '<span aria-hidden="true">/</span>' : ''}<button type="button" data-path="${crumb.crumbPath.join('/') }"${active ? ' aria-current="page" disabled' : ''}>${crumb.name}</button>`;
+    }).join('');
+
+    $('.pe-grid', root).innerHTML = items.map(item => `
+      <button class="pe-entry${item.type === 'locked' ? ' is-locked' : ''}" type="button" data-id="${item.id}" data-type="${item.type}">
+        <span class="pe-folder${item.type === 'project' ? ' is-file' : ''}${item.type === 'locked' ? ' has-lock' : ''}" aria-hidden="true">${item.type === 'project' ? '' : '<img class="pe-folder-img" src="projects-icon.png" alt="">'}${item.type === 'locked' ? '<span class="pe-lock">🔒</span>' : ''}</span>
+        <span class="pe-entry-name">${item.name}</span>
+        <span class="pe-entry-kind">${item.type === 'folder' ? 'папка' : item.type === 'locked' ? 'закрыто' : 'проект'}</span>
+      </button>`).join('');
+    renderPreview(state.selected);
+  };
+
+  on(root, 'click', (event) => {
+    const pathButton = event.target.closest('[data-path]');
+    if (pathButton) {
+      go(pathButton.dataset.path ? pathButton.dataset.path.split('/') : []);
+      return;
+    }
+    if (event.target.closest('.pe-back') && state.historyIndex > 0) {
+      state.historyIndex -= 1;
+      state.selected = null;
+      render();
+      $('.pe-title', root).focus();
+      return;
+    }
+    if (event.target.closest('.pe-forward') && state.historyIndex < state.history.length - 1) {
+      state.historyIndex += 1;
+      state.selected = null;
+      render();
+      $('.pe-title', root).focus();
+      return;
+    }
+    const entry = event.target.closest('.pe-entry');
+    if (!entry) return;
+    const item = nodeAt(path()).children.find(child => child.id === entry.dataset.id);
+    if (item.type === 'folder') go([...path(), item.id]);
+    else {
+      state.selected = item;
+      $$('.pe-entry', root).forEach(button => button.classList.toggle('is-selected', button === entry));
+      renderPreview(item);
+    }
+  });
+
+  render();
+}
+
 /* ═══════════════ COMPACT-VH DETECT ═══════════════
    Telegram WebView (и другие in-app браузеры) рапортуют media-query
    и vh-юнитам полную высоту экрана, игнорируя собственный тулбар.
@@ -152,6 +306,8 @@ function openApp(app, gotoTab) {
 }
 
 /* ═══════════════ MOBILE FULLSCREEN MODAL (variant B) ═══════════════ */
+let mobileProjectSection;
+
 function openMobileModal(app) {
   const modal = $('#mobile-modal');
   const body  = $('#mm-body');
@@ -165,10 +321,18 @@ function openMobileModal(app) {
   };
   title.textContent = titles[app] || 'Окно';
 
-  // Клонируем нужную секцию, делаем active, вставляем в модалку
+  // Проводник получает отдельное состояние; остальные статичные секции можно клонировать.
   const src = $(`.mw-section[data-sec="${app}"]`);
   body.innerHTML = '';
-  if (src) {
+  if (app === 'projects') {
+    if (!mobileProjectSection) {
+      mobileProjectSection = document.createElement('section');
+      mobileProjectSection.className = 'mw-section project-explorer active';
+      mobileProjectSection.innerHTML = '<div class="project-explorer-root"></div>';
+      initProjectExplorer(mobileProjectSection);
+    }
+    body.appendChild(mobileProjectSection);
+  } else if (src) {
     const clone = src.cloneNode(true);
     clone.classList.add('active');
     body.appendChild(clone);
@@ -242,8 +406,11 @@ function pokeWindow() {
   on(win, 'click', (e) => { e.stopPropagation(); close(); });
 
   on(document, 'click', (e) => {
-    // Только «пустая» сцена: не компуктер, не иконки, не модалки, не титлбар, не бут
-    if (e.target.closest('#monitor-win, .mw-icon, #mobile-modal, #games-modal, #trash-modal, #poke-win, #frame-titlebar, #rotate-overlay, #boot')) return;
+    // composedPath сохраняет исходных родителей даже когда клик перерисовал папку до всплытия события.
+    const blockedClick = e.composedPath().some(node => node instanceof Element && node.matches(
+      '#monitor-win, .mw-icon, #mobile-modal, #games-modal, #trash-modal, #poke-win, #frame-titlebar, #rotate-overlay, #boot'
+    ));
+    if (blockedClick) return;
 
     // Случайная фраза без повтора подряд
     let i;
@@ -446,6 +613,7 @@ function initSnake() {
 /* ═══════════════ INIT ═══════════════ */
 document.addEventListener('DOMContentLoaded', () => {
   boot();
+  initProjectExplorer($('.project-explorer[data-explorer="desktop"]'));
   const goto = monitorTabs();
   desktopIcons(goto);
   modals();
