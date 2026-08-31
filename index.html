@@ -23,11 +23,11 @@
 <link href="https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap" rel="stylesheet">
 <!-- Параллельная загрузка критичных ассетов — убирает задержку старта звука и фона -->
 <link rel="preload" as="audio" href="bg.mp3?v=30" type="audio/mpeg">
-<!-- URL фонов должны совпадать с url() в CSS (там без ?v=) — иначе preload не засчитывается и картинка качается дважды -->
-<link rel="preload" as="image" href="bg.jpg">
-<link rel="preload" as="image" href="bg-mobile.jpg">
+<!-- URL фонов должны совпадать с url() в CSS — иначе preload не засчитывается и картинка качается дважды -->
+<link rel="preload" as="image" href="bg.jpg?v=35">
+<link rel="preload" as="image" href="bg-mobile.jpg?v=35">
 <link rel="preload" as="video" href="boot-loader.mp4?v=30" type="video/mp4">
-<link rel="stylesheet" href="style.css?v=34">
+<link rel="stylesheet" href="style.css?v=35">
 </head>
 <body>
 
