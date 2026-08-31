@@ -224,7 +224,7 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
 }
 #desk-bg {
   position: absolute; inset: 0;
-  background-image: url('bg.jpg?v=35');
+  background-image: url('bg.jpg?v=37');
   background-size: 100% 100%;       /* stage сам имеет аспект 1672/941 → без деформации */
   background-repeat: no-repeat;
   z-index: 1;
@@ -242,7 +242,7 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
 @keyframes flicker { 0%,100% { opacity: 1; } 50% { opacity: .92; } }
 
 /* ═══════════════ MONITOR WINDOW (overlay on CRT screen) ═══════════════ */
-/* Границы чёрного CRT-экрана на десктопном фоне: x=415..1281, y=96..675. */
+/* Границы чёрного CRT-экрана на десктопном фоне: x=472..1279, y=115..680. */
 /* Monitor window — «утоплен» в CRT-стекло.
    Окно ~500×400. Внутри .mw-body имеет свой белый/цветной фон,
    поэтому inset-shadow у #monitor-win перекрывается контентом.
@@ -250,10 +250,10 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
    (z-index выше всего, pointer-events: none — не мешает кликам). */
 #monitor-win {
   position: absolute;
-  left:  24.9%;
-  top:   10.4%;
-  width: 51.6%;
-  height: 61.1%;
+  left:  28.3%;
+  top:   12.4%;
+  width: 48.05%;
+  height: 59.7%;
   z-index: 200;
   background: #ece9d8;
   border: 1px solid #000;
