@@ -27,7 +27,8 @@
 <link rel="preload" as="image" href="bg.jpg?v=37">
 <link rel="preload" as="image" href="bg-mobile.jpg?v=35">
 <link rel="preload" as="video" href="boot-loader.mp4?v=30" type="video/mp4">
-<link rel="stylesheet" href="style.css?v=38">
+<link rel="stylesheet" href="vendor/js-dos/js-dos.css?v=7.5.0">
+<link rel="stylesheet" href="style.css?v=39">
 </head>
 <body>
 
@@ -277,6 +278,15 @@
       <div class="mw-tb-btns"><button class="mw-tb-btn mw-tb-close" id="gm-close">×</button></div>
     </div>
     <div class="gm-body">
+      <div class="gm-game gm-doom-card">
+        <div class="gm-title">[ DOOM.exe ]</div>
+        <div class="doom-card-screen" aria-hidden="true">
+          <span class="doom-card-logo">DOOM</span>
+          <span class="doom-card-version">SHAREWARE v1.9</span>
+        </div>
+        <div class="gm-status">Episode 1 · Knee-Deep in the Dead</div>
+        <button class="gm-btn doom-launch" id="doom-launch" type="button">[ запустить DOOM ]</button>
+      </div>
       <div class="gm-game">
         <div class="gm-title">[ крестики-нолики ]</div>
         <div class="ttt-grid" id="ttt-grid">
@@ -304,6 +314,29 @@
           <button class="dpad" data-dir="down">▼</button>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ DOOM / JS-DOS ═══════════════ -->
+<div id="doom-modal" class="hidden" role="dialog" aria-modal="true" aria-labelledby="doom-window-title" aria-hidden="true">
+  <div class="doom-frame">
+    <div class="gm-titlebar doom-titlebar">
+      <div class="gm-tb-left">
+        <div class="mw-tb-icon">D</div>
+        <span id="doom-window-title">DOOM.exe — Shareware v1.9</span>
+      </div>
+      <div class="mw-tb-btns">
+        <button class="doom-exit-btn" id="doom-close" type="button" aria-label="Выйти из DOOM">[ выйти ]</button>
+      </div>
+    </div>
+    <div class="doom-stage">
+      <div id="doom-player"></div>
+      <div id="doom-loading" role="status">Загрузка DOOM...</div>
+    </div>
+    <div class="doom-help">
+      <span>ПК: стрелки — движение · Ctrl — огонь · Space — дверь · Shift — бег</span>
+      <span>Телефон: экранные кнопки появятся поверх игры</span>
     </div>
   </div>
 </div>
@@ -349,6 +382,6 @@
   <div class="pw-body" id="pw-text"></div>
 </div>
 
-<script src="app.js?v=33"></script>
+<script src="app.js?v=34"></script>
 </body>
 </html>

@@ -1054,13 +1054,13 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
 .mw-sb-flex { flex: 1; }
 
 /* ═══════════════ MODALS (games, trash) ═══════════════ */
-#games-modal, #trash-modal {
+#games-modal, #trash-modal, #doom-modal {
   position: fixed; inset: 0; z-index: 5000;
   background: rgba(0,0,0,.5);
   display: flex; align-items: center; justify-content: center;
   font-family: var(--f-sys);
 }
-#games-modal.hidden, #trash-modal.hidden { display: none; }
+#games-modal.hidden, #trash-modal.hidden, #doom-modal.hidden { display: none; }
 .gm-frame {
   width: 560px; max-width: 92vw; max-height: 82vh;
   background: var(--w98-gray);
@@ -1089,6 +1089,132 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
   box-shadow: inset 1px 1px 0 var(--w98-white);
   padding: 10px; text-align: center;
   font-family: var(--f-mono);
+}
+.gm-doom-card {
+  grid-column: 1 / -1;
+  background: #080808;
+  color: #fff;
+  border-color: #303030;
+  box-shadow: inset 1px 1px 0 #555;
+}
+.doom-card-screen {
+  min-height: 88px;
+  margin: 6px 0 8px;
+  border: 2px solid;
+  border-color: #111 #777 #777 #111;
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.035) 0 1px, transparent 1px 4px),
+    radial-gradient(circle at 50% 120%, #8d270e 0 14%, #3b120b 38%, #090909 72%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.doom-card-logo {
+  color: #d7d7d7;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: 52px;
+  line-height: .9;
+  letter-spacing: -3px;
+  text-shadow: 2px 2px 0 #751b09, -1px -1px 0 #fff;
+}
+.doom-card-version {
+  margin-top: 5px;
+  color: #ffca49;
+  font-family: var(--f-mono);
+  font-size: 13px;
+  letter-spacing: 2px;
+}
+.gm-doom-card .gm-title { color: #ffca49; }
+.gm-doom-card .gm-status { color: #ddd; }
+.doom-launch { min-width: 210px; font-weight: bold; }
+.doom-launch:focus-visible { outline: 2px dotted #ffca49; outline-offset: 2px; }
+
+/* Отдельное полноэкранное окно игры. Эмулятор создаётся только после запуска. */
+#doom-modal {
+  z-index: 7000;
+  padding: 12px;
+  background: rgba(0,0,0,.88);
+}
+.doom-frame {
+  width: min(1100px, 96vw);
+  height: min(760px, calc(100dvh - 24px));
+  min-height: 420px;
+  background: var(--w98-gray);
+  border: 2px solid;
+  border-color: var(--w98-white) var(--w98-lo2) var(--w98-lo2) var(--w98-white);
+  display: flex;
+  flex-direction: column;
+}
+.doom-titlebar { height: 28px; font-size: 13px; }
+.doom-exit-btn {
+  min-width: 92px;
+  height: 23px;
+  padding: 0 9px;
+  background: var(--w98-gray);
+  color: #000;
+  border: 2px solid;
+  border-color: var(--w98-white) var(--w98-lo2) var(--w98-lo2) var(--w98-white);
+  font-family: var(--f-mono);
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 1;
+  cursor: pointer;
+}
+.doom-exit-btn:active {
+  border-color: var(--w98-lo2) var(--w98-white) var(--w98-white) var(--w98-lo2);
+}
+.doom-exit-btn:focus-visible { outline: 1px dotted #000; outline-offset: -5px; }
+.doom-stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  margin: 4px;
+  overflow: hidden;
+  background: #000;
+  border: 2px solid;
+  border-color: var(--w98-lo2) var(--w98-white) var(--w98-white) var(--w98-lo2);
+}
+#doom-player,
+#doom-player > .emulator-root {
+  width: 100%;
+  height: 100%;
+}
+/* js-dos рисует свою современную боковую панель. Она здесь не нужна:
+   управление на ПК идёт с клавиатуры, а мобильные игровые кнопки — отдельный слой. */
+#doom-player .absolute.left-0.top-0.rounded-br-md,
+#doom-player .absolute.left-0.opacity-80,
+#doom-player .bg-gray-200.shadow.w-10,
+#doom-player .bg-gray-300.w-8 {
+  display: none !important;
+}
+#doom-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: #000;
+  color: #00ff41;
+  font-family: var(--f-mono);
+  font-size: clamp(18px, 3vw, 30px);
+  text-align: center;
+}
+#doom-loading.hidden { display: none; }
+.doom-help {
+  flex-shrink: 0;
+  min-height: 28px;
+  padding: 5px 8px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: #222;
+  font-family: var(--f-mono);
+  font-size: 13px;
+  line-height: 1.2;
 }
 .gm-title { font-family: var(--f-mono); font-size: 18px; color: var(--w98-blue); margin-bottom: 8px; }
 .gm-status { font-family: var(--f-mono); font-size: 15px; color: #333; margin: 6px 0; }
@@ -1552,6 +1678,27 @@ a, button, .mw-icon, .ttt-cell { cursor: url('cursor-hand.png') 12 0, pointer; }
   .ttt-cell { width: 40px; height: 40px; font-size: 26px; }
   .snake-dpad { gap: 4px; margin-top: 6px; }
   .dpad { width: 44px; height: 32px; font-size: 16px; }
+
+  #doom-modal { padding: 0; }
+  .doom-frame {
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    border: 0;
+  }
+  .doom-titlebar { height: 32px; padding-left: 5px; font-size: 13px; }
+  .doom-exit-btn { min-width: 96px; height: 27px; padding: 0 8px; font-size: 13px; }
+  .doom-stage { margin: 0; border-width: 0; }
+  .doom-help {
+    min-height: 42px;
+    padding: 5px 8px calc(5px + env(safe-area-inset-bottom));
+    display: block;
+    font-size: 11px;
+    text-align: center;
+  }
+  .doom-help span { display: block; }
+  .doom-help span:first-child { display: none; }
 
   /* Корзина — маленькая всплывашка по центру, не fullscreen */
   #trash-modal {
