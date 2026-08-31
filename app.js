@@ -122,9 +122,9 @@ function initProjectExplorer(section) {
       return `${index ? '<span aria-hidden="true">/</span>' : ''}<button type="button" data-path="${crumb.crumbPath.join('/') }"${active ? ' aria-current="page" disabled' : ''}>${crumb.name}</button>`;
     }).join('');
 
-    $('.pe-grid', root).innerHTML = items.map(item => `
+    $('.pe-grid', root).innerHTML = items.map((item, index) => `
       <button class="pe-entry${item.type === 'locked' ? ' is-locked' : ''}" type="button" data-id="${item.id}" data-type="${item.type}">
-        <span class="pe-folder${item.type === 'project' ? ' is-file' : ''}${item.type === 'locked' ? ' has-lock' : ''}" aria-hidden="true">${item.type === 'project' ? '' : '<img class="pe-folder-img" src="projects-icon.png" alt="">'}${item.type === 'locked' ? '<span class="pe-lock">🔒</span>' : ''}</span>
+        <span class="pe-folder${item.type === 'project' ? ` is-file tone-${index % 5}` : ''}${item.type === 'locked' ? ' has-lock' : ''}" aria-hidden="true">${item.type === 'project' ? '' : '<img class="pe-folder-img" src="projects-icon.png" alt="">'}${item.type === 'locked' ? '<span class="pe-lock">🔒</span>' : ''}</span>
         <span class="pe-entry-name">${item.name}</span>
         <span class="pe-entry-kind">${item.type === 'folder' ? 'папка' : item.type === 'locked' ? 'закрыто' : 'проект'}</span>
       </button>`).join('');

@@ -724,12 +724,14 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
   image-rendering: pixelated;
 }
 .pe-folder.is-file {
+  --paper: #f4f0e5;
+  --paper-edge: #d6cfbd;
   width: calc(43 * var(--u));
   height: calc(53 * var(--u));
   margin-top: 0;
   border: calc(2 * var(--u)) solid #686868;
-  background: #fff;
-  box-shadow: inset calc(-8 * var(--u)) 0 0 #d8d8d8, calc(2 * var(--u)) calc(2 * var(--u)) 0 #8d8d8d;
+  background: var(--paper);
+  box-shadow: inset calc(-8 * var(--u)) 0 0 var(--paper-edge), calc(2 * var(--u)) calc(2 * var(--u)) 0 #8d8d8d;
 }
 .pe-folder.is-file::before {
   content: '';
@@ -742,8 +744,13 @@ body { background: #0a0a0a; }   /* тёмные поля снаружи окна
   border-color: #686868;
   border-style: solid;
   border-width: 0 0 calc(2 * var(--u)) calc(2 * var(--u));
-  background: #d8d8d8;
+  background: var(--paper-edge);
 }
+.pe-folder.is-file.tone-0 { --paper: #f4f0e5; --paper-edge: #d6cfbd; }
+.pe-folder.is-file.tone-1 { --paper: #e5edf1; --paper-edge: #bdcbd2; }
+.pe-folder.is-file.tone-2 { --paper: #e8eee3; --paper-edge: #c3cfba; }
+.pe-folder.is-file.tone-3 { --paper: #f1e6e3; --paper-edge: #d5bfba; }
+.pe-folder.is-file.tone-4 { --paper: #ebe8f0; --paper-edge: #c8c2d2; }
 .pe-entry.is-locked { color: #555; filter: grayscale(.72); }
 .pe-folder.has-lock .pe-folder-img { filter: brightness(.48) grayscale(.35); }
 .pe-folder .pe-lock {
