@@ -183,33 +183,76 @@ if (window.visualViewport) {
 }
 
 /* ═══════════════ BACKGROUND AUDIO — СТАРТУЕТ СРАЗУ ═══════════════
-   Вызываем на этапе парсинга скрипта (скрипт в конце body,
-   значит <audio> уже в DOM). Не ждём DOMContentLoaded — это экономит ~50-200мс. */
+   На мобильных autoplay со звуком запрещён до первого жеста. Поэтому заранее
+   грузим файл ОДИН раз и на первом pointer/touch пытаемся включить его снова.
+   Повторный audio.load() здесь нельзя вызывать: он обнуляет уже скачанный буфер. */
+const AUDIO_START_AT = 1.5; // в самом mp3 первые ~1.5с почти тишина
+const AUDIO_UNLOCK_EVENTS = ['pointerdown', 'touchstart', 'keydown'];
 let audioStarted = false;
+let audioPrepared = false;
+let audioUnlockBound = false;
+let bgAudioSuppressed = false;
+
+function clearAudioUnlock() {
+  if (!audioUnlockBound) return;
+  AUDIO_UNLOCK_EVENTS.forEach(eventName => {
+    document.removeEventListener(eventName, unlockBgAudio, true);
+  });
+  audioUnlockBound = false;
+}
+
+function markAudioStarted() {
+  audioStarted = true;
+  clearAudioUnlock();
+  $('#boot')?.classList.add('audio-on');
+}
+
+function armAudioUnlock(allowStarted = false) {
+  if (audioUnlockBound || (!allowStarted && audioStarted) || bgAudioSuppressed) return;
+  audioUnlockBound = true;
+  AUDIO_UNLOCK_EVENTS.forEach(eventName => {
+    document.addEventListener(eventName, unlockBgAudio, {
+      capture: true,
+      passive: eventName !== 'keydown'
+    });
+  });
+}
+
+function tryPlayBgAudio(force = false) {
+  const audio = $('#bg-audio');
+  if (!audio || bgAudioSuppressed || (!force && audioStarted)) return;
+  try {
+    const playResult = audio.play();
+    if (playResult?.then) {
+      playResult.then(markAudioStarted).catch(() => armAudioUnlock(force));
+    }
+    else markAudioStarted();
+  } catch {
+    armAudioUnlock(force);
+  }
+}
+
+function unlockBgAudio() {
+  tryPlayBgAudio(true);
+}
+
 function startBgAudio() {
   const audio = $('#bg-audio');
   if (!audio || audioStarted) return;
-  audio.volume = 0.6;
-  // Форсируем скачивание буфера — preload="auto" в HTML тоже помогает,
-  // но load() явно запускает/пере-запускает загрузку
-  try { audio.load(); } catch {}
 
-  const markStarted = () => { audioStarted = true; };
-  const unlock = () => {
-    if (audioStarted) return;
-    audio.play().then(markStarted).catch(() => {});
-  };
+  if (!audioPrepared) {
+    audioPrepared = true;
+    audio.volume = 0.6;
+    const skipQuietIntro = () => {
+      if (audioStarted || audio.currentTime >= AUDIO_START_AT) return;
+      try { audio.currentTime = AUDIO_START_AT; } catch {}
+    };
+    if (audio.readyState >= 1) skipQuietIntro();
+    else audio.addEventListener('loadedmetadata', skipQuietIntro, { once: true });
+    try { audio.load(); } catch {}
+  }
 
-  audio.play()
-    .then(markStarted)
-    .catch(() => {
-      // Автоплей заблокирован (iOS Safari, Chrome без interaction) —
-      // ловим первый же user gesture и стартуем
-      document.addEventListener('pointerdown', unlock, { once: true });
-      document.addEventListener('keydown', unlock, { once: true });
-      document.addEventListener('touchstart', unlock, { once: true });
-      document.addEventListener('click', unlock, { once: true });
-    });
+  tryPlayBgAudio();
 }
 // ВЫЗЫВАЕМ СРАЗУ — не ждём DOMContentLoaded
 startBgAudio();
@@ -416,7 +459,9 @@ async function launchDoomImpl() {
   const session = ++doomSession;
   let instance;
   const bgAudio = $('#bg-audio');
-  doomResumeBgAudio = Boolean(bgAudio && !bgAudio.paused);
+  bgAudioSuppressed = true;
+  clearAudioUnlock();
+  doomResumeBgAudio = Boolean(bgAudio && (!bgAudio.paused || audioStarted));
   bgAudio?.pause();
   doomPreviousOverflow = document.body.style.overflow;
   document.body.style.overflow = 'hidden';
@@ -493,9 +538,11 @@ function closeDoom() {
     }
     if (closingSession !== doomSession) return;
     if (root) root.replaceChildren();
+    bgAudioSuppressed = false;
     if (shouldResumeBgAudio) {
-      try { await $('#bg-audio')?.play(); }
-      catch {}
+      tryPlayBgAudio(true);
+    } else if (!audioStarted) {
+      armAudioUnlock();
     }
   });
 

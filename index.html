@@ -22,13 +22,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap" rel="stylesheet">
 <!-- Параллельная загрузка критичных ассетов — убирает задержку старта звука и фона -->
-<link rel="preload" as="audio" href="bg.mp3?v=30" type="audio/mpeg">
+<link rel="preload" as="audio" href="bg.mp3?v=30" type="audio/mpeg" fetchpriority="high">
 <!-- URL фонов должны совпадать с url() в CSS — иначе preload не засчитывается и картинка качается дважды -->
 <link rel="preload" as="image" href="bg.jpg?v=37">
 <link rel="preload" as="image" href="bg-mobile.jpg?v=35">
 <link rel="preload" as="video" href="boot-loader.mp4?v=30" type="video/mp4">
 <link rel="stylesheet" href="vendor/js-dos/js-dos.css?v=7.5.0">
-<link rel="stylesheet" href="style.css?v=39">
+<link rel="stylesheet" href="style.css?v=40">
 </head>
 <body>
 
@@ -38,6 +38,7 @@
   <video id="boot-media" autoplay muted loop playsinline preload="auto" disableremoteplayback>
     <source src="boot-loader.mp4?v=30" type="video/mp4">
   </video>
+  <button id="boot-sound-hint" type="button" aria-label="Включить звук">♪ тапни — включить звук</button>
 </div>
 
 <!-- Фоновый звук — автоплей заблокирован, запускается по первому тапу -->
@@ -382,6 +383,6 @@
   <div class="pw-body" id="pw-text"></div>
 </div>
 
-<script src="app.js?v=35"></script>
+<script src="app.js?v=36"></script>
 </body>
 </html>
