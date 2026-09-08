@@ -460,8 +460,8 @@ const interactiveItems=[
   makeInteractive(cup,'Третий за день. Или второй. Неважно.'),
   makeInteractive(techBox,'Работает тихо. Это подозрительно.'),
   makeInteractive(plant,'Растение до сих пор живое.'),
-  makeInteractive(speakerLeft,'Левой — коронный.'),
-  makeInteractive(speakerRight,'Правой — похоронный.'),
+  makeInteractive(speakerLeft,'Левый - Коронный'),
+  makeInteractive(speakerRight,'Правый - похоронный'),
   makeInteractive(pen,'Этой ручкой написаны четыре экзамена и несколько решений, которые пришлось переписать.'),
   makeInteractive(monitor,'Здесь обычно происходит что-то важное. Обычно.')
 ];
