@@ -191,3 +191,7 @@
  #monitor-ui .profile-columns>section+section h3{background:#415738}
  #monitor-ui .profile-skills{font-size:15px}
 }
+
+.desktop-welcome{max-width:560px}
+@media(max-width:900px){.desktop-welcome{max-width:250px}}
+
