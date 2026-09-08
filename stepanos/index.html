@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<base href="/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>StepanOS — Степан Крылов</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<meta name="description" content="Степан Крылов — Project Manager. Проекты в retail, fintech и IT. Личный сайт StepanOS.">
+<meta name="theme-color" content="#1a1a1a">
+<link rel="canonical" href="https://stepankrylov.ru/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://stepankrylov.ru/">
+<meta property="og:title" content="StepanOS — Степан Крылов">
+<meta property="og:description" content="Степан Крылов — Project Manager. Проекты в retail, fintech и IT. Личный сайт StepanOS.">
+<meta property="og:image" content="https://stepankrylov.ru/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap" rel="stylesheet">
+<!-- Параллельная загрузка критичных ассетов — убирает задержку старта звука и фона -->
+<!-- URL фонов должны совпадать с url() в CSS — иначе preload не засчитывается и картинка качается дважды -->
+<link rel="preload" as="image" href="bg.jpg?v=37">
+<link rel="preload" as="image" href="bg-mobile.jpg?v=35">
+<link rel="stylesheet" href="vendor/js-dos/js-dos.css?v=7.5.0">
+<link rel="stylesheet" href="stepanos/style.css">
+</head>
+<body>
+
+<!-- ═══════════════ BOOT SCREEN — Windows84 pin (1.5с) ═══════════════
+     Видео квадратное 1200×1200, чёрный фон вокруг через CSS (desktop — полосы по бокам, mobile — сверху/снизу). -->
+
+
+<!-- Фоновый звук — автоплей заблокирован, запускается по первому тапу -->
+<audio id="bg-audio" src="bg.mp3?v=30" loop preload="none"></audio>
+
+<!-- ═══════════════ WINDOW FRAME (Win95-стиль, обрамляет всю сцену) ═══════════════ -->
+<div id="scene-frame">
+
+  <!-- Титлбар фрейма (Win95 синий) — слева логотип+иконка, справа МСК+кнопки -->
+  <div id="frame-titlebar">
+    <div class="ft-left">
+      <div class="ft-icon">S</div>
+      <span class="ft-title">СтепанКрылов.exe</span>
+    </div>
+    <div class="ft-right">
+      <span class="ft-clock-wrap">
+        <span class="ft-clock-lbl">МСК</span>
+        <span class="ft-clock" id="tb-clock">00:00</span>
+      </span>
+      <div class="ft-btns">
+        <button class="ft-btn" title="Свернуть" tabindex="-1">_</button>
+        <button class="ft-btn" title="Развернуть" tabindex="-1">☐</button>
+        <button class="ft-btn ft-close" title="Закрыть" tabindex="-1">×</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Тело фрейма — тут живёт сцена -->
+  <div id="frame-body">
+
+<!-- ═══════════════ SCENE (aspect-locked inside frame) ═══════════════ -->
+<div id="desktop-stage">
+  <div id="desk-bg"></div>
+  <div id="desk-crt"></div>
+
+  <!-- Monitor window (positioned over CRT in bg) -->
+  <div id="monitor-win">
+    <div class="mw-titlebar">
+      <div class="mw-tb-left">
+        <div class="mw-tb-icon">S</div>
+        <span class="mw-tb-title">Компуктер</span>
+      </div>
+      <div class="mw-tb-btns">
+        <button class="mw-tb-btn" title="Свернуть">_</button>
+        <button class="mw-tb-btn" title="Развернуть">☐</button>
+        <button class="mw-tb-btn mw-tb-close" title="Закрыть">×</button>
+      </div>
+    </div>
+
+    <div class="mw-tabs">
+      <button class="mw-tab active" data-tab="home">/home/</button>
+      <button class="mw-tab" data-tab="projects">/projects/</button>
+      <button class="mw-tab" data-tab="about">/about/</button>
+      <button class="mw-tab" data-tab="contact">/contact/</button>
+      <div class="mw-tab-flex"></div>
+      <span class="mw-tab-ver">v1.0.0</span>
+    </div>
+
+    <div class="mw-body" id="mw-body">
+
+      <!-- ── HOME (desktop-style with icons) ── -->
+      <section class="mw-section active home-desk" data-sec="home">
+        <div class="home-head">
+          <h1 class="hero-name">СТЕПАН <br>КРЫЛОВ</h1>
+          <div class="hero-role">/ Project Manager</div>
+          <div class="hero-bio">Довожу проекты от исследования до концепции до готового решения. Сейчас строю <b>будущее</b>.</div>
+        </div>
+
+        <div class="home-icons">
+          <button type="button" class="mw-icon" data-app="about" title="Обо мне">
+            <div class="mw-icon-img"><img src="icon_about.png" alt=""></div>
+            <div class="mw-icon-lbl">Обо мне</div>
+          </button>
+
+          <button type="button" class="mw-icon" data-app="projects" title="Проекты">
+            <div class="mw-icon-img"><img src="projects-icon.png" alt=""></div>
+            <div class="mw-icon-lbl">Проекты</div>
+          </button>
+
+          <button type="button" class="mw-icon" data-app="telegram" title="Telegram">
+            <div class="mw-icon-img"><img src="icon_telegram.png" alt=""></div>
+            <div class="mw-icon-lbl">Телеграм</div>
+          </button>
+
+          <!-- Только мобилка (CSS): на десктопе contact живёт в табах, а тут — единственный путь к почте -->
+          <button type="button" class="mw-icon" data-app="contact" title="Контакты">
+            <div class="mw-icon-img"><img src="icon_contact.png" alt=""></div>
+            <div class="mw-icon-lbl">Контакты</div>
+          </button>
+
+          <button type="button" class="mw-icon" data-app="games" title="Игры">
+            <div class="mw-icon-img"><img src="icon_games.png" alt=""></div>
+            <div class="mw-icon-lbl">Игры</div>
+          </button>
+
+          <button type="button" class="mw-icon" data-app="trash" title="Корзина">
+            <div class="mw-icon-img"><img src="icon_trash.png" alt=""></div>
+            <div class="mw-icon-lbl">Корзина</div>
+          </button>
+        </div>
+      </section>
+
+      <!-- ── PROJECTS ── -->
+      <section class="mw-section project-explorer" data-sec="projects" data-explorer="desktop">
+        <div class="project-explorer-root"></div>
+      </section>
+
+      <!-- ── ABOUT ── -->
+      <section class="mw-section" data-sec="about">
+        <h2 class="sec-h">/ about /</h2>
+        <div class="ab-top">
+          <div class="ab-ava"><img src="icon_about.png" alt="Степан Крылов — пиксельный портрет"></div>
+          <div class="ab-head">
+            <div class="ab-name">Степан Крылов</div>
+            <div class="ab-role">Project Manager</div>
+            <div class="ab-loc">Ярославль → Москва</div>
+          </div>
+        </div>
+        <div class="h-rule"></div>
+        <p class="ab-bio">IT, финансы, дизайн. Продуктовое управление: свои инициативы + заказные проекты. Силён в генерации идей и доведении до первых клиентов.</p>
+        <div class="ab-stats">
+          <div class="ab-stat"><div class="ab-n">15+</div><div class="ab-l">проектов</div></div>
+          <div class="ab-stat"><div class="ab-n">2+</div><div class="ab-l">года опыта</div></div>
+          <div class="ab-stat" title="русский · английский · итальянский · немецкий"><div class="ab-n">4</div><div class="ab-l">RU·EN·IT·DE</div></div>
+          <div class="ab-stat"><div class="ab-n">10</div><div class="ab-l">в команде</div></div>
+        </div>
+        <div class="h-rule"></div>
+        <div class="sec-lbl">/ skills</div>
+        <!-- Топ-5 — сегментированные полосы как в инсталляторе Win95.
+             Уровень задаётся инлайн-переменной --lvl (поправить = поменять процент) -->
+        <div class="ab-skbars">
+          <div class="skb"><span class="skb-name">Scrum/Kanban</span><span class="skb-bar"><span class="skb-fill" style="--lvl:90%"></span></span></div>
+          <div class="skb"><span class="skb-name">CustDev</span><span class="skb-bar"><span class="skb-fill" style="--lvl:85%"></span></span></div>
+          <div class="skb"><span class="skb-name">Notion/Jira</span><span class="skb-bar"><span class="skb-fill" style="--lvl:85%"></span></span></div>
+          <div class="skb"><span class="skb-name">MVP</span><span class="skb-bar"><span class="skb-fill" style="--lvl:80%"></span></span></div>
+          <div class="skb"><span class="skb-name">Figma</span><span class="skb-bar"><span class="skb-fill" style="--lvl:75%"></span></span></div>
+        </div>
+        <div class="ab-skills">
+          <span class="sk">PESTEL/SWOT</span><span class="sk">Python/HTML</span>
+          <span class="sk">Miro</span><span class="sk">CJM/SNW</span>
+          <span class="sk">Roadmaps</span>
+        </div>
+        <div class="h-rule"></div>
+        <div class="sec-lbl">/ education</div>
+        <div class="ab-edu">
+          <div class="edu-name">Президентская Академия (РАНХиГС) · Факультет Менеджмента</div>
+          <div class="edu-sub">Бакалавриат · Менеджмент · 2024–н.в. · бюджет</div>
+        </div>
+        <div class="ab-edu" style="margin-top:6px">
+          <div class="edu-sub">+ Skillbox (Продакт), РУДН, Нетология</div>
+        </div>
+        <div class="h-rule"></div>
+        <a class="ab-cta" href="https://t.me/krygerman" target="_blank" rel="noopener">
+          <img class="cta-ico" src="icon_telegram.png" alt="">
+          <span>написать в telegram</span><span class="cta-cursor">_</span>
+        </a>
+      </section>
+
+      <!-- ── CONTACT ── -->
+      <section class="mw-section" data-sec="contact">
+        <h2 class="sec-h">/ contact /</h2>
+        <div class="c-grid">
+          <a class="c-card" href="https://t.me/krygerman" target="_blank" rel="noopener">
+            <div class="c-ico"><img src="icon_telegram.png" alt=""></div>
+            <div class="c-body">
+              <div class="c-lbl">telegram.exe</div>
+              <div class="c-val">@krygerman</div>
+              <div class="c-hint">самый быстрый способ  →</div>
+            </div>
+          </a>
+          <a class="c-card" href="mailto:directstep@mail.ru">
+            <div class="c-ico">✉</div>
+            <div class="c-body">
+              <div class="c-lbl">mail.app</div>
+              <div class="c-val">directstep@mail.ru</div>
+              <div class="c-hint">для формальных писем</div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Фейковый терминал — строки «выводятся» по очереди при открытии вкладки (CSS-анимация) -->
+        <div class="c-term" aria-hidden="true">
+          <div class="t-line t1">C:\&gt; ping @krygerman <span class="t-dim">... ok 12ms</span></div>
+          <div class="t-line t2">C:\&gt; status <span class="t-dim">... ● открыт к проектам</span></div>
+          <div class="t-line t3">C:\&gt; <span class="t-cursor">_</span></div>
+        </div>
+
+        <div class="c-foot">
+          <div>локация: <b>Москва</b> (ранее Ярославль)</div>
+          <div>статус: <b class="st-ok">● открыт к проектам</b></div>
+        </div>
+      </section>
+
+    </div><!-- /mw-body -->
+
+    <div class="mw-statusbar">
+      <span class="mw-sb-item">status: <b class="st-ok">online</b></span>
+      <div class="mw-sb-flex"></div>
+      <span class="mw-sb-item">build: <b>260424</b></span>
+    </div>
+  </div><!-- /monitor-win -->
+
+</div><!-- /desktop-stage -->
+
+  </div><!-- /frame-body -->
+</div><!-- /scene-frame -->
+
+<!-- ═══════════════ MOBILE FULLSCREEN MODAL (variant B) ═══════════════
+     На мобилке клик по иконке в CRT открывает контент поверх сцены.
+     JS клонирует нужную .mw-section в .mm-body при открытии. -->
+<div id="mobile-modal" class="hidden" role="dialog" aria-modal="true" aria-labelledby="mm-title" aria-hidden="true">
+  <div class="mm-frame">
+    <div class="mm-titlebar">
+      <div class="mm-tb-left">
+        <div class="mw-tb-icon">S</div>
+        <span class="mm-tb-title" id="mm-title">Окно</span>
+      </div>
+      <div class="mw-tb-btns">
+        <button class="mw-tb-btn mw-tb-close" id="mm-close" aria-label="Закрыть">×</button>
+      </div>
+    </div>
+    <div class="mm-body" id="mm-body">
+      <!-- контент вставляется из JS -->
+    </div>
+    <div class="mw-statusbar">
+      <span class="mw-sb-item">status: <b class="st-ok">online</b></span>
+      <div class="mw-sb-flex"></div>
+      <span class="mw-sb-item">build: <b>260424</b></span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ GAMES MODAL ═══════════════ -->
+<div id="games-modal" class="hidden" role="dialog" aria-modal="true" aria-label="Игры">
+  <div class="gm-frame">
+    <div class="gm-titlebar">
+      <div class="gm-tb-left"><div class="mw-tb-icon">G</div><span>Игры.exe</span></div>
+      <div class="mw-tb-btns"><button class="mw-tb-btn mw-tb-close" id="gm-close">×</button></div>
+    </div>
+    <div class="gm-body">
+      <div class="gm-game gm-doom-card">
+        <div class="gm-title">[ DOOM.exe ]</div>
+        <div class="doom-card-screen" aria-hidden="true">
+          <span class="doom-card-logo">DOOM</span>
+          <span class="doom-card-version">SHAREWARE v1.9</span>
+        </div>
+        <div class="gm-status">Episode 1 · Knee-Deep in the Dead</div>
+        <button class="gm-btn doom-launch" id="doom-launch" type="button">[ запустить DOOM ]</button>
+      </div>
+      <div class="gm-game">
+        <div class="gm-title">[ крестики-нолики ]</div>
+        <div class="ttt-grid" id="ttt-grid">
+          <div class="ttt-cell" data-i="0"></div><div class="ttt-cell" data-i="1"></div><div class="ttt-cell" data-i="2"></div>
+          <div class="ttt-cell" data-i="3"></div><div class="ttt-cell" data-i="4"></div><div class="ttt-cell" data-i="5"></div>
+          <div class="ttt-cell" data-i="6"></div><div class="ttt-cell" data-i="7"></div><div class="ttt-cell" data-i="8"></div>
+        </div>
+        <div class="gm-status" id="ttt-status">Твой ход (X)</div>
+        <button class="gm-btn" id="ttt-reset">[ сначала ]</button>
+      </div>
+      <div class="gm-game">
+        <div class="gm-title">[ snake ]</div>
+        <div class="snake-row">
+          <span class="gm-status">Счёт: <span id="snake-score">0</span></span>
+          <span class="gm-status">Рекорд: <span id="snake-best">0</span></span>
+        </div>
+        <canvas id="snake-canvas" width="200" height="200"></canvas>
+        <button class="gm-btn" id="snake-start">[ старт ]</button>
+        <div class="snake-dpad">
+          <button class="dpad" data-dir="up">▲</button>
+          <div class="dpad-row">
+            <button class="dpad" data-dir="left">◀</button>
+            <button class="dpad" data-dir="right">▶</button>
+          </div>
+          <button class="dpad" data-dir="down">▼</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ DOOM / JS-DOS ═══════════════ -->
+<div id="doom-modal" class="hidden" role="dialog" aria-modal="true" aria-labelledby="doom-window-title" aria-hidden="true">
+  <div class="doom-frame">
+    <div class="gm-titlebar doom-titlebar">
+      <div class="gm-tb-left">
+        <div class="mw-tb-icon">D</div>
+        <span id="doom-window-title">DOOM.exe — Shareware v1.9</span>
+      </div>
+      <div class="mw-tb-btns">
+        <button class="doom-exit-btn" id="doom-close" type="button" aria-label="Выйти из DOOM">[ выйти ]</button>
+      </div>
+    </div>
+    <div class="doom-stage">
+      <div id="doom-player"></div>
+      <div id="doom-loading" role="status">Загрузка DOOM...</div>
+    </div>
+    <div class="doom-help">
+      <span>ПК: стрелки — движение · Ctrl — огонь · Space — дверь · Shift — бег</span>
+      <span>Телефон: стрелки слева — движение · F — огонь · SP — дверь</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ TRASH MODAL ═══════════════ -->
+<div id="trash-modal" class="hidden" role="dialog" aria-modal="true" aria-label="Корзина">
+  <div class="tm-frame">
+    <div class="gm-titlebar">
+      <div class="gm-tb-left"><div class="mw-tb-icon">🗑</div><span>Корзина</span></div>
+      <div class="mw-tb-btns"><button class="mw-tb-btn mw-tb-close" id="tm-close">×</button></div>
+    </div>
+    <div class="tm-body">
+      <p class="tm-p">Мусор вынес утром.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ ROTATE-DEVICE OVERLAY ═══════════════
+     Показывается только в landscape с узкой высотой (≤ 500px) —
+     сцена с aspect 1672:941 в горизонтали телефона нечитаема. -->
+<div id="rotate-overlay" aria-hidden="true">
+  <div class="ro-frame">
+    <div class="ro-tb">
+      <div class="ro-tb-left">
+        <span class="ro-tb-icon">!</span>
+        <span class="ro-tb-title">Внимание</span>
+      </div>
+    </div>
+    <div class="ro-body">
+      <div class="ro-icon">↻</div>
+      <p class="ro-text">Поверните телефон<br>вертикально</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ POKE WINDOW — окошко-шутка при клике по сцене ═══════════════
+     Появляется в точке клика мимо «компуктера», само исчезает через 4с. -->
+<div id="poke-win" class="hidden" role="status">
+  <div class="pw-tb">
+    <span class="pw-title">StepanOS</span>
+    <button class="pw-close" aria-label="Закрыть">×</button>
+  </div>
+  <div class="pw-body" id="pw-text"></div>
+</div>
+
+<a class="return-updated" href="/">Вернуться на обновленный сайт</a>
+<style>.return-updated{position:fixed;z-index:10000;left:50%;bottom:calc(12px + env(safe-area-inset-bottom));transform:translateX(-50%);max-width:calc(100vw - 24px);box-sizing:border-box;padding:10px 18px;min-height:44px;text-align:center;background:#c0c0c0;color:#111;border:3px solid;border-color:#fff #444 #444 #fff;font:20px 'VT323',monospace;text-decoration:none;box-shadow:3px 3px #0008}.return-updated:focus-visible{outline:3px solid #000080}</style>
+<script src="stepanos/app.js"></script>
+</body>
+</html>

@@ -1,255 +1,21 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>StepanOS — Степан Крылов</title>
-<link rel="icon" type="image/png" href="favicon.png">
-<link rel="apple-touch-icon" href="favicon.png">
-<meta name="description" content="Степан Крылов — Project Manager. Проекты в retail, fintech и IT. Личный сайт StepanOS.">
-<meta name="theme-color" content="#1a1a1a">
-<link rel="canonical" href="https://stepankrylov.ru/">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://stepankrylov.ru/">
-<meta property="og:title" content="StepanOS — Степан Крылов">
-<meta property="og:description" content="Степан Крылов — Project Manager. Проекты в retail, fintech и IT. Личный сайт StepanOS.">
-<meta property="og:image" content="https://stepankrylov.ru/og-cover.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:locale" content="ru_RU">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap" rel="stylesheet">
-<!-- Параллельная загрузка критичных ассетов — убирает задержку старта звука и фона -->
-<link rel="preload" as="audio" href="bg.mp3?v=30" type="audio/mpeg" fetchpriority="high">
-<!-- URL фонов должны совпадать с url() в CSS — иначе preload не засчитывается и картинка качается дважды -->
-<link rel="preload" as="image" href="bg.jpg?v=37">
-<link rel="preload" as="image" href="bg-mobile.jpg?v=35">
-<link rel="preload" as="video" href="boot-loader.mp4?v=30" type="video/mp4">
-<link rel="stylesheet" href="vendor/js-dos/js-dos.css?v=7.5.0">
-<link rel="stylesheet" href="style.css?v=40">
-</head>
-<body>
-
-<!-- ═══════════════ BOOT SCREEN — Windows84 pin (1.5с) ═══════════════
-     Видео квадратное 1200×1200, чёрный фон вокруг через CSS (desktop — полосы по бокам, mobile — сверху/снизу). -->
-<div id="boot">
-  <video id="boot-media" autoplay muted loop playsinline preload="auto" disableremoteplayback>
-    <source src="boot-loader.mp4?v=30" type="video/mp4">
-  </video>
-  <button id="boot-sound-hint" type="button" aria-label="Включить звук">♪ тапни — включить звук</button>
-</div>
-
-<!-- Фоновый звук — автоплей заблокирован, запускается по первому тапу -->
-<audio id="bg-audio" src="bg.mp3?v=30" loop preload="auto"></audio>
-
-<!-- ═══════════════ WINDOW FRAME (Win95-стиль, обрамляет всю сцену) ═══════════════ -->
-<div id="scene-frame">
-
-  <!-- Титлбар фрейма (Win95 синий) — слева логотип+иконка, справа МСК+кнопки -->
-  <div id="frame-titlebar">
-    <div class="ft-left">
-      <div class="ft-icon">S</div>
-      <span class="ft-title">СтепанКрылов.exe</span>
-    </div>
-    <div class="ft-right">
-      <span class="ft-clock-wrap">
-        <span class="ft-clock-lbl">МСК</span>
-        <span class="ft-clock" id="tb-clock">00:00</span>
-      </span>
-      <div class="ft-btns">
-        <button class="ft-btn" title="Свернуть" tabindex="-1">_</button>
-        <button class="ft-btn" title="Развернуть" tabindex="-1">☐</button>
-        <button class="ft-btn ft-close" title="Закрыть" tabindex="-1">×</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Тело фрейма — тут живёт сцена -->
-  <div id="frame-body">
-
-<!-- ═══════════════ SCENE (aspect-locked inside frame) ═══════════════ -->
-<div id="desktop-stage">
-  <div id="desk-bg"></div>
-  <div id="desk-crt"></div>
-
-  <!-- Monitor window (positioned over CRT in bg) -->
-  <div id="monitor-win">
-    <div class="mw-titlebar">
-      <div class="mw-tb-left">
-        <div class="mw-tb-icon">S</div>
-        <span class="mw-tb-title">Компуктер</span>
-      </div>
-      <div class="mw-tb-btns">
-        <button class="mw-tb-btn" title="Свернуть">_</button>
-        <button class="mw-tb-btn" title="Развернуть">☐</button>
-        <button class="mw-tb-btn mw-tb-close" title="Закрыть">×</button>
-      </div>
-    </div>
-
-    <div class="mw-tabs">
-      <button class="mw-tab active" data-tab="home">/home/</button>
-      <button class="mw-tab" data-tab="projects">/projects/</button>
-      <button class="mw-tab" data-tab="about">/about/</button>
-      <button class="mw-tab" data-tab="contact">/contact/</button>
-      <div class="mw-tab-flex"></div>
-      <span class="mw-tab-ver">v1.0.0</span>
-    </div>
-
-    <div class="mw-body" id="mw-body">
-
-      <!-- ── HOME (desktop-style with icons) ── -->
-      <section class="mw-section active home-desk" data-sec="home">
-        <div class="home-head">
-          <h1 class="hero-name">СТЕПАН <br>КРЫЛОВ</h1>
-          <div class="hero-role">/ Project Manager</div>
-          <div class="hero-bio">Довожу проекты от исследования до концепции до готового решения. Сейчас строю <b>будущее</b>.</div>
-        </div>
-
-        <div class="home-icons">
-          <div class="mw-icon" data-app="about" title="Обо мне">
-            <div class="mw-icon-img"><img src="icon_about.png" alt=""></div>
-            <div class="mw-icon-lbl">Обо мне</div>
-          </div>
-
-          <div class="mw-icon" data-app="projects" title="Проекты">
-            <div class="mw-icon-img"><img src="projects-icon.png" alt=""></div>
-            <div class="mw-icon-lbl">Проекты</div>
-          </div>
-
-          <div class="mw-icon" data-app="telegram" title="Telegram">
-            <div class="mw-icon-img"><img src="icon_telegram.png" alt=""></div>
-            <div class="mw-icon-lbl">Телеграм</div>
-          </div>
-
-          <!-- Только мобилка (CSS): на десктопе contact живёт в табах, а тут — единственный путь к почте -->
-          <div class="mw-icon" data-app="contact" title="Контакты">
-            <div class="mw-icon-img"><img src="icon_contact.png" alt=""></div>
-            <div class="mw-icon-lbl">Контакты</div>
-          </div>
-
-          <div class="mw-icon" data-app="games" title="Игры (скоро)">
-            <div class="mw-icon-img"><img src="icon_games.png" alt=""></div>
-            <div class="mw-icon-lbl">Игры</div>
-          </div>
-
-          <div class="mw-icon" data-app="trash" title="Корзина">
-            <div class="mw-icon-img"><img src="icon_trash.png" alt=""></div>
-            <div class="mw-icon-lbl">Корзина</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ── PROJECTS ── -->
-      <section class="mw-section project-explorer" data-sec="projects" data-explorer="desktop">
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Степан Крылов — Ночная мастерская</title><meta name="description" content="Проекты, игры и личная мастерская Степана Крылова."><meta name="theme-color" content="#101722"><link rel="icon" href="/favicon.png"><link href="https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vendor/js-dos/js-dos.css"><link rel="stylesheet" href="/stepanos/style.css?v=spacing1"><link rel="stylesheet" href="/style.css?v=retro3"><link rel="stylesheet" href="/lowpoly.css?v=copy-final"></head><body><main class="workshop portal lowpoly is-booting" aria-label="Объёмный рабочий стол Степана"><div id="portal-room"></div><div id="monitor-ui"><div class="monitor-bar"><span>СтепанКрылов.exe</span><span>STEPAN OS</span></div><div class="monitor-content"><div class="desktop-welcome"><div class="welcome-title">Добро пожаловать</div><div class="welcome-content"><div><h1>Степан Крылов</h1><p>Project Manager</p><span class="welcome-note">Вы зашли на мой сайт</span></div></div></div><div class="screen-icons"><button data-open="about"><img src="/icon_about.png" alt=""><span>Обо мне</span></button><button data-open="projects"><img src="/projects-icon.png" alt=""><span>Проекты</span></button><button data-open="games"><img src="/icon_games.png" alt=""><span>Игры</span></button><button data-open="contact"><img src="/icon_contact.png" alt=""><span>Контакты</span></button></div><div class="desktop-taskbar"><span class="desktop-system">▣ StepanOS</span><span class="screen-status">● Открыт к проектам</span></div></div></div><div class="desk-caption"><span>СТЕПАН КРЫЛОВ</span><p>Проекты, игры и немного магии.</p></div><nav class="desk-controls" aria-label="Управление столом"><button id="view-computer">К компьютеру</button></nav><p id="scene-status" role="status"></p></main><audio id="bg-audio" src="/bg.mp3" loop preload="auto"></audio><div hidden id="section-sources"><section class="mw-section project-explorer" data-sec="projects" data-explorer="desktop">
         <div class="project-explorer-root"></div>
       </section>
-
-      <!-- ── ABOUT ── -->
-      <section class="mw-section" data-sec="about">
-        <h2 class="sec-h">/ about /</h2>
-        <div class="ab-top">
-          <div class="ab-ava"><img src="icon_about.png" alt="Степан Крылов — пиксельный портрет"></div>
-          <div class="ab-head">
-            <div class="ab-name">Степан Крылов</div>
-            <div class="ab-role">Project Manager</div>
-            <div class="ab-loc">Ярославль → Москва</div>
-          </div>
-        </div>
-        <div class="h-rule"></div>
-        <p class="ab-bio">IT, финансы, дизайн. Продуктовое управление: свои инициативы + заказные проекты. Силён в генерации идей и доведении до первых клиентов.</p>
-        <div class="ab-stats">
-          <div class="ab-stat"><div class="ab-n">15+</div><div class="ab-l">проектов</div></div>
-          <div class="ab-stat"><div class="ab-n">2+</div><div class="ab-l">года опыта</div></div>
-          <div class="ab-stat" title="русский · английский · итальянский · немецкий"><div class="ab-n">4</div><div class="ab-l">RU·EN·IT·DE</div></div>
-          <div class="ab-stat"><div class="ab-n">10</div><div class="ab-l">в команде</div></div>
-        </div>
-        <div class="h-rule"></div>
-        <div class="sec-lbl">/ skills</div>
-        <!-- Топ-5 — сегментированные полосы как в инсталляторе Win95.
-             Уровень задаётся инлайн-переменной --lvl (поправить = поменять процент) -->
-        <div class="ab-skbars">
-          <div class="skb"><span class="skb-name">Scrum/Kanban</span><span class="skb-bar"><span class="skb-fill" style="--lvl:90%"></span></span></div>
-          <div class="skb"><span class="skb-name">CustDev</span><span class="skb-bar"><span class="skb-fill" style="--lvl:85%"></span></span></div>
-          <div class="skb"><span class="skb-name">Notion/Jira</span><span class="skb-bar"><span class="skb-fill" style="--lvl:85%"></span></span></div>
-          <div class="skb"><span class="skb-name">MVP</span><span class="skb-bar"><span class="skb-fill" style="--lvl:80%"></span></span></div>
-          <div class="skb"><span class="skb-name">Figma</span><span class="skb-bar"><span class="skb-fill" style="--lvl:75%"></span></span></div>
-        </div>
-        <div class="ab-skills">
-          <span class="sk">PESTEL/SWOT</span><span class="sk">Python/HTML</span>
-          <span class="sk">Miro</span><span class="sk">CJM/SNW</span>
-          <span class="sk">Roadmaps</span>
-        </div>
-        <div class="h-rule"></div>
-        <div class="sec-lbl">/ education</div>
-        <div class="ab-edu">
-          <div class="edu-name">РАНХиГС · ФМ</div>
-          <div class="edu-sub">Бакалавриат · Менеджмент · 2024–н.в. · бюджет</div>
-        </div>
-        <div class="ab-edu" style="margin-top:6px">
-          <div class="edu-sub">+ Skillbox (Продакт), РУДН, Нетология</div>
-        </div>
-        <div class="h-rule"></div>
-        <a class="ab-cta" href="https://t.me/krygerman" target="_blank" rel="noopener">
-          <img class="cta-ico" src="icon_telegram.png" alt="">
-          <span>написать в telegram</span><span class="cta-cursor">_</span>
-        </a>
-      </section>
-
-      <!-- ── CONTACT ── -->
-      <section class="mw-section" data-sec="contact">
-        <h2 class="sec-h">/ contact /</h2>
-        <div class="c-grid">
-          <a class="c-card" href="https://t.me/krygerman" target="_blank" rel="noopener">
-            <div class="c-ico"><img src="icon_telegram.png" alt=""></div>
-            <div class="c-body">
-              <div class="c-lbl">telegram.exe</div>
-              <div class="c-val">@krygerman</div>
-              <div class="c-hint">самый быстрый способ  →</div>
-            </div>
-          </a>
-          <a class="c-card" href="mailto:directstep@mail.ru">
-            <div class="c-ico">✉</div>
-            <div class="c-body">
-              <div class="c-lbl">mail.app</div>
-              <div class="c-val">directstep@mail.ru</div>
-              <div class="c-hint">для формальных писем</div>
-            </div>
-          </a>
-        </div>
-
-        <!-- Фейковый терминал — строки «выводятся» по очереди при открытии вкладки (CSS-анимация) -->
-        <div class="c-term" aria-hidden="true">
-          <div class="t-line t1">C:\&gt; ping @krygerman <span class="t-dim">... ok 12ms</span></div>
-          <div class="t-line t2">C:\&gt; status <span class="t-dim">... ● открыт к проектам</span></div>
-          <div class="t-line t3">C:\&gt; <span class="t-cursor">_</span></div>
-        </div>
-
-        <div class="c-foot">
-          <div>локация: <b>Москва</b> (ранее Ярославль)</div>
-          <div>статус: <b class="st-ok">● открыт к проектам</b></div>
-        </div>
-      </section>
-
-    </div><!-- /mw-body -->
-
-    <div class="mw-statusbar">
-      <span class="mw-sb-item">status: <b class="st-ok">online</b></span>
-      <div class="mw-sb-flex"></div>
-      <span class="mw-sb-item">build: <b>260424</b></span>
-    </div>
-  </div><!-- /monitor-win -->
-
-</div><!-- /desktop-stage -->
-
-  </div><!-- /frame-body -->
-</div><!-- /scene-frame -->
-
-<!-- ═══════════════ MOBILE FULLSCREEN MODAL (variant B) ═══════════════
-     На мобилке клик по иконке в CRT открывает контент поверх сцены.
-     JS клонирует нужную .mw-section в .mm-body при открытии. -->
-<div id="mobile-modal" class="hidden" role="dialog" aria-modal="true" aria-labelledby="mm-title" aria-hidden="true">
+<section class="mw-section profile-page" data-sec="about">
+  <header class="profile-header"><img src="/icon_about.png" alt="Пиксельный портрет Степана"><div><h2>Степан Крылов</h2><p>Project / Product Manager</p><span>Ярославль → Москва</span></div></header>
+  <p class="profile-intro">Занимаюсь проектным и продуктовым управлением. Больше всего люблю задачи, где нужно разобраться в новой теме, сформулировать решение и организовать его реализацию.</p>
+  <p class="profile-description">Работаю с продуктами, маркетингом и IT. Вне работы занимаюсь живописью, интересуюсь дизайном, технологиями и делаю собственные digital-проекты.</p>
+  <dl class="profile-facts"><div><dt>Ярославль → Москва</dt><dd>откуда и где живу сейчас</dd></div><div><dt>Project + Product</dt><dd>мой профессиональный фокус</dd></div><div><dt>Fintech · Retail · IT</dt><dd>основные сферы проектов</dd></div><div><dt>Живопись</dt><dd>одно из главных занятий вне работы</dd></div></dl>
+  <div class="profile-columns"><section><h3>Профессионально</h3><ul class="profile-skills"><li>Проектное и продуктовое управление</li><li>Исследования и проверка гипотез</li><li>Roadmap и приоритизация</li><li>Работа с командами 3-10 человек</li><li>Продуктовые и маркетинговые проекты</li><li>Fintech · Retail · IT</li></ul></section><section><h3>Личное</h3><ul class="profile-skills"><li>Родился в Ярославле, сейчас живу в Москве</li><li>Занимаюсь живописью</li><li>Интересуюсь дизайном и технологиями</li><li>Делаю собственные digital-проекты</li><li>EN C1 · DE B1 · IT A2</li></ul></section></div>
+  <section class="profile-education"><h3>Образование</h3><p>Президентская Академия · Менеджмент · 3 курс</p></section>
+  <a class="profile-contact" href="https://t.me/krygerman" target="_blank" rel="noopener"><img src="/icon_telegram.png" alt="">Написать в Telegram ↗</a>
+</section>
+<section class="mw-section contact-page" data-sec="contact">
+<header class="contact-heading"><img src="/icon_contact.png" alt=""><div><h2>На связи</h2><p>Есть проект или идея? Давай обсудим.</p></div></header>
+<div class="contact-options"><section class="contact-option"><div class="contact-method"><img src="/icon_telegram.png" alt=""><h3>Telegram</h3><span>Для быстрого разговора</span></div><a class="contact-address" href="https://t.me/krygerman" target="_blank" rel="noopener">@krygerman <span aria-hidden="true">↗</span></a></section>
+<section class="contact-option"><div class="contact-method"><img src="/icon_contact.png" alt=""><h3>Почта</h3><span>Для деталей и документов</span></div><a class="contact-address" href="mailto:directstep@mail.ru">directstep@mail.ru <span aria-hidden="true">↗</span></a></section></div>
+<footer class="contact-footer"><span>Москва · Ярославль</span><span>● Открыт к проектам</span></footer>
+</section></div><div id="mobile-modal" class="hidden" role="dialog" aria-modal="true" aria-labelledby="mm-title" aria-hidden="true">
   <div class="mm-frame">
     <div class="mm-titlebar">
       <div class="mm-tb-left">
@@ -272,11 +38,19 @@
 </div>
 
 <!-- ═══════════════ GAMES MODAL ═══════════════ -->
-<div id="games-modal" class="hidden">
+<div id="games-modal" class="hidden" role="dialog" aria-modal="true" aria-label="Игры">
+  <div class="games-launcher" aria-label="Папка с играми">
+    <div class="games-launcher-title">/ games /</div>
+    <div class="games-launcher-grid">
+      <button class="game-shortcut" data-game="doom"><img src="/assets/games/doom-logo.png" alt=""><span>DOOM.exe</span></button>
+      <button class="game-shortcut" data-game="ttt"><img src="/assets/games/tictactoe.jpg" alt=""><span>Крестики-нолики</span></button>
+      <button class="game-shortcut" data-game="snake"><img src="/assets/games/snake.png" alt=""><span>Snake.exe</span></button>
+    </div>
+  </div>
   <div class="gm-frame">
     <div class="gm-titlebar">
       <div class="gm-tb-left"><div class="mw-tb-icon">G</div><span>Игры.exe</span></div>
-      <div class="mw-tb-btns"><button class="mw-tb-btn mw-tb-close" id="gm-close">×</button></div>
+      <div class="mw-tb-btns"><button class="mw-tb-btn games-back" id="games-back" aria-label="Вернуться к играм">↩</button><button class="mw-tb-btn mw-tb-close" id="gm-close" aria-label="Закрыть игры">×</button></div>
     </div>
     <div class="gm-body">
       <div class="gm-game gm-doom-card">
@@ -291,9 +65,9 @@
       <div class="gm-game">
         <div class="gm-title">[ крестики-нолики ]</div>
         <div class="ttt-grid" id="ttt-grid">
-          <div class="ttt-cell" data-i="0"></div><div class="ttt-cell" data-i="1"></div><div class="ttt-cell" data-i="2"></div>
-          <div class="ttt-cell" data-i="3"></div><div class="ttt-cell" data-i="4"></div><div class="ttt-cell" data-i="5"></div>
-          <div class="ttt-cell" data-i="6"></div><div class="ttt-cell" data-i="7"></div><div class="ttt-cell" data-i="8"></div>
+          <button class="ttt-cell" data-i="0" aria-label="Клетка 1"></button><button class="ttt-cell" data-i="1" aria-label="Клетка 2"></button><button class="ttt-cell" data-i="2" aria-label="Клетка 3"></button>
+          <button class="ttt-cell" data-i="3" aria-label="Клетка 4"></button><button class="ttt-cell" data-i="4" aria-label="Клетка 5"></button><button class="ttt-cell" data-i="5" aria-label="Клетка 6"></button>
+          <button class="ttt-cell" data-i="6" aria-label="Клетка 7"></button><button class="ttt-cell" data-i="7" aria-label="Клетка 8"></button><button class="ttt-cell" data-i="8" aria-label="Клетка 9"></button>
         </div>
         <div class="gm-status" id="ttt-status">Твой ход (X)</div>
         <button class="gm-btn" id="ttt-reset">[ сначала ]</button>
@@ -343,11 +117,11 @@
 </div>
 
 <!-- ═══════════════ TRASH MODAL ═══════════════ -->
-<div id="trash-modal" class="hidden">
+<div id="trash-modal" class="hidden" role="dialog" aria-modal="true" aria-label="Корзина">
   <div class="tm-frame">
     <div class="gm-titlebar">
       <div class="gm-tb-left"><div class="mw-tb-icon">🗑</div><span>Корзина</span></div>
-      <div class="mw-tb-btns"><button class="mw-tb-btn mw-tb-close" id="tm-close">×</button></div>
+      <div class="mw-tb-btns"><button class="mw-tb-btn mw-tb-close" id="tm-close" aria-label="Закрыть корзину">×</button></div>
     </div>
     <div class="tm-body">
       <p class="tm-p">Мусор вынес утром.</p>
@@ -355,34 +129,5 @@
   </div>
 </div>
 
-<!-- ═══════════════ ROTATE-DEVICE OVERLAY ═══════════════
-     Показывается только в landscape с узкой высотой (≤ 500px) —
-     сцена с aspect 1672:941 в горизонтали телефона нечитаема. -->
-<div id="rotate-overlay" aria-hidden="true">
-  <div class="ro-frame">
-    <div class="ro-tb">
-      <div class="ro-tb-left">
-        <span class="ro-tb-icon">!</span>
-        <span class="ro-tb-title">Внимание</span>
-      </div>
-    </div>
-    <div class="ro-body">
-      <div class="ro-icon">↻</div>
-      <p class="ro-text">Поверните телефон<br>вертикально</p>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════ POKE WINDOW — окошко-шутка при клике по сцене ═══════════════
-     Появляется в точке клика мимо «компуктера», само исчезает через 4с. -->
-<div id="poke-win" class="hidden" role="status">
-  <div class="pw-tb">
-    <span class="pw-title">StepanOS</span>
-    <button class="pw-close" aria-label="Закрыть">×</button>
-  </div>
-  <div class="pw-body" id="pw-text"></div>
-</div>
-
-<script src="app.js?v=36"></script>
-</body>
-</html>
+<link rel="stylesheet" href="/desktop.css?v=about33">
+<script>window.portalView={enter(){},exit(){}};</script><script type="module" src="/lowpoly.js?v=callouts33"></script><script src="/app.js?v=room13"></script><script src="/mobile.js?v=noback21"></script></body></html>

@@ -101,7 +101,8 @@ function initProjectExplorer(section) {
       preview.innerHTML = '<div class="pe-preview-head">🔒 Доступ ограничен</div><p>Ещё три проекта существуют, но их содержание защищено NDA.</p>';
       return;
     }
-        preview.innerHTML = `<div class="pe-preview-head">${item.name}</div><div class="pe-preview-kicker">${item.kicker}</div><p>${item.description}</p><div class="pe-preview-tags">${item.tags}</div><a href="https://disk.yandex.ru/d/CUsa3mXcSa4nTg" target="_blank" rel="noopener">Материалы проекта в общем архиве ↗</a>`;
+    const casePath = item.id.startsWith('x5-') ? 'x5' : item.id.startsWith('yandex-') ? 'alice' : item.id.startsWith('alfa-') ? 'alfa' : null;
+    preview.innerHTML = `<div class="pe-preview-head">${item.name}</div><div class="pe-preview-kicker">${item.kicker}</div><p>${item.description}</p><div class="pe-preview-tags">${item.tags}</div>${casePath ? `<a href="/projects/${casePath}/">Открыть полный разбор</a>` : ''}`;
   };
 
   const render = () => {
@@ -188,21 +189,18 @@ if (window.visualViewport) {
    Повторный audio.load() здесь нельзя вызывать: он обнуляет уже скачанный буфер. */
 let audioStarted = false;
 let bgAudioSuppressed = false;
-let soundEnabled = true;
+let soundEnabled = false;
 function clearAudioUnlock() {}
 function armAudioUnlock() {}
 async function tryPlayBgAudio() {
   if (!soundEnabled || bgAudioSuppressed) return;
   const audio = $('#bg-audio');
   try { audio.volume = 0.35; await audio.play(); audioStarted = true; }
-  catch { audioStarted = false; }
+  catch { soundEnabled = false; audioStarted = false; updateSoundButton(); }
 }
-tryPlayBgAudio();
-document.addEventListener('pointerdown', () => { if (soundEnabled && !audioStarted) tryPlayBgAudio(); }, {passive:true});
 function updateSoundButton() {
   const button = $('#room-sound');
-  if (!button) return;
-  button.textContent = soundEnabled ? '♫ Музыка вкл.' : '♫ Музыка выкл.';
+  button.textContent = soundEnabled ? 'Звук включён' : 'Звук выключен';
   button.setAttribute('aria-pressed', String(soundEnabled));
 }
 on($('#room-sound'), 'click', () => {
@@ -419,8 +417,6 @@ async function launchDoomImpl() {
     // При закрытии cleanup уже принадлежит closeDoom(); второй stop опасен для worker API.
     if (session !== doomSession) return;
     loading.classList.add('hidden');
-    const gameCanvas = root.querySelector('canvas');
-    if (gameCanvas) { gameCanvas.tabIndex = 0; gameCanvas.focus(); }
   } catch (error) {
     // Старый запуск мог завершиться уже после закрытия/нового запроса.
     // В таком случае он не имеет права трогать актуальный player и интерфейс.
@@ -439,7 +435,7 @@ async function launchDoomImpl() {
 function closeDoom() {
   const modal = $('#doom-modal');
   const root = $('#doom-player');
-  if (modal?.classList.contains('hidden') && !doomPlayer && !doomLaunchTask) return doomClosingPromise;
+  if (modal?.classList.contains('hidden') && !doomPlayer) return doomClosingPromise;
 
   const instance = doomPlayer;
   const activeLaunchTask = doomLaunchTask;
@@ -465,7 +461,7 @@ function closeDoom() {
     if (closingSession !== doomSession) return;
     if (root) root.replaceChildren();
     bgAudioSuppressed = false;
-    if (soundEnabled) {
+    if (shouldResumeBgAudio) {
       tryPlayBgAudio(true);
     } else if (!audioStarted) {
       armAudioUnlock();
@@ -477,34 +473,6 @@ function closeDoom() {
 
 /* ═══════════════ MODALS ═══════════════ */
 function modals() {
-  const gamesModal = $('#games-modal');
-  const gamesFrame = gamesModal?.querySelector('.gm-frame');
-  const gamesLauncher = gamesModal?.querySelector('.games-launcher');
-  gamesFrame?.insertBefore(gamesLauncher, gamesFrame.querySelector('.gm-body'));
-  const gamePanels = {
-    doom: $('#doom-launch')?.closest('.gm-game'),
-    ttt: $('#ttt-grid')?.closest('.gm-game'),
-    snake: $('#snake-canvas')?.closest('.gm-game')
-  };
-  const resetGamesFolder = () => {
-    gamesModal?.classList.remove('is-playing');
-    Object.values(gamePanels).forEach(panel => panel?.classList.remove('is-selected'));
-    gamesModal.dispatchEvent(new Event('gamechange'));
-    gamesFrame.querySelector('.gm-tb-left span').textContent = 'Игры';
-  };
-  window.showGamesFolder = resetGamesFolder;
-  gamesModal?.querySelectorAll('.game-shortcut').forEach(shortcut => on(shortcut, 'click', () => {
-    if (shortcut.dataset.game === 'doom') { launchDoom(); return; }
-    const panel = gamePanels[shortcut.dataset.game];
-    if (!panel) return;
-    Object.values(gamePanels).forEach(item => item?.classList.remove('is-selected'));
-    panel.classList.add('is-selected');
-    gamesModal.classList.add('is-playing');
-    gamesFrame.querySelector('.gm-tb-left span').textContent = shortcut.textContent.trim();
-    gamesModal.dispatchEvent(new Event('gamechange'));
-    panel.querySelector('button')?.focus();
-  }));
-  on($('#games-back'), 'click', resetGamesFolder);
   on($('#gm-close'), 'click', () => $('#games-modal')?.classList.add('hidden'));
   on($('#doom-launch'), 'click', () => launchDoom());
   on($('#doom-close'), 'click', () => closeDoom());
@@ -620,13 +588,12 @@ function initTTT() {
   if (!grid || !status || !resetBtn) return;
 
   const cells = Array(9).fill(null);
-  let active = true, thinking = false, aiTimer;
+  let active = true;
   const WINS = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
 
   const render = () => {
     $$('.ttt-cell', grid).forEach((c, i) => {
       c.textContent = cells[i] || '';
-      c.setAttribute('aria-label', `Клетка ${i + 1}: ${cells[i] || 'пусто'}`);
       c.className = 'ttt-cell' + (cells[i]==='X' ? ' x' : cells[i]==='O' ? ' o' : '');
     });
   };
@@ -641,16 +608,14 @@ function initTTT() {
 
   on(grid, 'click', (e) => {
     const cell = e.target.closest('.ttt-cell');
-    if (!cell || !active || thinking) return;
+    if (!cell || !active) return;
     const i = +cell.dataset.i;
     if (cells[i]) return;
     cells[i] = 'X'; render();
     if (won('X')) { status.textContent = '✓ Ты выиграл!'; active=false; return; }
     if (cells.every(Boolean)) { status.textContent = '[ ничья ]'; active=false; return; }
     status.textContent = 'Думаю...';
-    thinking = true;
-    aiTimer = setTimeout(() => {
-      thinking = false;
+    setTimeout(() => {
       ai(); render();
       if (won('O'))   { status.textContent = '× Ты проиграл!'; active=false; return; }
       if (cells.every(Boolean)) { status.textContent = '[ ничья ]'; active=false; return; }
@@ -659,7 +624,6 @@ function initTTT() {
   });
 
   on(resetBtn, 'click', () => {
-    clearTimeout(aiTimer); thinking = false;
     for (let i=0;i<9;i++) cells[i]=null;
     active = true;
     status.textContent = 'Твой ход (X)';
@@ -745,23 +709,11 @@ function initSnake() {
     draw();
   };
 
-  const stop = () => {
-    clearInterval(loop); loop = null; running = false;
-    const sb = $('#snake-start'); if (sb) sb.textContent = '[ старт ]';
-  };
-
-  const gamesModal = $('#games-modal');
-  on(gamesModal, 'gamechange', stop);
-  if (gamesModal) new MutationObserver(() => {
-    if (gamesModal.classList.contains('hidden')) stop();
-  }).observe(gamesModal, {attributes:true, attributeFilter:['class']});
-
   on($('#snake-start'), 'click', start);
 
   on(document, 'keydown', (e) => {
-    if (!running || $('#games-modal').classList.contains('hidden') || !$('#doom-modal').classList.contains('hidden')) return;
+    if (!running) return;
     const k = e.key;
-    if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(k)) e.preventDefault();
     if ((k==='ArrowUp'||k==='w') && dir.y !== 1) nextDir = {x:0, y:-1};
     else if ((k==='ArrowDown'||k==='s') && dir.y !== -1) nextDir = {x:0, y:1};
     else if ((k==='ArrowLeft'||k==='a') && dir.x !== 1) nextDir = {x:-1, y:0};
@@ -786,96 +738,23 @@ function initSnake() {
 
 /* ═══════════════ INIT ═══════════════ */
 document.addEventListener('DOMContentLoaded', () => {
-  modals(); initTTT(); initSnake(); initWorkshop();
-});
 
-function initWorkshop() {
-  const scene = $('.workshop');
-  const camera = $('#portal-room');
-  const dialogs = ['doom-modal','games-modal','trash-modal','mobile-modal'].map(id => $('#'+id));
-  const monitorScreen = $('#monitor-ui');
-  dialogs.forEach(dialog => monitorScreen.append(dialog));
-  let trigger = null;
-  let previousTop = null;
-  function previousRouteWasWindow() { return ['projects','about','contact','games','trash','project-x5'].includes(location.hash.slice(1)); }
-  function syncWindows() {
-    const top = dialogs.find(el => !el.classList.contains('hidden'));
-    const closedWindow = previousTop && !top;
-    scene.inert = false;
-    monitorScreen.querySelector('.monitor-content').inert = Boolean(top);
-    scene.querySelector('.desk-controls').inert = false;
-    camera.inert = Boolean(top);
-    document.body.classList.toggle('zoomed', Boolean(top));
-    dialogs.forEach(el => {
-      const hidden = el.classList.contains('hidden');
-      el.inert = el !== top;
-      el.setAttribute('aria-hidden', String(hidden || el !== top));
-    });
-    if (top !== previousTop) {
-      if(top) {
-        const focusTarget = previousTop?.id === 'doom-modal' && top.id === 'games-modal' ? $('#doom-launch') : top.querySelector('button');
-        focusTarget?.focus();
-      }
-      else trigger?.focus({preventScroll:true});
-      previousTop = top;
-    }
-    if (closedWindow && previousRouteWasWindow()) {
-      if (history.state?.workshop) history.back();
-      else history.replaceState(null,'',location.pathname + location.search + '#desktop');
-    }
-  }
-  function open(name) {
-    if (!['projects','about','contact','games','trash'].includes(name)) return;
-    closeDoom();
-    dialogs.forEach(el => el.classList.add('hidden'));
-    window.portalView.enter(false);
-    if(name === 'games') { window.showGamesFolder?.(); $('#games-modal').classList.remove('hidden'); }
-    else if(name === 'trash') $('#trash-modal').classList.remove('hidden');
-    else openMobileModal(name);
-    syncWindows();
-  }
-  $$('[data-open]').forEach(button => on(button,'click',() => {
-    trigger = button;
-    history.pushState({workshop:true},'', '#'+button.dataset.open);
-    open(button.dataset.open);
-  }));
-  const observer = new MutationObserver(syncWindows);
-  dialogs.forEach(el => observer.observe(el,{attributes:true,attributeFilter:['class']}));
-  function route() {
-    closeDoom();
-    dialogs.forEach(el=>el.classList.add('hidden'));
-    const name = location.hash.slice(1);
-    if(name === 'desktop') { window.portalView.enter(false); syncWindows(); }
-    else if(name) open(name === 'project-x5' ? 'projects' : name);
-    else { window.portalView.enter(false); syncWindows(); }
-  }
-  on(window,'popstate',route);
-  on(window,'hashchange',route);
-  on(window,'resize',syncWindows);
-  window.workshopNavigate = name => {
-    history.pushState({workshop:true},'', '#'+name);
-    route();
-  };
-  on($('#motion'),'click', e => {
-    const paused = document.body.classList.toggle('paused');
-    e.currentTarget.setAttribute('aria-pressed',String(paused));
-    e.currentTarget.setAttribute('aria-label',paused ? 'Возобновить движение' : 'Приостановить движение');
-    e.currentTarget.textContent = paused ? '▷' : 'Ⅱ';
-  });
-  on(document,'visibilitychange',()=>{
-    document.body.classList.toggle('hidden-tab',document.hidden);
-    if(document.hidden) $('#bg-audio').pause();
-    else tryPlayBgAudio();
-  });
-  route();
-}
+  initProjectExplorer($('.project-explorer[data-explorer="desktop"]'));
+  const goto = monitorTabs();
+  desktopIcons(goto);
+  modals();
+  pokeWindow();
+  initTTT();
+  initSnake();
+
+  tickClock(); setInterval(tickClock, 1000);
+});
 
 })();
 
 // Keep keyboard focus inside the currently open game or mobile window.
 document.addEventListener('keydown', event => {
   if (event.key !== 'Tab') return;
-  if (innerWidth <= 900) return;
   const dialogs = ['doom-modal', 'games-modal', 'trash-modal', 'mobile-modal'];
   const modal = dialogs.map(id => document.getElementById(id)).find(el => el && !el.classList.contains('hidden'));
   if (!modal) return;

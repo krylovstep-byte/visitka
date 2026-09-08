@@ -1,0 +1,61 @@
+.lowpoly{height:100dvh;min-height:0;background:#24191b;color:#ebddc4}.lowpoly #portal-room{position:absolute;inset:0}.lowpoly canvas{display:block;width:100%;height:100%}#monitor-ui{position:absolute;width:800px;height:480px;left:0;top:0;transform-origin:0 0;backface-visibility:hidden;background:#244e73;color:#e6e9d8;overflow:hidden;will-change:transform;font-family:Consolas,monospace;box-shadow:inset 0 0 45px #0c233855}.monitor-bar{height:30px;background:#18375e;display:flex;justify-content:space-between;padding:7px 14px;font-size:13px;color:#c5d4dc}.monitor-content{padding:42px 46px;position:relative;height:450px;background:linear-gradient(145deg,#386a8c,#204362)}.screen-kicker{font-size:12px;letter-spacing:.2em;color:#a1c0c6}.monitor-content h1{font:38px 'Press Start 2P',Consolas,monospace;letter-spacing:-2px;line-height:1.35;margin:24px 0 14px}.monitor-content p{font-size:23px;color:#f1d996;margin:0}.screen-icons{display:flex;justify-content:space-between;gap:16px;margin-top:52px}.screen-icons button{display:flex;flex-direction:column;align-items:center;gap:13px;width:108px;min-height:95px;background:transparent;border:0;color:#f1edda;font:17px Consolas,monospace;cursor:pointer}.screen-icons img{width:58px;height:58px;object-fit:contain;image-rendering:pixelated}.screen-icons button:hover{background:#9bc5e428}.screen-icons button:focus-visible{outline:3px dotted #ffe899;outline-offset:5px}.screen-status{position:absolute;bottom:16px;left:46px;font-size:13px;color:#bacdb1}.desk-caption{position:absolute;top:2rem;left:2.5rem;pointer-events:none;text-shadow:0 2px 6px #000}.desk-caption>span{font:11px Consolas,monospace;letter-spacing:.2em;color:#d9c7a4}.desk-caption p{font:14px Consolas,monospace;margin:.6rem 0;color:#b5a68e}.desk-controls{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);display:flex;gap:5px;padding:6px;background:#221d19dc;border:1px solid #c2a57755;max-width:calc(100% - 1.2rem);flex-wrap:wrap;justify-content:center}.desk-controls button{color:#e3d0a9;background:transparent;border:0;min-height:44px;padding:8px 14px;font:12px Consolas,monospace;white-space:nowrap}.desk-controls button:hover{background:#c6a77320}.desk-controls button:focus-visible{outline:2px solid #eec37d}.zoomed .lowpoly{filter:none}#scene-status{position:absolute;left:1rem;bottom:6rem;right:1rem;text-align:center;font:12px Consolas,monospace;pointer-events:none}@media(max-width:700px){.desk-caption{top:1.3rem;left:1.2rem}.desk-caption p{font-size:11px}.desk-controls{bottom:calc(.75rem + env(safe-area-inset-bottom));width:calc(100% - 1rem)}.desk-controls button{font-size:11px;padding:6px 9px}#monitor-ui{visibility:hidden}.lowpoly.computer-view #monitor-ui{visibility:visible}}
+.lowpoly canvas{touch-action:none}.lowpoly #scene-callout{position:fixed;z-index:20;max-width:min(300px,calc(100vw - 32px));padding:10px 13px;background:#201b18ee;border:1px solid #d9b579;box-shadow:4px 4px 0 #100d0baa;color:#f4dfb7;font:13px/1.35 Consolas,'Courier New',monospace;pointer-events:none;opacity:0;transform:translate(-12%,-115%) scale(.96);transition:opacity .16s,transform .16s}.lowpoly #scene-callout.is-visible{opacity:1;transform:translate(-12%,-115%) scale(1)}
+.lowpoly .desk-controls{background:#c0c0c0;border:2px solid;border-color:#fff #555 #555 #fff;box-shadow:inset -1px -1px 0 #808080,4px 4px 0 #0007;padding:3px;gap:2px;color:#000;font-family:'VT323','Courier New',monospace}.lowpoly .desk-controls button{background:#c0c0c0;border:2px solid;border-color:#fff #555 #555 #fff;color:#000;min-height:38px;padding:5px 13px;font:18px 'VT323','Courier New',monospace;text-shadow:none}.lowpoly .desk-controls button:hover,.lowpoly .desk-controls button:focus-visible{background:#000080;color:#fff;outline:none}.lowpoly #scene-callout{background:linear-gradient(#000080 0 23px,#c0c0c0 23px);border:2px solid;border-color:#fff #555 #555 #fff;box-shadow:inset -1px -1px 0 #808080,4px 4px 0 #0008;color:#000;padding:31px 12px 10px;font:18px/1.15 'VT323','Courier New',monospace;transform:translate(-12%,-115%) scale(.96)}.lowpoly #scene-callout::before{content:'StepanOS.exe';position:absolute;left:7px;right:7px;top:2px;color:#fff;font:bold 14px Tahoma,sans-serif;white-space:nowrap}.lowpoly #scene-callout.is-visible{transform:translate(-12%,-115%) scale(1)}
+.lowpoly .desk-controls{flex-wrap:nowrap}
+@media(max-width:700px){.lowpoly .desk-controls{flex-wrap:wrap;width:calc(100% - .75rem);bottom:calc(.75rem + env(safe-area-inset-bottom))}}
+@media(max-width:700px){.lowpoly .desk-controls button{font-size:16px;min-height:34px;padding:4px 7px}}
+
+.monitor-boot{position:absolute;inset:0;z-index:10;background:#080c0c;color:#c2c8b1;padding:38px;box-sizing:border-box;box-shadow:inset 0 0 70px #000}
+.monitor-boot pre{margin:0;white-space:pre-wrap;font:21px/1.6 Consolas,monospace;opacity:0}
+.monitor-boot.is-powered pre{opacity:1}
+.lowpoly.is-booting #monitor-ui{visibility:visible;background:#080c0c}
+.lowpoly.is-booting .desk-controls{visibility:hidden}
+.lowpoly .desk-controls{width:max-content;max-width:calc(100% - 24px);flex-wrap:wrap}
+.lowpoly .desk-controls button{min-height:44px}
+@media(max-width:700px){.lowpoly #monitor-ui{visibility:visible}}
+
+.lowpoly.is-booting #monitor-ui>.monitor-bar,.lowpoly.is-booting #monitor-ui>.monitor-content{visibility:hidden}
+
+.monitor-boot{padding:0}
+.boot95{position:absolute;inset:0;visibility:hidden;color:#111;background:radial-gradient(ellipse at 18% 68%,#fff 0 7%,#ffffff00 29%),radial-gradient(ellipse at 72% 25%,#fff 0 8%,#ffffff00 36%),radial-gradient(ellipse at 95% 70%,#eaf4ff 0 10%,#ffffff00 35%),linear-gradient(#6599d3,#b9d4ee 60%,#eff5fc);font-family:Arial,sans-serif}
+.is-powered .boot95{visibility:visible}
+.boot95-flag{position:absolute;left:370px;top:42px;width:126px;height:112px;display:grid;grid-template-columns:1fr 1fr;gap:7px;background:#111;padding:8px;transform:rotate(-12deg) skewY(7deg);box-shadow:-14px 10px 0 -5px #111,-30px 20px 0 -10px #111}
+.boot95-flag i:nth-child(1){background:#e54322}.boot95-flag i:nth-child(2){background:#36a53b}.boot95-flag i:nth-child(3){background:#2772c8}.boot95-flag i:nth-child(4){background:#ffda32}
+.boot95-brand{position:absolute;left:150px;top:196px}.boot95-brand small{font-size:23px}.boot95-brand strong{display:block;font-size:80px;letter-spacing:-6px;line-height:1.1}.boot95-brand strong span{font-weight:400}.boot95-brand strong b{font-size:68px;margin-left:12px;font-weight:400}.boot95-brand p{font-size:18px;letter-spacing:0;margin-top:10px}
+.boot95-bottom{position:absolute;bottom:0;left:0;right:0;padding-top:10px;background:#bfc2c5;font:17px Arial,sans-serif;color:#222;text-align:center}.boot95-progress{height:17px;margin-top:8px;background:repeating-linear-gradient(90deg,#17276a 0,#567ba6 90px,#b6c9d3 180px,#17276a 270px);background-size:270px 100%;animation:boot95-scroll 1.2s linear infinite}
+@keyframes boot95-scroll{to{background-position:270px 0}}
+@media(prefers-reduced-motion:reduce){.boot95-progress{animation:none}}
+body.paused .boot95-progress{animation-play-state:paused}
+
+/* Application windows belong to the projected screen, including nested games. */
+#monitor-ui #mobile-modal,#monitor-ui #games-modal,#monitor-ui #doom-modal,#monitor-ui #trash-modal{position:absolute;inset:0;width:100%;height:100%;padding:0;background:transparent;align-items:stretch;justify-content:stretch}
+#monitor-ui .mm-frame,#monitor-ui .gm-frame,#monitor-ui .doom-frame,#monitor-ui .tm-frame{width:100%;height:100%;max-width:none;max-height:none;min-height:0;margin:0;box-sizing:border-box;display:flex;flex-direction:column;box-shadow:none}
+#monitor-ui .mm-body,#monitor-ui .gm-body,#monitor-ui .tm-body{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain}
+#monitor-ui .mm-body{padding:16px 20px;font-size:18px}
+#monitor-ui .mm-body .pe-entry{min-height:112px}
+#monitor-ui .gm-body{display:grid;grid-template-columns:1fr 1fr;align-content:start}
+#monitor-ui .gm-doom-card{grid-column:1/-1}
+#monitor-ui .doom-stage{flex:1;min-height:0;height:auto;aspect-ratio:auto}
+#monitor-ui #doom-player{width:100%;height:100%}
+#monitor-ui .doom-help{flex-shrink:0;font-size:12px}
+#monitor-ui .gm-titlebar,#monitor-ui .mm-titlebar{flex-shrink:0;min-height:38px}
+#monitor-ui .tm-body{background:#c0c0c0;padding:24px}
+#monitor-ui #snake-canvas{display:block;width:200px;height:200px;max-width:100%;max-height:200px;object-fit:contain}
+#monitor-ui .gm-game{min-width:0;overflow:auto;min-height:0}
+#monitor-ui .gm-body{align-items:start;align-content:start;overflow-y:auto;overflow-x:hidden}
+#monitor-ui .gm-body{padding:8px;gap:8px;grid-template-rows:155px 220px;overflow:hidden}
+#monitor-ui .gm-game{padding:4px;overflow:hidden}
+#monitor-ui .gm-doom-card{min-height:0}
+#monitor-ui .doom-card-screen{min-height:55px;margin:3px 0 4px}
+#monitor-ui .doom-card-logo{font-size:42px}
+#monitor-ui .doom-card-version{font-size:10px;margin-top:3px}
+#monitor-ui .gm-status{font-size:14px}
+#monitor-ui .gm-btn{font-size:13px;margin:3px 2px;padding:2px 8px}
+#monitor-ui .ttt-grid{grid-template-columns:repeat(3,32px);gap:2px;margin:3px auto}
+#monitor-ui .ttt-cell{width:32px;height:32px;font-size:23px}
+#monitor-ui #snake-canvas{width:80px;height:80px;max-height:80px}
+#monitor-ui .snake-dpad{gap:1px;margin-top:2px}
+#monitor-ui .dpad-row{gap:5px}
+#monitor-ui .dpad{width:22px;height:18px;min-width:22px;min-height:18px;font-size:10px}
+.desk-caption>span{font-family:"Press Start 2P",Consolas,monospace;letter-spacing:.06em}.desk-caption p{display:none}
+.lowpoly{visibility:hidden}.lowpoly.scene-ready{visibility:visible}
