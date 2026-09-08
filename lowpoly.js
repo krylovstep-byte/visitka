@@ -496,6 +496,7 @@ function resize(){
   const mobile=innerWidth<=900;
   roomShelf.visible=true;
   roomShelf.position.set(-.4,mobile?10.6:5.65,-2.0);
+  roomShelf.scale.setScalar(mobile?1.45:1);
   for(const wall of [backWall,leftWall,rightWall])wall.scale.y=mobile?2:1;
   shade.matrixAutoUpdate=true;
   for(const item of mobileLayout){
