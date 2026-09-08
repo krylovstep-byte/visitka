@@ -476,8 +476,8 @@ const mobileLayout=[
   [lampRig,[-3.15,0,.0],[.9,2.25,.9]],
   [metronome,[2.0,0,.9],[1.15,1.15,1.15]],
   [shade,[.75,3.24,.27],[1,1,1]],
-  [speakerLeft,[-2.95,0,-1.35],[1.3,1.4,1.3]],
-  [speakerRight,[2.95,0,-1.35],[1.3,1.4,1.3]],
+  [speakerLeft,[-4.25,0,-1.45],[1.45,1.55,1.45]],
+  [speakerRight,[4.25,0,-1.45],[1.45,1.55,1.45]],
   [spineBox,[-2.75,0,-.65],[.85,.85,.85]],
   [plant,[1.15,0,3.0],[.85,.85,.85]],
   [cup,[-2.5,0,2.05],[1.05,1.05,1.05]],
@@ -487,7 +487,7 @@ const mobileLayout=[
   [mouse,[2.1,.14,2.0],[1,1,1]],
   [mouseCable,[.04,0,.75],[1,1,1]],
   [diskette,[-1.5,.085,.75],[.85,.85,.85]],
-  [techBox,[2.35,.38,3.05],[.9,.9,.9]],
+  [techBox,[3.7,.38,3.05],[1.05,1.05,1.05]],
   [topBox,[2.7,.73,-.9],[.72,.5,.72]],
   ...bookGroups.map((book,i)=>[book,[2.7,.1+i*.17,-.9],[.72,.5,.72]])
 ].map(([object,position,scale])=>({object,position,scale,originalPosition:object.position.clone(),originalScale:object.scale.clone()}));
