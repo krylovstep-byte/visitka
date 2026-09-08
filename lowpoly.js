@@ -456,7 +456,7 @@ const interactiveItems=[
   makeInteractive(schedule,'пресс качат бегит турник анжуманя'),
   makeInteractive(spineBox,'Степан Крылов. Один экземпляр.'),
   makeInteractive(diskette,'Что внутри — уже никто не узнает.'),
-  ...bookGroups.map((book,i)=>makeInteractive(book,['Эту я реально читал.','Эту почти.','Эта пока выполняет декоративную функцию.'][i])),
+  ...bookGroups.map((book,i)=>makeInteractive(book,['Эту я реально читал.','Эту почти.','Эта книга пока выполняет чисто декоративную функцию'][i])),
   makeInteractive(cup,'Третий за день. Или второй. Неважно.'),
   makeInteractive(techBox,'Работает тихо. Это подозрительно.'),
   makeInteractive(plant,'Растение до сих пор живое.'),
