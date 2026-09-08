@@ -195,3 +195,6 @@
 .desktop-welcome{max-width:560px}
 @media(max-width:900px){.desktop-welcome{max-width:250px}}
 
+
+@media(max-width:900px){.lowpoly .desk-controls{left:50%;bottom:calc(8px + env(safe-area-inset-bottom));width:270px;max-width:calc(100% - 16px);transform:translateX(-50%);height:60px}.phone-controls{grid-template-columns:repeat(2,1fr);width:100%;gap:3px}.phone-controls button{font-size:21px!important}.phone-controls button span{font-size:15px}}
+

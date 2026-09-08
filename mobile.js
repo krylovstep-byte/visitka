@@ -3,7 +3,7 @@
   const dock = document.querySelector('.desk-controls');
   const controls = document.createElement('div');
   controls.className = 'phone-controls';
-  controls.innerHTML = '<button data-phone="computer" data-camera="computer">▣<span>К компьютеру</span></button><button data-phone="room" data-camera="room">⌂<span>Комната</span></button><button data-phone="menu" aria-expanded="false">▦<span>Меню</span></button>';
+  controls.innerHTML = '<button data-phone="computer" data-camera="computer">▣<span>К компьютеру</span></button><button data-phone="room" data-camera="room">⌂<span>Комната</span></button>';
   dock.append(controls);
   const menu = document.createElement('nav');
   menu.className = 'phone-menu';
@@ -12,10 +12,10 @@
   menu.innerHTML = [['about','Обо мне'],['projects','Проекты'],['games','Игры'],['contact','Контакты']].map(([route,title]) => `<button data-route="${route}">${title}</button>`).join('');
   root.append(menu);
   const menuButton = controls.querySelector('[data-phone="menu"]');
-  function closeMenu() { menu.hidden = true; menuButton.setAttribute('aria-expanded','false'); }
+  function closeMenu() { menu.hidden = true; menuButton?.setAttribute('aria-expanded','false'); }
   controls.addEventListener('click', event => {
     const action = event.target.closest('[data-phone]')?.dataset.phone;
-    if(action === 'menu') { menu.hidden = !menu.hidden; menuButton.setAttribute('aria-expanded',String(!menu.hidden)); return; }
+    if(action === 'menu') { menu.hidden = !menu.hidden; menuButton?.setAttribute('aria-expanded',String(!menu.hidden)); return; }
     closeMenu();
     if(action === 'room') window.portalView.exit();
     if(action === 'computer') window.portalView.enter();
