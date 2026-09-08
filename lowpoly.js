@@ -445,25 +445,25 @@ function makeInteractive(object,label) {
   const item={object,label};interactive.push(item);return item;
 }
 const interactiveItems=[
-  makeInteractive(roomShelf,'Книги на полке. Планы — чуть выше.'),
+  makeInteractive(roomShelf,'Покупаю книги быстрее, чем читаю.'),
   makeInteractive(roomWindow,'Перейти на старую версию сайта?'),
-  makeInteractive(metronome,'Тикает ровно, пока дедлайн делает вид, что его нет.'),
-  makeInteractive(mouse,'Курсор двигается быстрее, чем я принимаю решения.'),
-  makeInteractive(keyboard,'Большинство хороших идей здесь сначала выглядят как опечатки.'),
-  makeInteractive(lampRig,'Включаю её, когда город уже лёг, а дедлайн — нет.'),
-  makeInteractive(notebook,'Некоторые идеи уже стали проектами. Остальные пока делают вид.'),
+  makeInteractive(metronome,'СДВГ. Тик. Так. Тик. Так.'),
+  makeInteractive(mouse,'Двигать медленно. Компьютер старенький.'),
+  makeInteractive(keyboard,'Пробел работает через раз. Как и я.'),
+  makeInteractive(lampRig,'Включается с первого раза. Редкость.'),
+  makeInteractive(notebook,'Записал, чтобы не забыть. Забыл зачем.'),
   makeInteractive(poster,'Я сам из Ярославля, но живу в Москве.'),
-  makeInteractive(schedule,'Утром — тело, вечером — таблицы. Баланс, как его понимает менеджер.'),
-  makeInteractive(spineBox,'Коробка с именем. Переезжала чаще, чем хотелось бы.'),
-  makeInteractive(diskette,'Когда-то на этой дискете помещалась целая жизнь. Сейчас — один мем.'),
-  ...bookGroups.map((book,i)=>makeInteractive(book,['План запуска, который пережил четыре версии.','Сначала поговорить с людьми. Потом открывать таблицы.','Открыл её — и снова хочется всё систематизировать.'][i])),
-  makeInteractive(cup,'Кофе закончился. Проект почему-то нет.'),
+  makeInteractive(schedule,'пресс качат бегит турник анжуманя'),
+  makeInteractive(spineBox,'Степан Крылов. Один экземпляр.'),
+  makeInteractive(diskette,'Что внутри — уже никто не узнает.'),
+  ...bookGroups.map((book,i)=>makeInteractive(book,['Эту я реально читал.','Эту почти.','Эта пока выполняет декоративную функцию.'][i])),
+  makeInteractive(cup,'Третий за день. Или второй. Неважно.'),
   makeInteractive(techBox,'Работает тихо. Это подозрительно.'),
-  makeInteractive(plant,'Единственный участник команды, которому не нужны созвоны.'),
-  makeInteractive(speakerLeft,'Из этой колонки обычно звучит музыка для первого прототипа.'),
-  makeInteractive(speakerRight,'Правая колонка отвечает за бас и тяжёлые решения.'),
+  makeInteractive(plant,'Растение до сих пор живое.'),
+  makeInteractive(speakerLeft,'Левой — коронный.'),
+  makeInteractive(speakerRight,'Правой — похоронный.'),
   makeInteractive(pen,'Этой ручкой написаны четыре экзамена и несколько решений, которые пришлось переписать.'),
-  makeInteractive(monitor,'Рабочий стол. Здесь идеи сначала становятся ярлыками.')
+  makeInteractive(monitor,'Здесь обычно происходит что-то важное. Обычно.')
 ];
 // Project the live HTML screen onto the monitor's four corners.
 const corners=[[-2.02,3.54,.181],[2.02,3.54,.181],[2.02,.94,.181],[-2.02,.94,.181]].map(v=>new THREE.Vector3(...v));
