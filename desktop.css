@@ -196,5 +196,12 @@
 @media(max-width:900px){.desktop-welcome{max-width:250px}}
 
 
-@media(max-width:900px){.lowpoly .desk-controls{left:50%;bottom:calc(8px + env(safe-area-inset-bottom));width:270px;max-width:calc(100% - 16px);transform:translateX(-50%);height:60px}.phone-controls{grid-template-columns:repeat(2,1fr);width:100%;gap:3px}.phone-controls button{font-size:21px!important}.phone-controls button span{font-size:15px}}
+@media(max-width:900px){
+ .lowpoly .desk-controls{left:50%;bottom:calc(8px + env(safe-area-inset-bottom));width:270px;max-width:calc(100% - 16px);transform:translateX(-50%);height:54px}
+ .phone-controls{grid-template-columns:repeat(2,1fr);width:100%;gap:3px}
+ .phone-controls button{flex-direction:row;min-height:44px}
+ .phone-controls button span{font-size:17px}
+ #monitor-ui .screen-icons button span{background:transparent;color:#fff;text-shadow:1px 1px 0 #142535,-1px -1px 0 #142535,1px -1px 0 #142535,-1px 1px 0 #142535}
+ #monitor-ui .screen-icons button:active span,#monitor-ui .screen-icons button:focus-visible span{background:#000080;text-shadow:none}
+}
 

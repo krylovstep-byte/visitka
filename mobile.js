@@ -3,7 +3,7 @@
   const dock = document.querySelector('.desk-controls');
   const controls = document.createElement('div');
   controls.className = 'phone-controls';
-  controls.innerHTML = '<button data-phone="computer" data-camera="computer">▣<span>К компьютеру</span></button><button data-phone="room" data-camera="room">⌂<span>Комната</span></button>';
+  controls.innerHTML = '<button data-phone="computer" data-camera="computer"><span>К компьютеру</span></button><button data-phone="room" data-camera="room"><span>Комната</span></button>';
   dock.append(controls);
   const menu = document.createElement('nav');
   menu.className = 'phone-menu';
