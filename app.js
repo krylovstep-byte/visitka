@@ -286,7 +286,8 @@ function openMobileModal(app) {
     projects: 'Проекты — СтепанКрылов.exe',
     contact:  'Контакты — СтепанКрылов.exe'
   };
-  title.textContent = titles[app] || 'Окно';
+  const shortTitles = {about:'Обо мне',projects:'Проекты',contact:'Контакты'};
+  title.textContent = (innerWidth <= 900 ? shortTitles[app] : titles[app]) || 'Окно';
 
   // Проводник получает отдельное состояние; остальные статичные секции можно клонировать.
   const src = $(`.mw-section[data-sec="${app}"]`);
