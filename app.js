@@ -815,7 +815,10 @@ function initWorkshop() {
     if (top !== previousTop) {
       if(top) {
         const focusTarget = previousTop?.id === 'doom-modal' && top.id === 'games-modal' ? $('#doom-launch') : top.querySelector('button');
-        focusTarget?.focus();
+        // Не даём мобильному браузеру прокручивать страницу к кнопке окна.
+        // Такой автоскролл меняет visual viewport и на короткий момент
+        // рассинхронизирует projective-трансформацию монитора со сценой.
+        focusTarget?.focus({preventScroll:true});
       }
       else trigger?.focus({preventScroll:true});
       previousTop = top;
