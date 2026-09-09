@@ -613,5 +613,13 @@ computerControl.addEventListener('click',()=>selectView(true));
 roomControl.addEventListener('click',()=>selectView(false));
 selectView(true);
 window.addEventListener('resize',resize);
+// На мобильных Safari/встроенных браузерах изменение панели адреса часто
+// приходит только через visualViewport. Без этого canvas и проекция монитора
+// на один кадр остаются в старом размере, из-за чего сцена «уезжает» вправо.
+let viewportResizeFrame=0;
+window.visualViewport?.addEventListener('resize',()=>{
+  cancelAnimationFrame(viewportResizeFrame);
+  viewportResizeFrame=requestAnimationFrame(resize);
+},{passive:true});
 const clock=new THREE.Clock();function draw(){requestAnimationFrame(draw);if(document.hidden){clock.getDelta();return;}const elapsedFrame=clock.getDelta();const dt=Math.min(elapsedFrame,.05);const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;if(!document.body.classList.contains('paused')){camera.position.lerp(target,reduced?1:1-Math.exp(-dt*5));currentLook.lerp(look,reduced?1:1-Math.exp(-dt*5));}if(!document.body.classList.contains('paused'))metroTime+=elapsedFrame;metroPivot.rotation.z=reduced?0:Math.sin(metroTime*3.2)*.38;updateIntro(elapsedFrame);camera.lookAt(currentLook);camera.updateMatrixWorld();scene.updateMatrixWorld();const pts=corners.map(v=>{const p=monitor.localToWorld(v.clone()).project(camera);return[(p.x+1)*innerWidth/2,(1-p.y)*innerHeight/2];});const css=matrix(pts);if(css)ui.style.transform=css;if(callout.classList.contains('is-visible')&&activeCallout?.anchor){const p=activeCallout.anchor.clone().project(camera);const rawX=(p.x+1)*innerWidth/2,rawY=(1-p.y)*innerHeight/2,w=callout.offsetWidth,h=callout.offsetHeight;callout.style.left=`${Math.max(12+.12*w,Math.min(innerWidth-12-.88*w,rawX))}px`;callout.style.top=`${Math.max(12+1.15*h,Math.min(innerHeight-12,rawY))}px`;}renderer.render(scene,camera);root.classList.add('scene-ready');}draw();
 if(location.hash)window.portalView.enter();
