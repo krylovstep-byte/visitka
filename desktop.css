@@ -49,9 +49,13 @@
  #monitor-ui .mm-titlebar,#monitor-ui .gm-titlebar{min-height:48px}#monitor-ui .mw-tb-btn,#monitor-ui #mm-close,#monitor-ui #gm-close{min-width:44px;height:44px}
  #monitor-ui .games-launcher{padding:24px 14px}.games-launcher-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 10px;margin-top:28px}.games-launcher-title{font-size:18px}
  #monitor-ui .game-shortcut{font-size:20px;padding:12px 4px}.game-shortcut img{width:88px;height:80px}
- #monitor-ui .gm-body{padding:8px}#monitor-ui .gm-game:has(#snake-canvas).is-selected{display:flex;flex-direction:column;justify-content:flex-start;gap:12px}
- #monitor-ui #snake-canvas{width:min(280px,100%);height:auto;flex-shrink:0;align-self:center}
- #monitor-ui #snake-start,#monitor-ui .snake-dpad{align-self:center}
+ #monitor-ui .gm-body{padding:8px}
+ #monitor-ui .gm-game:has(#snake-canvas).is-selected{display:grid;grid-template-columns:minmax(0,1fr) 112px;grid-template-rows:auto minmax(0,1fr);align-content:stretch;align-items:center;gap:6px 8px;padding:6px;overflow:hidden}
+ #monitor-ui .gm-game:has(#snake-canvas).is-selected .gm-title{display:none}
+ #monitor-ui .gm-game:has(#snake-canvas).is-selected .snake-row{grid-column:1/-1;grid-row:1;margin:0}
+ #monitor-ui #snake-canvas{grid-column:1;grid-row:2;width:min(200px,100%);height:auto;max-height:200px;align-self:center;justify-self:center}
+ #monitor-ui #snake-start{grid-column:2;grid-row:2;align-self:start;justify-self:stretch;margin-top:4px;padding:4px;font-size:16px;white-space:nowrap}
+ #monitor-ui .snake-dpad{grid-column:2;grid-row:2;align-self:end;justify-self:center;margin-bottom:4px}
  #monitor-ui .ttt-grid{grid-template-columns:repeat(3,76px)}#monitor-ui .ttt-cell{width:76px;height:76px}
  .boot95-flag{left:calc(50% - 63px);top:15%}.boot95-brand{left:20px;right:20px;top:48%;text-align:center}.boot95-brand strong{font-size:50px;letter-spacing:-3px}.boot95-brand strong b{font-size:42px}.boot95-brand p{font-size:16px}
  #monitor-ui .doom-help{font-size:12px;line-height:1.4}
