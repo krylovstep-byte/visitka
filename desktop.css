@@ -56,7 +56,12 @@
  #monitor-ui #snake-canvas{grid-column:1;grid-row:2;width:min(200px,100%);height:auto;max-height:200px;align-self:center;justify-self:center}
  #monitor-ui #snake-start{grid-column:2;grid-row:2;align-self:start;justify-self:stretch;margin-top:4px;padding:4px;font-size:16px;white-space:nowrap}
  #monitor-ui .snake-dpad{grid-column:2;grid-row:2;align-self:end;justify-self:center;margin-bottom:4px}
- #monitor-ui .ttt-grid{grid-template-columns:repeat(3,76px)}#monitor-ui .ttt-cell{width:76px;height:76px}
+ #monitor-ui .gm-game:has(#ttt-grid).is-selected{display:grid;grid-template-columns:180px minmax(0,1fr);grid-template-rows:1fr auto;align-items:center;gap:8px;padding:6px;overflow:hidden}
+ #monitor-ui .gm-game:has(#ttt-grid).is-selected .gm-title{display:none}
+ #monitor-ui .ttt-grid{grid-column:1;grid-row:1/3;grid-template-columns:repeat(3,56px);gap:4px;margin:0;justify-self:center}
+ #monitor-ui .ttt-cell{width:56px;height:56px;font-size:36px}
+ #monitor-ui #ttt-status{grid-column:2;grid-row:1;align-self:end;margin-bottom:8px;text-align:center;line-height:1.25}
+ #monitor-ui #ttt-reset{grid-column:2;grid-row:2;align-self:start;justify-self:stretch;padding:4px;font-size:16px;white-space:nowrap}
  .boot95-flag{left:calc(50% - 63px);top:15%}.boot95-brand{left:20px;right:20px;top:48%;text-align:center}.boot95-brand strong{font-size:50px;letter-spacing:-3px}.boot95-brand strong b{font-size:42px}.boot95-brand p{font-size:16px}
  #monitor-ui .doom-help{font-size:12px;line-height:1.4}
  .lowpoly .desk-controls>button{display:none}
